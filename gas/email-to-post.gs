@@ -28,7 +28,7 @@ var CONFIG = {
 
   /* --- GitHub --- */
   GITHUB_OWNER:  'yotsukaido-wo',          // GitHubのアカウント名
-  GITHUB_REPO:   'yotsukaido-wo-hp',       // ★リポジトリ名（実際の名前に変えてください）
+  GITHUB_REPO:   'yotsusui-website',       // リポジトリ名
   GITHUB_BRANCH: 'main',                   // Netlifyが見ているブランチ
 
   /**

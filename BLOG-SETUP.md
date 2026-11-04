@@ -47,10 +47,11 @@ GitHubのリポジトリには、`site` フォルダの **中身** をそのま�
 ## 1. GitHub のリポジトリを用意する
 
 1. GitHub に `yotsukaido-wo` でログインします。
-2. 新しいリポジトリを作ります（例：`yotsukaido-wo-hp`）。**Private でも構いません。**
+2. 新しいリポジトリ **`yotsusui-website`** を作ります（Public）。
 3. 上の構成でファイルを push します。
 
-作ったリポジトリ名を、Apps Script の `CONFIG.GITHUB_REPO` に書いてください。
+Apps Script の `CONFIG.GITHUB_REPO` は `'yotsusui-website'` に設定済みです。
+別の名前にした場合は、そこを書きかえてください。
 
 ---
 
