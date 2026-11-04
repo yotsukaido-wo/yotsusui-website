@@ -1,0 +1,25 @@
+# ===== Windows / OneDrive =====
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# ===== macOS =====
+.DS_Store
+
+# ===== エディタ =====
+.vscode/
+.idea/
+*.swp
+
+# ===== 作業用ファイル =====
+*.tmp
+*.bak
+~$*
+
+# ===== 秘密の情報（絶対にコミットしないこと）=====
+# GitHubのトークンやパスワードは、ここではなく
+# Google Apps Script の「スクリプト プロパティ」に保存します。
+.env
+*.key
+secrets.json

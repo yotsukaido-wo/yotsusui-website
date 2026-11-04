@@ -1,0 +1,11 @@
+# Netlify のキャッシュ設定
+# 記事データはすぐ反映されるように、写真は長くキャッシュするようにしています。
+
+/blog/index.json
+  Cache-Control: public, max-age=0, must-revalidate
+
+/blog/posts/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/blog/images/*
+  Cache-Control: public, max-age=31536000, immutable

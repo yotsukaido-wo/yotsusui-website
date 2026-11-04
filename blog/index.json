@@ -1,0 +1,29 @@
+{
+  "generated": "2026-11-01T18:00:00+09:00",
+  "posts": [
+    {
+      "slug": "2026-11-01-sample-renshu",
+      "title": "今日の合奏は「アルヴァマー序曲」から",
+      "date": "2026-11-01",
+      "category": "練習日誌",
+      "excerpt": "11月最初の練習は四街道公民館からスタート。冒頭のファンファーレを何度もくり返しました。",
+      "cover": "blog/images/2026-11-01-sample-renshu/01.jpg"
+    },
+    {
+      "slug": "2026-10-25-sample-honban",
+      "title": "消防フェスティバル四街道2026に出演しました",
+      "date": "2026-10-25",
+      "category": "本番レポート",
+      "excerpt": "秋晴れの会場で、お客さまといっしょに手拍子。子どもたちが前に集まってくれたのがうれしい一日でした。",
+      "cover": "blog/images/2026-10-25-sample-honban/01.jpg"
+    },
+    {
+      "slug": "2026-10-18-sample-oshirase",
+      "title": "ウインターコンサート2026のご案内",
+      "date": "2026-10-18",
+      "category": "お知らせ",
+      "excerpt": "今年もウインターコンサートを開催します。入場無料、どなたでもお越しいただけます。",
+      "cover": "blog/images/2026-10-18-sample-oshirase/01.jpg"
+    }
+  ]
+}

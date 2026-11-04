@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>よつすいブログ｜四街道吹奏楽団　Yotsukaido Wind Orchestra</title>
+<meta name="description" content="四街道吹奏楽団（よつすい）のブログ。練習のようす、本番のうらばなし、団員のつぶやきをお届けしています。">
+<link rel="canonical" href="https://yotsukaido-wo.netlify.app/blog.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="よつすいブログ｜四街道吹奏楽団">
+<meta property="og:description" content="練習のようす、本番のうらばなし、団員のつぶやき。よつすいの「ふだん」をお届けしています。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/onepage.css">
+<link rel="stylesheet" href="assets/blog.css">
+</head>
+<body>
+<a class="skip-link" href="#main">本文へスキップ</a>
+
+<!-- ===================== ヘッダー ===================== -->
+<header class="site-header">
+  <div class="wrap header-bar">
+    <a class="site-logo" href="onepage.html">
+      <span class="mark" aria-hidden="true">♪</span>
+      <span>
+        <span class="name-ja">四街道吹奏楽団</span>
+        <span class="name-en">YOTSUKAIDO WIND ORCHESTRA</span>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="header-nav">
+      <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="label">メニュー</span>
+    </button>
+    <nav class="header-nav" id="header-nav" aria-label="メインメニュー">
+      <ul>
+        <li><a href="onepage.html#about">楽団紹介</a></li>
+        <li><a href="onepage.html#concert">演奏会</a></li>
+        <li><a href="onepage.html#schedule">練習日程</a></li>
+        <li><a href="onepage.html#activity">活動記録</a></li>
+        <li><a href="onepage.html#recruit">団員募集</a></li>
+        <li><a href="onepage.html#movie">動画紹介</a></li>
+        <li><a href="blog.html" aria-current="page">ブログ</a></li>
+        <li><a class="is-cta" href="onepage.html#contact">見学・お問合せ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===================== ページ見出し ===================== -->
+  <div class="blog-head">
+    <div class="wrap">
+      <span class="label">BLOG</span>
+      <h1>よつすいブログ</h1>
+      <p>
+        練習のようす、本番のうらばなし、団員のつぶやき。<br>
+        よつすいの「ふだん」をお届けしています。
+      </p>
+    </div>
+  </div>
+
+  <!-- ===================== 記事一覧 ===================== -->
+  <section class="section blog-list">
+    <div class="wrap">
+
+      <!-- カテゴリーのボタン（記事のカテゴリーから自動で作られます） -->
+      <div class="cat-filter" id="cat-filter" hidden></div>
+
+      <!-- 記事カード（blog/index.json から自動で並びます） -->
+      <ul class="post-grid" id="post-grid"></ul>
+
+      <!-- 読み込み中・記事がないときの表示 -->
+      <p class="blog-state" id="blog-state">記事を読み込んでいます…</p>
+
+      <!-- ページ送り -->
+      <nav class="pager" id="pager" aria-label="ページ送り" hidden></nav>
+
+    </div>
+  </section>
+
+  <!-- ===================== どんなことを書いているか ===================== -->
+  <section class="section section-cream">
+    <div class="wrap">
+      <div class="section-head" style="margin-left:auto;margin-right:auto;text-align:center">
+        <span class="label">CONTENTS</span>
+        <h2>こんなことを書いています</h2>
+      </div>
+
+      <div class="cards col-3" data-stagger>
+        <div class="card">
+          <div class="card-body">
+            <h3 style="margin-top:0">練習日誌</h3>
+            <p style="margin-bottom:0">今日の合奏で何をやったか、指揮者からどんな指摘があったか。見学をお考えの方が、雰囲気をつかむ手がかりにしていただけたらうれしいです。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h3 style="margin-top:0">本番レポート</h3>
+            <p style="margin-bottom:0">演奏会やイベント出演の記録。会場のお客さまの反応や、終演後の団員のよろこびを写真とあわせてお届けします。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h3 style="margin-top:0">お知らせ・募集</h3>
+            <p style="margin-bottom:0">公演のご案内、整理券の配付開始、団員募集の最新状況など、お早めにお伝えしたいことを書いています。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>ブログを読んで、気になったら</h2>
+      <p>「この楽団、ちょっと見てみたいな」と思っていただけたら、ぜひ練習にお越しください。見学は随時受け付けています。</p>
+      <div class="btn-row">
+        <a class="btn btn-outline" href="onepage.html#contact">見学・お問合せはこちらから</a>
+        <a class="btn btn-outline" href="onepage.html#schedule">練習日程を見る</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== フッター ===================== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="name-ja">四街道吹奏楽団</span>
+        <span class="name-en">YOTSUKAIDO WIND ORCHESTRA</span>
+        <p style="margin-top:20px">
+          千葉県四街道市を中心に、近隣地域で活動する一般吹奏楽団です。<br>
+          活動日：土曜日・日曜日<br>
+          主な練習場所：四街道公民館／わろうべの里／旭公民館
+        </p>
+        <div class="footer-sns">
+          <a href="https://www.youtube.com/@yotsukaido_wo/featured" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://www.instagram.com/yotsukaido.wo/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://x.com/yotsukaido_wo" target="_blank" rel="noopener">X</a>
+        </div>
+      </div>
+
+      <div>
+        <h2>メニュー</h2>
+        <ul>
+          <li><a href="onepage.html#about">楽団紹介</a></li>
+          <li><a href="onepage.html#concert">演奏会</a></li>
+          <li><a href="onepage.html#schedule">練習日程・年間予定</a></li>
+          <li><a href="onepage.html#activity">活動記録</a></li>
+          <li><a href="onepage.html#recruit">団員募集</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>リンク</h2>
+        <ul>
+          <li><a href="onepage.html#movie">ヨツスイ動画紹介</a></li>
+          <li><a href="blog.html">よつすいブログ</a></li>
+          <li><a href="https://www.cbs-net.jp/" target="_blank" rel="noopener">千葉県吹奏楽連盟</a></li>
+          <li><a href="https://www.city.yotsukaido.chiba.jp/" target="_blank" rel="noopener">四街道市</a></li>
+          <li><a href="onepage.html#contact">見学・お問合せ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="copyright">© 2026 四街道吹奏楽団　Yotsukaido Wind Orchestra. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="assets/onepage.js"></script>
+<script src="assets/blog.js"></script>
+</body>
+</html>
