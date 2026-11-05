@@ -184,6 +184,25 @@ a:hover { color: var(--head); }
 
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 34px; }
 
+/* 白い見出しとリード文だけ、すこし左上へずらしています。
+   position:relative のずらしなので、下のボタン類の位置は動きません。
+   （数字を変えると、ずらす量を調整できます） */
+.hero h1,
+.hero-lead {
+  position: relative;
+  top: -40px;
+  left: -48px;
+}
+/* 画面がせまいときは、左に寄せすぎると文字が切れるので控えめにします */
+@media (max-width: 900px) {
+  .hero h1,
+  .hero-lead { top: -24px; left: -8px; }
+}
+@media (max-width: 600px) {
+  .hero h1,
+  .hero-lead { top: -16px; left: 0; }
+}
+
 .scroll-cue {
   position: absolute; left: 50%; bottom: 18px; z-index: 2;
   transform: translateX(-50%);
