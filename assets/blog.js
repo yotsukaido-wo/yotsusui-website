@@ -1,6 +1,6 @@
 /* =========================================================
    よつすいブログ
-   ・blog.html       … 記事一覧（カード／カテゴリー／ページ送り）
+   ・blog.html       … 記事一覧（新しい順に並べて、横にスクロールできます）
    ・blog-post.html  … 記事ページ（Markdown を読んで表示）
 
    記事データは次の場所に置きます（メール投稿の仕組みが自動で書きます）。
@@ -9,12 +9,10 @@
      blog/images/<slug>/1.jpg … 記事の写真
 
    ※ このファイルは書きかえなくても動きます。
-      1ページあたりの表示件数だけ変えたいときは、すぐ下の PER_PAGE を直してください。
    ========================================================= */
 (function () {
   'use strict';
 
-  var PER_PAGE   = 9;                 // 1ページに並べる記事の数（3列×3段）
   var INDEX_URL  = 'blog/index.json'; // 記事一覧データ
   var POSTS_DIR  = 'blog/posts/';     // Markdown の置き場所
 
@@ -199,11 +197,11 @@
      ======================================================= */
 
   function initList(grid) {
-    var stateEl  = document.getElementById('blog-state');
-    var pagerEl  = document.getElementById('pager');
-    var filterEl = document.getElementById('cat-filter');
-
-    var all = [], cat = qs('cat'), page = parseInt(qs('page'), 10) || 1;
+    var stateEl = document.getElementById('blog-state');
+    var carEl   = document.getElementById('post-carousel');
+    var prevBtn = document.getElementById('car-prev');
+    var nextBtn = document.getElementById('car-next');
+    var hintEl  = document.getElementById('car-hint');
 
     function cardHtml(p) {
       var href  = 'blog-post.html?slug=' + encodeURIComponent(p.slug);
@@ -228,103 +226,60 @@
         '</li>';
     }
 
-    function filtered() {
-      return cat ? all.filter(function (p) { return (p.category || '') === cat; }) : all;
+    // 1回の矢印クリックで動かす幅（カード1枚ぶん）
+    function stepWidth() {
+      var first = grid.firstElementChild;
+      if (!first) { return grid.clientWidth; }
+      var gap = parseFloat(getComputedStyle(grid).columnGap || getComputedStyle(grid).gap) || 0;
+      return first.getBoundingClientRect().width + gap;
     }
 
-    function renderFilter() {
-      if (!filterEl) { return; }
-      var cats = [];
-      all.forEach(function (p) {
-        var c = p.category || '';
-        if (c && cats.indexOf(c) < 0) { cats.push(c); }
-      });
-      if (!cats.length) { filterEl.hidden = true; return; }
-
-      var html = '<button type="button" data-cat="" aria-pressed="' + (cat ? 'false' : 'true') + '">すべて</button>';
-      cats.forEach(function (c) {
-        html += '<button type="button" data-cat="' + esc(c) + '" aria-pressed="' +
-                (cat === c ? 'true' : 'false') + '">' + esc(c) + '</button>';
-      });
-      filterEl.innerHTML = html;
-      filterEl.hidden = false;
+    // 端まで来たら矢印を消します（横に動かせるぶんが無いときは両方消えます）
+    function syncNav() {
+      var max = grid.scrollWidth - grid.clientWidth;
+      var x   = grid.scrollLeft;
+      if (prevBtn) { prevBtn.disabled = x <= 2; }
+      if (nextBtn) { nextBtn.disabled = x >= max - 2; }
+      if (hintEl)  { hintEl.hidden = max <= 2; }
     }
 
-    function renderPager(total) {
-      if (!pagerEl) { return; }
-      var pages = Math.max(1, Math.ceil(total / PER_PAGE));
-      if (pages < 2) { pagerEl.innerHTML = ''; pagerEl.hidden = true; return; }
-
-      var html = '<button type="button" data-page="' + (page - 1) + '" aria-label="前のページ"' +
-                 (page <= 1 ? ' disabled' : '') + '>‹</button>';
-      for (var i = 1; i <= pages; i++) {
-        html += '<button type="button" data-page="' + i + '"' +
-                (i === page ? ' aria-current="page"' : '') + '>' + i + '</button>';
-      }
-      html += '<button type="button" data-page="' + (page + 1) + '" aria-label="次のページ"' +
-              (page >= pages ? ' disabled' : '') + '>›</button>';
-
-      pagerEl.innerHTML = html;
-      pagerEl.hidden = false;
+    function slide(dir) {
+      grid.scrollBy({ left: dir * stepWidth(), behavior: 'smooth' });
     }
 
-    function render() {
-      var list  = filtered();
-      var pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
-      if (page > pages) { page = pages; }
-      if (page < 1) { page = 1; }
+    if (prevBtn) { prevBtn.addEventListener('click', function () { slide(-1); }); }
+    if (nextBtn) { nextBtn.addEventListener('click', function () { slide(1); }); }
 
-      var slice = list.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+    // 左右キーでも動かせるようにします
+    grid.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); slide(1); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); slide(-1); }
+    });
 
-      if (!slice.length) {
-        grid.innerHTML = '';
-        if (stateEl) {
-          stateEl.hidden = false;
-          stateEl.textContent = all.length
-            ? 'このカテゴリーの記事はまだありません。'
-            : '記事はまだありません。最初の記事を準備中です。';
-        }
-      } else {
-        if (stateEl) { stateEl.hidden = true; }
-        grid.innerHTML = slice.map(cardHtml).join('');
-      }
-
-      renderPager(list.length);
-
-      // アドレスバーにも今の状態を残します（ブラウザの「戻る」で戻れます）
-      var q = [];
-      if (cat)      { q.push('cat=' + encodeURIComponent(cat)); }
-      if (page > 1) { q.push('page=' + page); }
-      history.replaceState(null, '', location.pathname + (q.length ? '?' + q.join('&') : ''));
-    }
-
-    if (filterEl) {
-      filterEl.addEventListener('click', function (e) {
-        var b = e.target.closest('button[data-cat]');
-        if (!b) { return; }
-        cat = b.getAttribute('data-cat');
-        page = 1;
-        renderFilter();
-        render();
-      });
-    }
-
-    if (pagerEl) {
-      pagerEl.addEventListener('click', function (e) {
-        var b = e.target.closest('button[data-page]');
-        if (!b || b.disabled) { return; }
-        page = parseInt(b.getAttribute('data-page'), 10) || 1;
-        render();
-        var head = document.querySelector('.blog-list');
-        if (head) { head.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-      });
-    }
+    grid.addEventListener('scroll', syncNav, { passive: true });
+    window.addEventListener('resize', syncNav);
 
     fetchJson(INDEX_URL).then(function (data) {
-      all = toPosts(data);
-      renderFilter();
-      render();
+      var posts = toPosts(data);   // 新しい順（日付のあたらしいものが先頭）
+
+      if (!posts.length) {
+        if (carEl)   { carEl.hidden = true; }
+        if (stateEl) {
+          stateEl.hidden = false;
+          stateEl.textContent = '記事はまだありません。最初の記事を準備中です。';
+        }
+        return;
+      }
+
+      grid.innerHTML = posts.map(cardHtml).join('');
+      if (carEl)   { carEl.hidden = false; }
+      if (stateEl) { stateEl.hidden = true; }
+
+      // 画像の読み込みで幅が変わることがあるので、少しおいてからもう一度そろえます
+      syncNav();
+      setTimeout(syncNav, 300);
     })['catch'](function (err) {
+      if (carEl)   { carEl.hidden = true; }
       if (stateEl) {
         stateEl.hidden = false;
         stateEl.textContent = '記事の読み込みに失敗しました。時間をおいて、もう一度お試しください。';

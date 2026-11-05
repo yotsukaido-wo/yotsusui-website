@@ -17,8 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/onepage.css">
-<link rel="stylesheet" href="assets/blog.css">
+<link rel="stylesheet" href="assets/onepage.css?v=2">
+<link rel="stylesheet" href="assets/blog.css?v=2">
 </head>
 <body>
 <a class="skip-link" href="#main">本文へスキップ</a>
@@ -70,63 +70,20 @@
   <section class="section blog-list">
     <div class="wrap">
 
-      <!-- カテゴリーのボタン（記事のカテゴリーから自動で作られます） -->
-      <div class="cat-filter" id="cat-filter" hidden></div>
-
-      <!-- 記事カード（blog/index.json から自動で並びます） -->
-      <ul class="post-grid" id="post-grid"></ul>
+      <!-- 記事カード（blog/index.json から新しい順に並びます。横にスクロールすると過去記事です） -->
+      <div class="post-carousel" id="post-carousel" hidden>
+        <button class="car-nav prev" id="car-prev" type="button" aria-label="新しい記事へもどる">‹</button>
+        <ul class="post-track" id="post-grid" tabindex="0" aria-label="記事一覧（横にスクロールできます）"></ul>
+        <button class="car-nav next" id="car-next" type="button" aria-label="過去の記事を見る">›</button>
+        <p class="car-hint" id="car-hint">← 横にスクロールすると過去の記事が読めます →</p>
+      </div>
 
       <!-- 読み込み中・記事がないときの表示 -->
       <p class="blog-state" id="blog-state">記事を読み込んでいます…</p>
 
-      <!-- ページ送り -->
-      <nav class="pager" id="pager" aria-label="ページ送り" hidden></nav>
-
     </div>
   </section>
 
-  <!-- ===================== どんなことを書いているか ===================== -->
-  <section class="section section-cream">
-    <div class="wrap">
-      <div class="section-head" style="margin-left:auto;margin-right:auto;text-align:center">
-        <span class="label">CONTENTS</span>
-        <h2>こんなことを書いています</h2>
-      </div>
-
-      <div class="cards col-3" data-stagger>
-        <div class="card">
-          <div class="card-body">
-            <h3 style="margin-top:0">練習日誌</h3>
-            <p style="margin-bottom:0">今日の合奏で何をやったか、指揮者からどんな指摘があったか。見学をお考えの方が、雰囲気をつかむ手がかりにしていただけたらうれしいです。</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <h3 style="margin-top:0">本番レポート</h3>
-            <p style="margin-bottom:0">演奏会やイベント出演の記録。会場のお客さまの反応や、終演後の団員のよろこびを写真とあわせてお届けします。</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <h3 style="margin-top:0">お知らせ・募集</h3>
-            <p style="margin-bottom:0">公演のご案内、整理券の配付開始、団員募集の最新状況など、お早めにお伝えしたいことを書いています。</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== CTA ===================== -->
-  <section class="cta-band">
-    <div class="wrap">
-      <h2>ブログを読んで、気になったら</h2>
-      <p>「この楽団、ちょっと見てみたいな」と思っていただけたら、ぜひ練習にお越しください。見学は随時受け付けています。</p>
-      <div class="btn-row">
-        <a class="btn btn-outline" href="index.html#contact">見学・お問合せはこちらから</a>
-        <a class="btn btn-outline" href="index.html#schedule">練習日程を見る</a>
-      </div>
-    </div>
-  </section>
 
 </main>
 
@@ -176,7 +133,7 @@
   </div>
 </footer>
 
-<script src="assets/onepage.js"></script>
-<script src="assets/blog.js"></script>
+<script src="assets/onepage.js?v=2"></script>
+<script src="assets/blog.js?v=2"></script>
 </body>
 </html>

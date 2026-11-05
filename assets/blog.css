@@ -41,20 +41,80 @@
   .blog-head p { font-size: .92rem; text-align: left; }
 }
 
-/* ---------- 記事カードのグリッド ---------- */
-/* パソコン：3列 ／ タブレット・スマホ（横長）：2列 ／ 小さいスマホ：1列 */
-.post-grid {
-  display: grid;
-  gap: 26px;
-  grid-template-columns: 1fr;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-@media (min-width: 520px)  { .post-grid { gap: 20px; grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 980px)  { .post-grid { gap: 28px; grid-template-columns: repeat(3, 1fr); } }
+/* ---------- 記事カードの横スクロール（過去記事は横へ送ります） ---------- */
+/* パソコン：3枚ずつ ／ タブレット：2枚ずつ ／ スマホ：1枚ずつ（指でスワイプ） */
+.post-carousel { position: relative; }
 
-.post-grid > li { display: flex; }
+.post-track {
+  display: flex;
+  gap: 18px;
+  margin: 0;
+  padding: 4px 0 10px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;          /* Firefox：横棒を隠します */
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+.post-track::-webkit-scrollbar { display: none; }
+
+.post-track > li {
+  display: flex;
+  flex: 0 0 86%;                  /* スマホ：次の記事がすこし見えます */
+  scroll-snap-align: start;
+}
+@media (min-width: 520px) { .post-track > li { flex-basis: calc(50% - 9px); } }
+@media (min-width: 980px) {
+  .post-track { gap: 28px; }
+  .post-track > li { flex-basis: calc(33.333% - 19px); }
+}
+
+/* 左右の矢印ボタン */
+.car-nav {
+  position: absolute;
+  top: 38%;
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--head);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.10);
+  transition: background .2s var(--ease), color .2s var(--ease),
+              border-color .2s var(--ease), opacity .2s var(--ease);
+}
+.car-nav.prev { left: -10px; }
+.car-nav.next { right: -10px; }
+.car-nav:hover:not(:disabled) { background: var(--terra); border-color: var(--terra); color: #fff; }
+.car-nav:disabled { opacity: 0; pointer-events: none; }
+
+@media (min-width: 1180px) {
+  .car-nav.prev { left: -26px; }
+  .car-nav.next { right: -26px; }
+}
+@media (max-width: 600px) {
+  .car-nav { width: 40px; height: 40px; top: 32%; }
+  .car-nav.prev { left: -6px; }
+  .car-nav.next { right: -6px; }
+}
+
+/* 横にスクロールできることを示す小さな案内 */
+.car-hint {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: .8rem;
+  letter-spacing: .06em;
+  color: var(--ink-soft);
+}
 
 .post-card {
   display: flex;
@@ -159,63 +219,6 @@
 @media (max-width: 519px) {
   .post-thumb { aspect-ratio: 16 / 10; }
   .post-body { padding: 20px 20px 22px; }
-}
-
-/* ---------- ページ送り ---------- */
-.pager {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 56px;
-  flex-wrap: wrap;
-}
-.pager button {
-  min-width: 42px;
-  height: 42px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--ink-soft);
-  font: inherit;
-  font-size: .9rem;
-  cursor: pointer;
-  transition: background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
-}
-.pager button:hover:not(:disabled) { background: var(--terra-pale); color: var(--head); border-color: var(--terra-pale); }
-.pager button[aria-current="page"] {
-  background: var(--terra);
-  border-color: var(--terra);
-  color: #fff;
-  font-weight: 700;
-}
-.pager button:disabled { opacity: .35; cursor: default; }
-
-/* ---------- カテゴリーのしぼりこみ ---------- */
-.cat-filter {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 44px;
-}
-.cat-filter button {
-  padding: 9px 20px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--ink-soft);
-  font: inherit;
-  font-size: .85rem;
-  cursor: pointer;
-  transition: background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
-}
-.cat-filter button:hover { background: var(--terra-pale); color: var(--head); border-color: var(--terra-pale); }
-.cat-filter button[aria-pressed="true"] {
-  background: var(--terra);
-  border-color: var(--terra);
-  color: #fff;
 }
 
 /* ---------- 読み込み中・記事なし ---------- */
