@@ -146,14 +146,15 @@ a:hover { color: var(--head); }
 }
 .hero-media { position: absolute; inset: 0; z-index: 0; }
 /* 1枚目の大きな演奏写真。ゆっくり寄っていく動きをつけています。
-   画面が縦長なときに団員が切れないよう、少し下寄りに表示しています */
+   写真の中でステージがやや上にあるので、少し上寄りに表示しています */
 .hero-media img {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 72%;
+  object-fit: cover; object-position: 50% 42%;
   animation: heroZoom 16s var(--ease) forwards;
 }
+/* 寄りを控えめにしています（大きく拡大すると写真があまくなるため） */
 @keyframes heroZoom {
-  from { transform: scale(1.08); }
+  from { transform: scale(1.04); }
   to   { transform: scale(1); }
 }
 .hero-media::after {
