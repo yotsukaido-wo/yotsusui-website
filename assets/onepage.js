@@ -179,7 +179,7 @@
   /* ---------- スクロールでふわっと表示 ----------
      ふだんは「少し見えたら」動きはじめます。
      背の高い写真は、それだと画面に入りきる前にフェードが終わってしまうので、
-     HTML側に data-reveal-at="0.4" と書くと「4割見えてから」動きはじめます。
+     HTML側に data-reveal-at="0.6" と書くと「6割見えてから」動きはじめます。
   ------------------------------------------------ */
   var targets = document.querySelectorAll('.reveal, .photo, .section-head');
 
@@ -191,7 +191,7 @@
     return;
   }
 
-  function makeObserver(threshold) {
+  function makeObserver(threshold, rootMargin) {
     return new IntersectionObserver(function (entries, obs) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -200,19 +200,21 @@
         }
       });
     }, {
-      rootMargin: '0px 0px -12% 0px',
+      rootMargin: rootMargin,
       threshold: threshold
     });
   }
 
-  var observer  = makeObserver(0.08);   // ふつうの要素
+  // ふつうの要素は、画面の下から少し上がった位置で動きはじめます
+  var observer  = makeObserver(0.08, '0px 0px -12% 0px');
   var observers = {};                   // data-reveal-at ごとに1つずつ用意します
 
   Array.prototype.forEach.call(targets, function (el) {
     var at = parseFloat(el.getAttribute('data-reveal-at'));
     if (!(at > 0 && at <= 1)) { observer.observe(el); return; }
 
-    if (!observers[at]) { observers[at] = makeObserver(at); }
+    // 割合を指定したものは、画面に入った量をそのまま見ます（下の余白は入れません）
+    if (!observers[at]) { observers[at] = makeObserver(at, '0px'); }
     observers[at].observe(el);
   });
 })();
