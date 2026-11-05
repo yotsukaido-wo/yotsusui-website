@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-05T14:00:00+09:00",
+  "generated": "2026-11-05T22:00:00+09:00",
   "posts": [
     {
       "slug": "2026-10-18-shimoda-nouen",
@@ -28,6 +28,62 @@
       "date": "2026-10-12",
       "excerpt": "今回の練習は、とにかく爆笑が多くてまさに「腹を抱えて笑う」場面もちらほら。そのいくつかをご紹介します。",
       "cover": "blog/images/2026-10-12-bakusho/01.jpg"
+    },
+    {
+      "slug": "2026-10-06-2310-sou-ieba",
+      "title": "あ！そういえば",
+      "date": "2026-10-06",
+      "excerpt": "YouTubeの登録者数が６２０人、Instagramのフォロワーが１５００人を越えました。勝手に報告します！",
+      "cover": "blog/images/2026-10-06-2310-sou-ieba/01.jpg"
+    },
+    {
+      "slug": "2026-10-06-2243-omoshiro-member",
+      "title": "よつすいのおもしろメンバー",
+      "date": "2026-10-06",
+      "excerpt": "団長から届いた謎の写真をきっかけに、よつすいメンバーの個性をご紹介します。みんなどこか穏やかで、微笑ましいのです。",
+      "cover": "blog/images/2026-10-06-2243-omoshiro-member/01.jpg"
+    },
+    {
+      "slug": "2026-10-06-2225-kominkan-matsuri",
+      "title": "公民館まつり出演報告",
+      "date": "2026-10-06",
+      "excerpt": "日曜日の大トリを務めました。マーチから昭和アイドル、令和のYOASOBIまで、アンコールを含め5曲を披露しました。",
+      "cover": "blog/images/2026-10-06-2225-kominkan-matsuri/01.jpg"
+    },
+    {
+      "slug": "2026-09-29-kengaku-matsuri",
+      "title": "続いています。見学祭り！！",
+      "date": "2026-09-29",
+      "excerpt": "今週はオーボエの見学さんがいらっしゃいました。デジタル楽譜は使い勝手がいいのか？というお話も。",
+      "cover": "blog/images/2026-09-29-kengaku-matsuri/01.jpg"
+    },
+    {
+      "slug": "2026-09-27-bakusho-shita",
+      "title": "今週は爆笑したな・・・",
+      "date": "2026-09-27",
+      "excerpt": "公民館まつりに向けた練習。合奏中の貝瀬さんのひとことで、笑いが止まらなくなりました。",
+      "cover": "blog/images/2026-09-27-bakusho-shita/01.jpg"
+    },
+    {
+      "slug": "2026-09-23-kengaku-arigatou",
+      "title": "見学ありがとう！！！",
+      "date": "2026-09-23",
+      "excerpt": "台風前の悪天候のなか、クラリネットの見学さんが来てくれました。お問い合わせ方法もリニューアルしています。",
+      "cover": "blog/images/2026-09-23-kengaku-arigatou/01.jpg"
+    },
+    {
+      "slug": "2026-09-21-2354-new-gakki",
+      "title": "今週もNEW楽器お披露目なんですか？！",
+      "date": "2026-09-21",
+      "excerpt": "先週に続いて、またもやNEW楽器が登場。リングキーのクラリネットです。",
+      "cover": "blog/images/2026-09-21-2354-new-gakki/01.jpg"
+    },
+    {
+      "slug": "2026-09-21-2314-rehearsal",
+      "title": "BGMは雨の音～リハありました～",
+      "date": "2026-09-21",
+      "excerpt": "台風２５号の雨の音をBGMに、公民館まつりのリハーサルを行いました。時間はバッチリ２５〜３０分に収まりました。",
+      "cover": "blog/images/2026-09-21-2314-rehearsal/01.jpg"
     }
   ]
 }
