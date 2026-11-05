@@ -829,8 +829,9 @@ function sendSuccessMail_(msg, posted, wasEdit) {
       '<p style="margin:22px 0 10px">直したいときは、下のボタンを押してください。' +
       'メールの作成画面が開くので、そのまま送れば記事に反映されます。</p>' +
       '<p style="margin:0 0 18px">' +
-        button_(editUrl, '✏️&nbsp;この記事を修正する', '#c2185b') +
-        button_(delUrl,  '🗑&nbsp;この記事を削除する',  '#777777') +
+        // 絵文字やHTMLの記号は、メールソフトによって文字化けするので使いません
+        button_(editUrl, 'この記事を修正する', '#c2185b') +
+        button_(delUrl,  'この記事を削除する', '#777777') +
       '</p>' +
       '<p style="font-size:13px;color:#777;margin-top:24px">' +
       '「修正」は、書いた本文で記事をまるごと置きかえます。写真はそのまま残り、' +
