@@ -13,7 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/onepage.css">
+<link rel="stylesheet" href="assets/onepage.css?v=2">
+<link rel="stylesheet" href="assets/blog.css?v=2">
 </head>
 <body>
 <a class="skip-link" href="#main">本文へスキップ</a>
@@ -40,7 +41,7 @@
         <li><a href="#activity">活動記録</a></li>
         <li><a href="#recruit">団員募集</a></li>
         <li><a href="#movie">動画紹介</a></li>
-        <li><a href="blog.html">ブログ</a></li>
+        <li><a href="#blog">ブログ</a></li>
         <li><a class="is-cta" href="#contact">見学・お問合せ</a></li>
       </ul>
     </nav>
@@ -530,6 +531,35 @@
     </div>
   </section>
 
+  <!-- ===================== よつすいブログ ===================== -->
+  <section class="section" id="blog">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="label">{ Blog }</span>
+        <h2>よつすいブログ</h2>
+        <p class="sub">
+          練習のようす、本番のうらばなし、団員のつぶやき。
+          よつすいの「ふだん」をお届けしています。
+        </p>
+      </div>
+
+      <!-- 記事カード（blog/index.json から新しい順に並びます。横に送ると過去記事です） -->
+      <div class="post-carousel" id="post-carousel" hidden>
+        <button class="car-nav prev" id="car-prev" type="button" aria-label="新しい記事へもどる">‹</button>
+        <ul class="post-track" id="post-grid" data-limit="6" tabindex="0" aria-label="ブログ記事（横にスクロールできます）"></ul>
+        <button class="car-nav next" id="car-next" type="button" aria-label="過去の記事を見る">›</button>
+        <p class="car-hint" id="car-hint">← 横にスクロールすると過去の記事が読めます →</p>
+      </div>
+
+      <!-- 読み込み中・記事がないときの表示 -->
+      <p class="blog-state" id="blog-state">記事を読み込んでいます…</p>
+
+      <div class="btn-row reveal">
+        <a class="btn btn-plain" href="blog.html">ブログ記事の一覧を見る</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== お問い合わせ ===================== -->
   <section class="section section-cream" id="contact">
     <div class="wrap">
@@ -693,6 +723,7 @@
     { id: "yArpXlf8ihc", title: "アルヴァマー序曲（J.バーンズ）", note: "" }
   ];
 </script>
-<script src="assets/onepage.js"></script>
+<script src="assets/onepage.js?v=2"></script>
+<script src="assets/blog.js?v=2"></script>
 </body>
 </html>

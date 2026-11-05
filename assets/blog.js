@@ -1,5 +1,6 @@
 /* =========================================================
    よつすいブログ
+   ・index.html      … トップページのブログ欄（最新のものだけを横並びで）
    ・blog.html       … 記事一覧（新しい順に並べて、横にスクロールできます）
    ・blog-post.html  … 記事ページ（Markdown を読んで表示）
 
@@ -259,8 +260,13 @@
     grid.addEventListener('scroll', syncNav, { passive: true });
     window.addEventListener('resize', syncNav);
 
+    // トップページのように「最新のいくつかだけ」出したいときは、
+    // <ul id="post-grid" data-limit="6"> のように書くと、その数だけ並びます。
+    var limit = parseInt(grid.getAttribute('data-limit'), 10);
+
     fetchJson(INDEX_URL).then(function (data) {
       var posts = toPosts(data);   // 新しい順（日付のあたらしいものが先頭）
+      if (limit > 0) { posts = posts.slice(0, limit); }
 
       if (!posts.length) {
         if (carEl)   { carEl.hidden = true; }
