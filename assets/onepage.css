@@ -7,22 +7,22 @@
    ========================================================= */
 
 :root {
-  --bg:         #F7F2F3;  /* ページ背景（ピンクを抑えた温かいオフホワイト） */
+  --bg:         #FAE5EC;  /* ページ背景（やわらかいピンク） */
   --surface:    #FFFFFF;  /* 記事・カード */
-  --cream:      #FAF7F5;  /* 生成りの切り替え背景 */
-  --ink:        #493B40;  /* 本文 */
-  --ink-soft:   #786C70;  /* 補助テキスト */
-  --head:       #85525E;  /* 見出し（落ち着いたローズブラウン） */
-  --link:       #9A5A6B;  /* リンク */
-  --line:       #E6DEE0;  /* 区切り線 */
-  --terra:      #A5543C;  /* アクセント（ボタン／白文字） */
-  --terra-mid:  #A3603F;  /* アクセント（アイコン・ラベル） */
-  --terra-pale: #F2E7E1;  /* アクセント（淡い背景） */
+  --cream:      #FDEDF2;  /* 切り替え背景（淡いピンク） */
+  --ink:        #46333C;  /* 本文 */
+  --ink-soft:   #74606C;  /* 補助テキスト */
+  --head:       #8A4660;  /* 見出し（ローズ） */
+  --link:       #A34B6C;  /* リンク */
+  --line:       #EFCEDC;  /* 区切り線 */
+  --terra:      #AC4651;  /* アクセント（ボタン／白文字・ローズ） */
+  --terra-mid:  #AC5059;  /* アクセント（アイコン・ラベル） */
+  --terra-pale: #F9DAE3;  /* アクセント（淡い背景） */
 
   --radius:  12px;
   --radius-lg: 18px;
-  --shadow:  0 2px 14px rgba(73, 59, 64, .08);
-  --shadow-lift: 0 10px 28px rgba(73, 59, 64, .13);
+  --shadow:  0 2px 14px rgba(70, 51, 60, .09);
+  --shadow-lift: 0 10px 28px rgba(70, 51, 60, .14);
   --wrap: 1100px;
   --ease: cubic-bezier(.22, .61, .36, 1);
 }
@@ -75,8 +75,7 @@ a:hover { color: var(--head); }
 }
 .site-logo .mark {
   flex: none; width: 42px; height: 42px; border-radius: 50%;
-  background: var(--terra); color: #fff;
-  display: grid; place-items: center; font-size: 21px; line-height: 1;
+  background: #fff; object-fit: cover; display: block;
 }
 .site-logo .name-ja {
   display: block; font-size: 1.1rem; font-weight: 700;
@@ -118,7 +117,7 @@ a:hover { color: var(--head); }
 @media (max-width: 430px) {
   .site-logo .name-ja { font-size: .98rem; white-space: nowrap; }
   .site-logo .name-en { font-size: .6rem; }
-  .site-logo .mark { width: 38px; height: 38px; font-size: 19px; }
+  .site-logo .mark { width: 38px; height: 38px; }
 }
 
 @media (max-width: 1140px) {
@@ -146,16 +145,12 @@ a:hover { color: var(--head); }
   overflow: hidden; color: #fff;
 }
 .hero-media { position: absolute; inset: 0; z-index: 0; }
-/* ↓ 写真が入るまでの仮の背景（ホールの照明をイメージ） */
-.hero-media .ph, .hero-media img {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+/* 1枚目の大きな演奏写真。ゆっくり寄っていく動きをつけています。
+   画面が縦長なときに団員が切れないよう、少し下寄りに表示しています */
+.hero-media img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 72%;
   animation: heroZoom 16s var(--ease) forwards;
-}
-.hero-media .ph {
-  background:
-    radial-gradient(900px 520px at 72% 18%, rgba(244, 224, 208, .38) 0%, rgba(244, 224, 208, 0) 66%),
-    radial-gradient(700px 480px at 18% 84%, rgba(165, 84, 60, .3) 0%, rgba(165, 84, 60, 0) 72%),
-    linear-gradient(160deg, #4B3B40 0%, #635049 48%, #7C6253 100%);
 }
 @keyframes heroZoom {
   from { transform: scale(1.08); }
@@ -163,19 +158,11 @@ a:hover { color: var(--head); }
 }
 .hero-media::after {
   content: ""; position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(180deg, rgba(42, 32, 34, .34) 0%, rgba(42, 32, 34, .1) 40%, rgba(42, 32, 34, .7) 100%);
+  background: linear-gradient(180deg, rgba(42, 32, 34, .46) 0%, rgba(42, 32, 34, .3) 38%, rgba(42, 32, 34, .82) 100%);
 }
 .hero .wrap { position: relative; z-index: 1; padding-top: 140px; padding-bottom: 74px; }
 
-.hero-badge {
-  display: inline-flex; align-items: baseline; gap: 12px;
-  padding: 9px 22px; border-radius: 999px;
-  background: var(--terra); color: #fff;
-  font-weight: 700; font-size: .95rem; letter-spacing: .04em;
-}
-.hero-badge .en { font-size: .78rem; letter-spacing: .16em; opacity: .9; }
-
-.hero h1 { margin: 24px 0 0; line-height: 1.3; }
+.hero h1 { margin: 0; line-height: 1.3; }
 .hero h1 .ja {
   display: block;
   font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
@@ -194,13 +181,7 @@ a:hover { color: var(--head); }
   text-shadow: 0 1px 14px rgba(40, 22, 28, .5);
 }
 
-.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
-
-.hero-photo-note {
-  position: absolute; right: 18px; bottom: 16px; z-index: 2;
-  font-size: .76rem; letter-spacing: .04em;
-  color: rgba(255, 255, 255, .75);
-}
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 34px; }
 
 .scroll-cue {
   position: absolute; left: 50%; bottom: 18px; z-index: 2;
@@ -232,8 +213,13 @@ a:hover { color: var(--head); }
               box-shadow .4s var(--ease);
 }
 .btn:hover { transform: translateY(-2px); }
-.btn-terra  { background: var(--terra); color: #fff; box-shadow: 0 4px 16px rgba(165,84,60,.22); }
-.btn-terra:hover { background: #8D432F; color: #fff; box-shadow: 0 10px 24px rgba(165,84,60,.28); }
+/* 最初の画面（ファーストビュー）のボタンだけ、少し小ぶりにしています。
+   高さ60px＝上下の余白（16px）＋文字1行（約25px）＋フチ（3px）。
+   左右の余白も32px→24pxに詰めて、横幅をひとまわり小さくしています。
+   大きさを変えるときは、min-height と padding を一緒に直してください */
+.hero-actions .btn { min-height: 60px; padding: 16px 24px; }
+.btn-terra  { background: var(--terra); color: #fff; box-shadow: 0 4px 16px rgba(172,70,81,.24); }
+.btn-terra:hover { background: #913744; color: #fff; box-shadow: 0 10px 24px rgba(172,70,81,.3); }
 .btn-outline { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.65); }
 .btn-outline:hover { background: rgba(255,255,255,.2); color: #fff; }
 .btn-plain {
@@ -242,10 +228,34 @@ a:hover { color: var(--head); }
 }
 .btn-plain:hover { background: var(--terra-pale); color: var(--head); border-color: var(--terra-pale); }
 
+/* 団員募集の丸いバッジ（画像）。背景が透明なPNGなので、写真の上でもきれいに出ます。
+   影は画像ではなくCSSでつけているので、濃さはここで調整できます */
+.btn-badge {
+  display: inline-block; flex: none; line-height: 0;
+  border-radius: 50%;
+  /* 他のボタンから切り離して、本文の右端まで寄せます */
+  margin-left: auto;
+  filter: drop-shadow(0 8px 20px rgba(40, 10, 12, .38));
+  transition: transform .4s var(--ease), filter .4s var(--ease);
+}
+.btn-badge img { display: block; width: 150px; height: 150px; }
+/* パソコンなど画面が広いときは、バッジだけを本文の幅（1100px）の外へ出して、
+   画面の右端まで寄せます。スマホは下の指定で中央のままです */
+@media (min-width: 900px) {
+  .hero-actions { margin-right: calc(50% - 50vw + 40px); }
+}
+.btn-badge:hover {
+  transform: translateY(-3px);
+  filter: drop-shadow(0 14px 28px rgba(40, 10, 12, .45));
+}
+
 .btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
 @media (max-width: 580px) {
   .btn-row, .hero-actions { display: grid; }
   .btn-row .btn, .hero-actions .btn { width: 100%; }
+  /* スマホでは縦に積むので、右端ではなく中央に置きます */
+  .btn-badge { justify-self: center; margin: 0 auto; }
+  .btn-badge img { width: 136px; height: 136px; }
 }
 
 /* SNSボタン */
@@ -263,22 +273,44 @@ a:hover { color: var(--head); }
 .btn-x { background: #000; }
 .btn-youtube { background: #FF0000; }
 
-/* アイコンだけの丸いSNSボタン（ファーストビュー用）
+/* アイコンだけの丸いSNSボタン
    高さは .btn と同じ62pxにそろえて、ボタンの列にきれいに並ぶようにしています */
-.hero-sns { display: inline-flex; align-items: center; gap: 12px; }
+.sns-icons { display: inline-flex; align-items: center; gap: 12px; }
 .btn-sns.btn-icon {
   width: 62px; height: 62px; min-height: 62px; padding: 0; flex: none;
   justify-content: center;
-  border: 1.5px solid rgba(255, 255, 255, .55);
   box-shadow: 0 4px 16px rgba(40, 28, 24, .18);
 }
 .btn-sns.btn-icon .sns-ico { width: 26px; height: 26px; }
+
+/* YouTubeチャンネルへの案内（丸いアイコン＋下に説明の文字） */
+.yt-link {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+  text-decoration: none; color: var(--ink-soft);
+  font-weight: 700; font-size: .95rem; line-height: 1.5;
+  transition: color .35s var(--ease);
+}
+.yt-circle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 62px; height: 62px; border-radius: 50%;
+  background: #FF0000; color: #fff;
+  box-shadow: 0 4px 16px rgba(40, 28, 24, .18);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.yt-link .sns-ico { width: 26px; height: 26px; fill: currentColor; }
+.yt-link:hover { color: var(--head); }
+.yt-link:hover .yt-circle {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(40, 28, 24, .24);
+}
+/* 写真や濃い色の上にのるので、白いフチで輪郭を出します */
+.sns-icons .btn-sns.btn-icon { border: 1.5px solid rgba(255, 255, 255, .55); }
 @media (max-width: 580px) {
   .sns-row { display: grid; }
   .btn-sns { width: 100%; }
   .btn-sns .sns-id { display: block; margin-left: 0; }
-  /* アイコンボタンは横幅を広げず、2つ並べて中央に置きます */
-  .hero-actions .hero-sns { justify-content: center; margin-top: 6px; }
+  /* アイコンボタンは横幅を広げず、横に並べて中央に置きます */
+  .sns-icons { justify-content: center; margin-top: 6px; }
 }
 
 /* =========================================================
@@ -336,6 +368,16 @@ h4 {
 .card-media img { transition: transform .7s var(--ease); }
 .card:hover .card-media img { transform: scale(1.03); }
 
+/* 演奏会・イベントが横3列に並ぶとき、日付の位置をそろえるために
+   画像の枠の高さだけ共通（チラシと同じ縦長）にしています。
+   写真は切り取らずに中央へ置くので、縦横比が違うものは上下にすき間が出ます。
+   すき間の色はカードの背景（--cream）です */
+@media (min-width: 900px) {
+  #concert .card-media { aspect-ratio: 1 / 1.414; }
+  #concert .card-media a { height: 100%; }
+  #concert .card-media img { height: 100%; object-fit: contain; }
+}
+
 /* =========================================================
    写真スライドショー（楽団紹介）
    3秒ごとに次の写真へ、1.1秒かけてゆっくり入れ替わります。
@@ -364,10 +406,10 @@ h4 {
 .photo-ph {
   aspect-ratio: 4 / 3;
   display: grid; place-content: center; gap: 10px; text-align: center;
-  color: #A99B98;
+  color: #AC8E9A;
   background:
     radial-gradient(420px 240px at 30% 20%, rgba(255,255,255,.75) 0%, rgba(255,255,255,0) 70%),
-    linear-gradient(140deg, #F2E7E1 0%, #E8E0DE 100%);
+    linear-gradient(140deg, #F9DAE3 0%, #EACEDA 100%);
 }
 .photo-ph.wide { aspect-ratio: 16 / 9; }
 /* 縦位置の写真（宣材写真など）は幅を抑えて置く */
@@ -404,7 +446,7 @@ h4 {
 
 .card-date {
   display: inline-block; align-self: flex-start;
-  background: var(--terra-pale); color: #7E4B33;
+  background: var(--terra-pale); color: #833B47;
   padding: 5px 15px; border-radius: 999px;
   font-size: .85rem; font-weight: 700; margin-bottom: 16px;
 }
@@ -466,7 +508,7 @@ table.data th, table.data td {
   border-bottom: 1px solid var(--line); padding: 17px 20px;
   text-align: left; vertical-align: top;
 }
-table.data th { background: var(--terra-pale); color: #76462F; font-weight: 700; white-space: nowrap; }
+table.data th { background: var(--terra-pale); color: #7D3642; font-weight: 700; white-space: nowrap; }
 table.data thead th { background: var(--head); color: #fff; }
 table.data tr:last-child th, table.data tr:last-child td { border-bottom: 0; }
 table.data caption {
@@ -493,9 +535,9 @@ table.data caption {
 }
 .badge-urgent { background: var(--terra); color: #fff; }
 .badge-open   { background: #E7EEE8; color: #3D6A4C; }
-.badge-boost  { background: var(--terra-pale); color: #7E4B33; }
-.badge-ask    { background: #EFE6E8; color: var(--head); }
-.badge-closed { background: #ECE8E9; color: #847A7D; }
+.badge-boost  { background: var(--terra-pale); color: #833B47; }
+.badge-ask    { background: #F6D9E5; color: var(--head); }
+.badge-closed { background: #F0E0E6; color: #82757B; }
 
 /* =========================================================
    チェックリスト
@@ -569,13 +611,13 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .video-thumb .ph {
   position: absolute; inset: 0; display: grid; place-content: center; gap: 8px;
-  text-align: center; color: #A99B98;
-  background: linear-gradient(140deg, #F2E7E1 0%, #E8E0DE 100%);
+  text-align: center; color: #AC8E9A;
+  background: linear-gradient(140deg, #F9DAE3 0%, #EACEDA 100%);
 }
 .video-thumb .play {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
   width: 62px; height: 44px; border-radius: 12px;
-  background: rgba(73, 59, 64, .78); color: #fff;
+  background: rgba(70, 51, 60, .78); color: #fff;
   display: grid; place-items: center; font-size: 1.05rem;
 }
 .video-body { padding: 20px 22px; }
@@ -597,7 +639,7 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
    ========================================================= */
 .cta-band {
   position: relative; overflow: hidden;
-  background: linear-gradient(140deg, #7A4B57 0%, #96604A 100%);
+  background: linear-gradient(140deg, #7B3A58 0%, #A24A5C 100%);
   color: #fff; padding: 96px 0; text-align: center;
 }
 .cta-band::after {
@@ -610,14 +652,14 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
   font-family: "Noto Serif JP", serif;
   font-size: clamp(1.5rem, 4.6vw, 2.1rem); font-weight: 500; letter-spacing: .04em;
 }
-.cta-band p { color: #EEE4DF; max-width: 36em; margin-left: auto; margin-right: auto; }
+.cta-band p { color: #F5DCE6; max-width: 36em; margin-left: auto; margin-right: auto; }
 .cta-band .btn-row { justify-content: center; margin-top: 36px; }
 
 /* =========================================================
    フッター
    ========================================================= */
 .site-footer {
-  background: #393135; color: #D3CACC; padding: 72px 0 32px; font-size: .97rem;
+  background: #3A2B33; color: #D9C4CE; padding: 72px 0 32px; font-size: .97rem;
 }
 .site-footer a { color: #fff; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
@@ -628,7 +670,7 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
   font-size: 1.2rem; color: #fff; letter-spacing: .05em;
 }
 .footer-brand .name-en {
-  display: block; font-size: .72rem; letter-spacing: .15em; margin-top: 6px; color: #B3A7AB;
+  display: block; font-size: .72rem; letter-spacing: .15em; margin-top: 6px; color: #BA9FAB;
 }
 .footer-grid h2 { font-size: 1rem; color: #fff; margin: 0 0 16px; letter-spacing: .05em; }
 .footer-grid ul { list-style: none; margin: 0; padding: 0; }
@@ -645,7 +687,7 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 .copyright {
   margin-top: 48px; padding-top: 24px;
   border-top: 1px solid rgba(255,255,255,.15);
-  font-size: .85rem; color: #A0969A;
+  font-size: .85rem; color: #A68E99;
 }
 
 /* =========================================================
@@ -722,6 +764,8 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
   .hero-media .ph, .hero-media img { animation: none; }
   .scroll-cue .bar { animation: none; }
   .btn:hover, .card:hover, .video-card:hover, .btn-sns:hover { transform: none; }
+  .btn-badge:hover { transform: none; }
+  .yt-link:hover .yt-circle { transform: none; }
   .card-media img, .card:hover .card-media img { transform: none; transition: none; }
   .slideshow .slide { transition: none; }
 }
