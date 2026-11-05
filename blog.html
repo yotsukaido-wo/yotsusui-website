@@ -17,8 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/onepage.css?v=5">
-<link rel="stylesheet" href="assets/blog.css?v=5">
+<link rel="stylesheet" href="assets/onepage.css?v=6">
+<link rel="stylesheet" href="assets/blog.css?v=6">
 </head>
 <body>
 <a class="skip-link" href="#main">本文へスキップ</a>
@@ -70,11 +70,11 @@
     <div class="wrap">
 
       <!-- 記事カード（blog/index.json から新しい順に並びます。横にスクロールすると過去記事です） -->
-      <div class="post-carousel" id="post-carousel" hidden>
+      <div class="post-carousel" id="post-carousel" data-hover-scroll hidden>
         <button class="car-nav prev" id="car-prev" type="button" aria-label="新しい記事へもどる">‹</button>
         <ul class="post-track" id="post-grid" tabindex="0" aria-label="記事一覧（横にスクロールできます）"></ul>
         <button class="car-nav next" id="car-next" type="button" aria-label="過去の記事を見る">›</button>
-        <p class="car-hint" id="car-hint">← 横にスクロールすると過去の記事が読めます →</p>
+        <p class="car-hint" id="car-hint">← 矢印にマウスを乗せるか、横にスクロールすると過去の記事が読めます →</p>
       </div>
 
       <!-- 読み込み中・記事がないときの表示 -->
@@ -132,7 +132,7 @@
   </div>
 </footer>
 
-<script src="assets/onepage.js?v=5"></script>
-<script src="assets/blog.js?v=5"></script>
+<script src="assets/onepage.js?v=6"></script>
+<script src="assets/blog.js?v=6"></script>
 </body>
 </html>

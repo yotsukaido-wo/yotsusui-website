@@ -250,6 +250,51 @@
     if (prevBtn) { prevBtn.addEventListener('click', function () { slide(-1); }); }
     if (nextBtn) { nextBtn.addEventListener('click', function () { slide(1); }); }
 
+    /* ---- 矢印にマウスを乗せるだけで、となりの記事へ送ります ----
+       <div class="post-carousel" data-hover-scroll> と書いたときだけ働きます。
+       ・通りがかっただけで動かないよう、0.35秒おいてから1枚目を送ります
+       ・そのまま乗せていると、1.2秒ごとに次の記事へ進みます
+       ・マウスを離す、端まで来る、動きを減らす設定の端末、では止まります
+       ・指で操作する端末（マウスのない端末）では何もしません
+    ------------------------------------------------------------ */
+    var HOVER_WAIT   = 350;   // 乗せてから最初に送るまで
+    var HOVER_REPEAT = 1200;  // そのあと、次を送るまでの間隔
+
+    var hoverOn = carEl && carEl.hasAttribute('data-hover-scroll') &&
+      !(window.matchMedia && (
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        window.matchMedia('(hover: none)').matches));
+
+    if (hoverOn) {
+      [[prevBtn, -1], [nextBtn, 1]].forEach(function (pair) {
+        var btn = pair[0], dir = pair[1];
+        if (!btn) { return; }
+
+        var waitTimer = null, repeatTimer = null;
+
+        function stop() {
+          clearTimeout(waitTimer);   waitTimer   = null;
+          clearInterval(repeatTimer); repeatTimer = null;
+        }
+        function step() {
+          if (btn.disabled) { stop(); return; }   // 端まで来たら止めます
+          slide(dir);
+        }
+
+        btn.addEventListener('mouseenter', function () {
+          stop();
+          waitTimer = setTimeout(function () {
+            step();
+            repeatTimer = setInterval(step, HOVER_REPEAT);
+          }, HOVER_WAIT);
+        });
+
+        btn.addEventListener('mouseleave', stop);
+        btn.addEventListener('blur', stop);
+        window.addEventListener('blur', stop);
+      });
+    }
+
     // 左右キーでも動かせるようにします
     grid.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowRight') { e.preventDefault(); slide(1); }
