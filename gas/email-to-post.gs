@@ -40,10 +40,16 @@ var CONFIG = {
 
   /* --- 投稿を受け付けるメールアドレス ---
      ★ここに書いた人からのメールだけを記事にします。
-       ほかの人がこのGmailに送っても投稿されません（迷惑メール対策）。 */
+       ほかの人がこのGmailに送っても投稿されません（迷惑メール対策）。
+
+     ▼ 団員の個人アドレスは、このファイルには書かないでください。
+        このファイルはGitHubで公開されているため、書くと誰でも見られてしまいます。
+        個人アドレスは Apps Script の「スクリプト プロパティ」に
+        ALLOWED_SENDERS という名前で、カンマ区切りで登録してください。
+        （例）aaa@gmail.com, bbb@gmail.com
+        登録すると、下の一覧のかわりにそちらが使われます。 */
   ALLOWED_SENDERS: [
-    'yotsukaido.wo.pr@gmail.com'
-    // , 'kouhou@example.com'   ← 広報係の個人アドレスなどを追加できます
+    'yotsukaido.wo.pr@gmail.com'    // 投稿専用アカウント本人（公開しても困らないアドレス）
   ],
 
   /* --- Gmailの検索条件とラベル --- */
@@ -69,6 +75,22 @@ var CONFIG = {
  *   プロパティ名： GITHUB_TOKEN
  *   値　　　　　： ghp_... （GitHubで発行したトークン）
  */
+/**
+ * 投稿を許可するアドレスの一覧を返します。
+ * スクリプト プロパティに ALLOWED_SENDERS があればそちらを（カンマ区切り）、
+ * なければ上の CONFIG.ALLOWED_SENDERS を使います。
+ */
+function getAllowedSenders_() {
+  var raw = PropertiesService.getScriptProperties().getProperty('ALLOWED_SENDERS');
+  var list = raw
+    ? raw.split(',')
+    : CONFIG.ALLOWED_SENDERS;
+
+  return list
+    .map(function (s) { return String(s).trim().toLowerCase(); })
+    .filter(function (s) { return s; });
+}
+
 function getGitHubToken_() {
   var t = PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
   if (!t) {
@@ -116,6 +138,8 @@ function testConnection() {
 
   var idx = readIndexJson_();
   Logger.log('いまの記事数：' + idx.posts.length + '件');
+
+  Logger.log('投稿を許可しているアドレス：' + getAllowedSenders_().join(' / '));
 }
 
 
@@ -136,6 +160,7 @@ function processBlogMail() {
 
     var doneLabel  = getOrCreateLabel_(CONFIG.LABEL_DONE);
     var errorLabel = getOrCreateLabel_(CONFIG.LABEL_ERROR);
+    var allowed    = getAllowedSenders_();
     var published  = 0;
 
     for (var i = 0; i < threads.length && published < CONFIG.MAX_POSTS_PER_RUN; i++) {
@@ -149,7 +174,7 @@ function processBlogMail() {
         var from = extractEmail_(msg.getFrom());
 
         // 許可していないアドレスからのメールは、記事にせず既読にするだけ
-        if (CONFIG.ALLOWED_SENDERS.indexOf(from) < 0) {
+        if (allowed.indexOf(from) < 0) {
           Logger.log('許可されていない送信者のため無視しました：' + from);
           msg.markRead();
           continue;
@@ -608,11 +633,14 @@ function dryRun() {
   var threads = GmailApp.search(CONFIG.GMAIL_QUERY, 0, 10);
   if (!threads.length) { Logger.log('対象のメールはありません。'); return; }
 
+  var allowed = getAllowedSenders_();
+  Logger.log('投稿を許可しているアドレス：' + allowed.join(' / '));
+
   threads.forEach(function (th) {
     th.getMessages().forEach(function (m) {
       if (!m.isUnread()) { return; }
       var from = extractEmail_(m.getFrom());
-      var ok   = CONFIG.ALLOWED_SENDERS.indexOf(from) >= 0;
+      var ok   = allowed.indexOf(from) >= 0;
       var p    = parseSubject_(m.getSubject());
       var imgs = m.getAttachments({ includeInlineImages: true, includeAttachments: true })
                   .filter(function (a) { return /^image\//i.test(a.getContentType() || ''); });
