@@ -8,7 +8,7 @@
  *  GitHub が更新されると Netlify が自動でビルドし、ブログに反映されます。
  *
  *  使いかた（投稿する人）
- *    件名  … 記事のタイトル（先頭に ［お知らせ］ のように付けるとカテゴリーになります）
+ *    件名  … 記事のタイトル
  *    本文  … 記事の本文（そのまま載ります。空行で段落が分かれます）
  *    添付  … 写真（何枚でも可。1枚目が一覧のサムネイルになります）
  *
@@ -58,7 +58,6 @@ var CONFIG = {
 
   /* --- 動作 --- */
   MAX_POSTS_PER_RUN: 5,                    // 1回の実行で処理する記事数の上限
-  DEFAULT_CATEGORY: 'お知らせ',
   EXCERPT_LENGTH: 80,                      // 一覧に出す抜粋の長さ（文字数）
   REPLY_ON_SUCCESS: true,                  // 投稿できたら送信者に完了メールを返す
   TIMEZONE: 'Asia/Tokyo'
@@ -191,11 +190,9 @@ function publishMessage_(msg) {
 
   var parsed   = parseSubject_(msg.getSubject());
   var rawBody  = cleanBody_(msg.getPlainBody());
-  var directive = extractDirectives_(rawBody);     // 本文先頭の「カテゴリ：〜」など
+  var directive = extractDirectives_(rawBody);     // 本文先頭の「タイトル：〜」など
 
   var title    = directive.values['タイトル'] || directive.values['title'] || parsed.title || '（無題）';
-  var category = directive.values['カテゴリ'] || directive.values['カテゴリー'] ||
-                 directive.values['category'] || parsed.category || CONFIG.DEFAULT_CATEGORY;
   var body     = directive.body;
 
   /* ---- 添付の写真を取り出して、縮めて、名前をつける ---- */
@@ -225,7 +222,6 @@ function publishMessage_(msg) {
     '---',
     'title: '    + yamlValue_(title),
     'date: '     + ymd,
-    'category: ' + yamlValue_(category),
     'cover: '    + cover,
     'excerpt: '  + yamlValue_(excerpt),
     '---',
@@ -239,7 +235,7 @@ function publishMessage_(msg) {
   index.posts = index.posts.filter(function (p) { return p.slug !== slug; });
   index.posts.unshift({
     slug: slug, title: title, date: ymd,
-    category: category, excerpt: excerpt, cover: cover
+    excerpt: excerpt, cover: cover
   });
   index.posts.sort(function (a, b) {
     return String(b.date).localeCompare(String(a.date)) || String(b.slug).localeCompare(String(a.slug));
@@ -267,11 +263,11 @@ function parseSubject_(subject) {
   var s = String(subject || '').trim();
   s = s.replace(/^\s*(?:re|fwd?|返信|転送)\s*[:：]\s*/i, '').trim();
 
-  var category = '';
-  var m = s.match(/^[\[［【]([^\]］】]{1,20})[\]］】]\s*(.*)$/);
-  if (m) { category = m[1].trim(); s = m[2].trim(); }
+  // 件名の先頭に ［お知らせ］ のような囲みがあれば、タイトルから取りのぞきます
+  var m = s.match(/^[\[［【][^\]］】]{1,20}[\]］】]\s*(.*)$/);
+  if (m && m[1].trim()) { s = m[1].trim(); }
 
-  return { title: s, category: category };
+  return { title: s };
 }
 
 
@@ -302,7 +298,7 @@ function cleanBody_(text) {
 }
 
 /**
- * 本文の先頭に書かれた「カテゴリ：お知らせ」などの指定を取り出します。
+ * 本文の先頭に書かれた「タイトル：〜」の指定を取り出します。
  * 指定がなければ、本文はそのまま返します。
  */
 function extractDirectives_(body) {
@@ -311,7 +307,7 @@ function extractDirectives_(body) {
   var i = 0;
 
   while (i < lines.length) {
-    var m = lines[i].match(/^\s*(タイトル|カテゴリー?|title|category)\s*[:：]\s*(.+?)\s*$/i);
+    var m = lines[i].match(/^\s*(タイトル|title)\s*[:：]\s*(.+?)\s*$/i);
     if (!m) { break; }
     values[m[1]] = m[2];
     values[m[1].toLowerCase()] = m[2];
@@ -624,7 +620,6 @@ function dryRun() {
       Logger.log(
         (ok ? '○ ' : '× 許可外 ') + from +
         '｜タイトル：' + p.title +
-        '｜カテゴリー：' + (p.category || CONFIG.DEFAULT_CATEGORY) +
         '｜写真：' + imgs.length + '枚');
     });
   });

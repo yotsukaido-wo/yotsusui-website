@@ -1,7 +1,6 @@
 ---
 title: クラリネット家族がよつすい最大に
 date: 2026-10-13
-category: 練習日誌
 cover: blog/images/2026-10-13-clarinet-family/01.jpg
 excerpt: 入団者を迎えてクラリネットは８人に。おねだりしていた大音量アンプも買ってもらいました！
 ---

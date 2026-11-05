@@ -219,7 +219,6 @@
               '<h2 class="post-title">' + esc(p.title || '（無題）') + '</h2>' +
               (p.excerpt ? '<p class="post-excerpt">' + esc(p.excerpt) + '</p>' : '') +
               '<div class="post-foot">' +
-                '<span class="post-cat">' + esc(p.category || 'お知らせ') + '</span>' +
                 '<span class="post-more">読む →</span>' +
               '</div>' +
             '</div>' +
@@ -327,7 +326,6 @@
 
       var title = meta.title || entry.title || '（無題）';
       var date  = meta.date  || entry.date  || '';
-      var cat   = meta.category || entry.category || '';
       var cover = meta.cover || entry.cover || '';
 
       document.title = title + '｜よつすいブログ｜四街道吹奏楽団';
@@ -346,7 +344,6 @@
         '<div class="article-inner">' +
           '<div class="article-meta">' +
             '<span>' + esc(fmtDate(date)) + '</span>' +
-            (cat ? '<span class="post-cat">' + esc(cat) + '</span>' : '') +
           '</div>' +
           '<h1>' + esc(title) + '</h1>' +
           '<hr class="article-rule">' +

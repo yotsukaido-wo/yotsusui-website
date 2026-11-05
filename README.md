@@ -15,7 +15,7 @@ recruit.html      団員募集（活動概要・応募条件・団員構成・�
 activity.html     活動記録（令和8年度の活動・これまでの歩み）
 concert.html      定期演奏会（第1回〜第4回の記録）
 winter.html       ウィンターコンサート（2026年の案内・2018年〜の曲目）
-blog.html         よつすいブログ 一覧（カード3列／カテゴリー／ページ送り）
+blog.html         よつすいブログ 一覧（新しい順に横スクロール）
 blog-post.html    ブログ記事ページ（blog/posts の .md を読んで表示）
 movie.html        ヨツスイ動画紹介（YouTube動画カード 8枠）
 link.html         リンク（公式SNS・関連団体・相互リンク案内）

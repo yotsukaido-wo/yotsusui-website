@@ -1,7 +1,6 @@
 ---
 title: 下田農園ふれあい館イベントに出演
 date: 2026-10-18
-category: 本番レポート
 cover: blog/images/2026-10-18-shimoda-nouen/01.jpg
 excerpt: 千葉市若葉区の下田農園ふれあい館18周年のお祝いイベントに、アンサンブルで参加させていただきました。
 ---

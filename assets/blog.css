@@ -200,19 +200,11 @@
 .post-foot {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
   margin-top: 18px;
   padding-top: 16px;
   border-top: 1px solid var(--line);
-}
-.post-cat {
-  font-size: .72rem;
-  letter-spacing: .06em;
-  padding: 4px 11px;
-  border-radius: 999px;
-  background: var(--terra-pale);
-  color: #7E4B33;
 }
 .post-more { font-size: .78rem; letter-spacing: .08em; color: var(--terra-mid); }
 
