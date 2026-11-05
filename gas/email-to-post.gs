@@ -31,6 +31,10 @@ var CONFIG = {
   GITHUB_REPO:   'yotsusui-website',       // リポジトリ名
   GITHUB_BRANCH: 'main',                   // Netlifyが見ているブランチ
 
+  /* --- ブログ投稿専用のGmail ---
+     完了メールに付ける「修正」「削除」ボタンの宛先になります。 */
+  BLOG_ADDRESS: 'yotsukaido.wo.pr@gmail.com',
+
   /**
    * リポジトリの中で、サイト（onepage.html がある場所）がどこにあるか。
    *   リポジトリ直下に onepage.html がある      → ''
@@ -725,13 +729,17 @@ function threadHasLabel_(thread, name) {
   return thread.getLabels().some(function (l) { return l.getName() === name; });
 }
 
-/** 投稿用Gmailのアドレス（このスクリプトを動かしているアカウント）。 */
+/**
+ * 投稿用Gmailのアドレス（完了メールのボタンの宛先に使います）。
+ * 以前はGoogleに問い合わせていましたが、自動実行のときに空で返ることがあり、
+ * 宛先の入っていないボタンができてしまったため、設定の値を使うようにしました。
+ */
 function blogAddress_() {
-  try {
-    return Session.getEffectiveUser().getEmail();
-  } catch (e) {
-    return CONFIG.ALLOWED_SENDERS[0];
-  }
+  var a = String(CONFIG.BLOG_ADDRESS || '').trim();
+  if (a) { return a; }
+
+  var list = getAllowedSenders_();
+  return list.length ? list[0] : '';
 }
 
 /**
@@ -756,12 +764,15 @@ function editMailto_(action, slug, title, currentBody) {
         + EDIT_SEPARATOR + '\n#修正 ' + slug + '\n';
   }
 
-  return 'mailto:' + encodeURIComponent(blogAddress_())
+  // 宛先はそのまま書きます（＠を %40 にすると、開けないメールソフトがあります）
+  return 'mailto:' + blogAddress_()
        + '?subject=' + encodeURIComponent('[' + action + '] ' + title)
        + '&body='    + encodeURIComponent(body);
 }
 
 function button_(url, label, color) {
+  // HTMLの中では & をそのまま書けないので、&amp; に直します
+  url = String(url).replace(/&/g, '&amp;');
   return '<a href="' + url + '" style="display:inline-block;padding:12px 22px;margin:0 8px 8px 0;'
        + 'background:' + color + ';color:#fff;text-decoration:none;border-radius:999px;'
        + 'font-weight:bold;font-size:15px;">' + label + '</a>';
@@ -788,6 +799,7 @@ function sendSuccessMail_(msg, posted, wasEdit) {
       '■ 消したいとき\n' +
       'このメールに返信し、次の1行だけ書いて送ってください。\n' +
       '　#削除 ' + posted.slug + '\n\n' +
+      '（返信ではなく新しいメールで送るときの宛先： ' + blogAddress_() + '）\n' +
       '（このメールは自動で送られています）';
 
     var html =
@@ -809,7 +821,8 @@ function sendSuccessMail_(msg, posted, wasEdit) {
       '「修正」は、書いた本文で記事をまるごと置きかえます。写真はそのまま残り、' +
       '新しく添付した写真はうしろに足されます。<br>' +
       'ボタンが押せないときは、このメールにそのまま返信して、いちばん下に ' +
-      '<code>#修正 ' + escapeHtml_(posted.slug) + '</code> と書いて送ってください。' +
+      '<code>#修正 ' + escapeHtml_(posted.slug) + '</code> と書いて送ってください。<br>' +
+      '新しいメールで送るときの宛先は <strong>' + escapeHtml_(blogAddress_()) + '</strong> です。' +
       '</p></div>';
 
     msg.reply(plain, { htmlBody: html });
