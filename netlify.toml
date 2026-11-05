@@ -9,6 +9,14 @@
   publish = "."
   # ビルドコマンドは不要なので指定しません
 
+  # --- デプロイのクレジット節約 ---
+  # 無料プランは「本番デプロイ1回 = 15クレジット」で、月300クレジット
+  # （＝月20回）までです。サイトの見ために関係ないファイル
+  # （gas/ のコード、*.md のマニュアル、*.pdf）だけを直したコミットでは、
+  # 下の命令が成功（終了コード0）してデプロイが省略されます。
+  # ※ブログの記事（blog/）やHTML・CSSを直したときは、ふつうに公開されます。
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)gas/' ':(exclude)*.md' ':(exclude)*.pdf' ':(exclude).gitignore'"
+
 # 制作中に使っていた /onepage.html のURLは、トップページへ転送します
 [[redirects]]
   from = "/onepage.html"
