@@ -745,10 +745,12 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 }
 .photo.is-visible { opacity: 1; transform: none; }
 
-/* 指揮者の写真は、さらにゆっくり静かにフェードイン */
+/* 指揮者の写真は、ふわっと浮かび上がるようにフェードイン
+   （HTML側の data-reveal-at="0.4" で、写真が4割ほど見えてから動きはじめます） */
 .photo.photo-slow {
-  transform: translateY(16px);
-  transition: opacity 2.2s var(--ease) .15s, transform 2.2s var(--ease) .15s;
+  opacity: 0;
+  transform: translateY(28px) scale(1.03);
+  transition: opacity 1.6s var(--ease) .1s, transform 1.6s var(--ease) .1s;
 }
 .photo.photo-slow.is-visible { opacity: 1; transform: none; }
 

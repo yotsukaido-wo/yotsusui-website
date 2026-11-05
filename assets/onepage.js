@@ -176,7 +176,11 @@
     }
   );
 
-  /* ---------- スクロールでふわっと表示 ---------- */
+  /* ---------- スクロールでふわっと表示 ----------
+     ふだんは「少し見えたら」動きはじめます。
+     背の高い写真は、それだと画面に入りきる前にフェードが終わってしまうので、
+     HTML側に data-reveal-at="0.4" と書くと「4割見えてから」動きはじめます。
+  ------------------------------------------------ */
   var targets = document.querySelectorAll('.reveal, .photo, .section-head');
 
   if (reduceMotion || !('IntersectionObserver' in window)) {
@@ -187,19 +191,28 @@
     return;
   }
 
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
+  function makeObserver(threshold) {
+    return new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -12% 0px',
+      threshold: threshold
     });
-  }, {
-    rootMargin: '0px 0px -12% 0px',
-    threshold: 0.08
-  });
+  }
+
+  var observer  = makeObserver(0.08);   // ふつうの要素
+  var observers = {};                   // data-reveal-at ごとに1つずつ用意します
 
   Array.prototype.forEach.call(targets, function (el) {
-    observer.observe(el);
+    var at = parseFloat(el.getAttribute('data-reveal-at'));
+    if (!(at > 0 && at <= 1)) { observer.observe(el); return; }
+
+    if (!observers[at]) { observers[at] = makeObserver(at); }
+    observers[at].observe(el);
   });
 })();
