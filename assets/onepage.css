@@ -181,6 +181,8 @@ a:hover { color: var(--head); }
   font-size: clamp(1rem, 2.4vw, 1.14rem); line-height: 2.1;
   text-shadow: 0 1px 14px rgba(40, 22, 28, .5);
 }
+/* 広い画面では、長い一文が途中で折り返さないように幅を広げます */
+@media (min-width: 980px) { .hero-lead { max-width: 44em; } }
 
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 34px; }
 
