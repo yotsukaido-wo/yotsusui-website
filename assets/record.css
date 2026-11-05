@@ -1,0 +1,203 @@
+/* =========================================================
+   演奏会の記録ページ（ウィンターコンサート／定期演奏会）共通のスタイル
+   配色や書体は onepage.css の設定をそのまま使っています。
+   ========================================================= */
+
+/* ----- ページ見出し（blog.css の .blog-head と同じ作り）----- */
+.rec-head-band {
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  text-align: center;
+  padding: 56px 0 50px;
+}
+.rec-head-band .label {
+  display: block;
+  font-size: .72rem;
+  letter-spacing: .22em;
+  color: var(--terra-mid);
+  margin-bottom: 14px;
+}
+.rec-head-band h1 {
+  margin: 0;
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 4.6vw, 2.9rem);
+  letter-spacing: .14em;
+  line-height: 1.4;
+  color: var(--head);
+}
+.rec-head-band p {
+  margin: 18px auto 0;
+  max-width: 34em;
+  color: var(--ink-soft);
+  font-size: .98rem;
+  line-height: 2;
+}
+
+/* ----- 1回ぶんのまとまり ----- */
+.rec-list { display: grid; gap: 36px; }
+
+.rec-item {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 32px;
+  overflow: hidden;
+}
+
+/* 見出し（年・日付・会場） */
+.rec-item-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 18px;
+  padding-bottom: 20px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+.rec-year {
+  font-family: "Noto Serif JP", serif;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: 500;
+  color: var(--terra);
+  line-height: 1;
+}
+.rec-item-head h2 {
+  margin: 0 0 6px;
+  font-family: "Noto Serif JP", serif;
+  font-weight: 500;
+  font-size: 1.22rem;
+  letter-spacing: .06em;
+  color: var(--head);
+}
+.rec-meta {
+  margin: 0;
+  font-size: .94rem;
+  color: var(--ink-soft);
+}
+
+/* 本体（写真 ＋ 曲目） */
+.rec-body {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 860px) {
+  .rec-body { grid-template-columns: minmax(240px, 340px) 1fr; gap: 40px; }
+}
+/* 写真がない回は、曲目を横いっぱいに */
+.rec-item.no-media .rec-body { grid-template-columns: 1fr; }
+
+/* 写真 */
+.rec-media { display: grid; gap: 16px; align-content: start; }
+.rec-media a {
+  display: block;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow .3s var(--ease), transform .3s var(--ease);
+}
+.rec-media a:hover,
+.rec-media a:focus-visible { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+.rec-media img { display: block; width: 100%; height: auto; }
+.rec-media figcaption {
+  margin-top: 6px;
+  font-size: .82rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+/* 画面が狭いときは、写真を2枚ならべる */
+@media (max-width: 859px) {
+  .rec-media { grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
+}
+@media (max-width: 480px) {
+  .rec-media { grid-template-columns: 1fr; }
+}
+
+/* 曲目 */
+.rec-program h3 {
+  margin: 0 0 16px;
+  font-size: .76rem;
+  letter-spacing: .2em;
+  color: var(--terra-mid);
+  font-weight: 700;
+}
+.rec-part {
+  margin: 22px 0 10px;
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--head);
+}
+.rec-part:first-of-type { margin-top: 0; }
+.rec-program ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rec-program li {
+  position: relative;
+  padding: 7px 0 7px 26px;
+  font-size: .97rem;
+  line-height: 1.75;
+  border-bottom: 1px dashed var(--line);
+}
+.rec-program li:last-child { border-bottom: 0; }
+.rec-program li::before {
+  content: "♪";
+  position: absolute;
+  left: 2px;
+  top: 7px;
+  color: var(--terra-mid);
+  font-size: .9rem;
+}
+.rec-program .sub-note {
+  display: block;
+  font-size: .86rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+@media (max-width: 580px) {
+  .rec-item { padding: 24px 20px; border-radius: var(--radius); }
+  .rec-item-head { gap: 14px; }
+}
+
+/* ----- 当日のプログラム（紙面の画像へのリンク）----- */
+.rec-docs {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.rec-docs h4 {
+  margin: 0 0 12px;
+  font-size: .76rem;
+  letter-spacing: .2em;
+  color: var(--terra-mid);
+  font-weight: 700;
+}
+.rec-docs ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rec-docs li { margin: 0; padding: 0; border: 0; }
+.rec-docs li::before { content: none; }
+.rec-docs a {
+  display: block;
+  width: 92px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow .3s var(--ease), transform .3s var(--ease);
+}
+.rec-docs a:hover,
+.rec-docs a:focus-visible { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+.rec-docs img { display: block; width: 100%; height: auto; }
+.rec-docs .note {
+  margin: 10px 0 0;
+  font-size: .84rem;
+  color: var(--ink-soft);
+}
