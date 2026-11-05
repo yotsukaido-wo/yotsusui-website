@@ -52,8 +52,10 @@ var CONFIG = {
     'yotsukaido.wo.pr@gmail.com'    // 投稿専用アカウント本人（公開しても困らないアドレス）
   ],
 
-  /* --- Gmailの検索条件とラベル --- */
-  GMAIL_QUERY:  'is:unread -label:ブログ投稿済み -label:ブログ投稿エラー',
+  /* --- Gmailの検索条件とラベル ---
+     ※「ブログ投稿済み」を除外していないのは、完了メールへの返信（記事の修正・削除）も
+       受け取るためです。指示のない返信は、何もせずに既読にするだけです。 */
+  GMAIL_QUERY:  'is:unread -label:ブログ投稿エラー',
   LABEL_DONE:   'ブログ投稿済み',
   LABEL_ERROR:  'ブログ投稿エラー',
 
@@ -181,13 +183,34 @@ function processBlogMail() {
         }
 
         try {
-          var slug = publishMessage_(msg);
+          var order     = parseEditDirective_(msg.getPlainBody());
+          var alreadyIn = threadHasLabel_(thread, CONFIG.LABEL_DONE);
+
+          if (order && order.action === '削除') {
+            deletePost_(order.slug);
+            Logger.log('削除しました：' + order.slug);
+            if (CONFIG.REPLY_ON_SUCCESS) { sendDeletedMail_(msg, order.slug); }
+
+          } else if (order) {
+            var edited = editPost_(msg, order.slug);
+            Logger.log('修正しました：' + edited.slug);
+            if (CONFIG.REPLY_ON_SUCCESS) { sendSuccessMail_(msg, edited, true); }
+
+          } else if (alreadyIn) {
+            // 投稿済みスレッドへのふつうの返信。同じ記事が二重にできないよう、何もしません。
+            Logger.log('修正の指示がない返信のため、何もしませんでした。');
+            msg.markRead();
+            continue;
+
+          } else {
+            var posted = publishMessage_(msg);
+            Logger.log('投稿しました：' + posted.slug);
+            if (CONFIG.REPLY_ON_SUCCESS) { sendSuccessMail_(msg, posted, false); }
+          }
+
           msg.markRead();
           thread.addLabel(doneLabel);
           published++;
-          Logger.log('投稿しました：' + slug);
-
-          if (CONFIG.REPLY_ON_SUCCESS) { sendSuccessMail_(msg, slug); }
 
         } catch (e) {
           Logger.log('投稿に失敗しました：' + (e && e.message ? e.message : e));
@@ -221,7 +244,19 @@ function publishMessage_(msg) {
   var body     = directive.body;
 
   /* ---- 添付の写真を取り出して、縮めて、名前をつける ---- */
-  var images = collectImages_(msg, slug);
+  var images = collectImages_(msg, slug, 0);
+
+  savePost_(slug, ymd, title, body, images, 'ブログ記事を追加：' + title + ' (' + slug + ')');
+
+  return { slug: slug, title: title, plainBody: body };
+}
+
+
+/**
+ * 記事1本をGitHubに書き込みます（新規・修正の両方で使います）。
+ * images は [{ webPath, blob }]。blob がないものは、すでにGitHubにある写真です。
+ */
+function savePost_(slug, ymd, title, body, images, commitMessage) {
 
   /* ---- 本文の [写真1] を実際の画像に置きかえる ---- */
   var used = {};
@@ -255,7 +290,7 @@ function publishMessage_(msg) {
     ''
   ].join('\n');
 
-  /* ---- index.json に1件足す（新しい順） ---- */
+  /* ---- index.json を書きかえる（新しい順） ---- */
   var index = readIndexJson_();
   index.posts = index.posts.filter(function (p) { return p.slug !== slug; });
   index.posts.unshift({
@@ -273,12 +308,99 @@ function publishMessage_(msg) {
     { path: sitePath_('blog/index.json'),            text: JSON.stringify(index, null, 2) + '\n' }
   ];
   images.forEach(function (img) {
-    files.push({ path: sitePath_(img.webPath), bytes: img.blob.getBytes() });
+    if (img.blob) { files.push({ path: sitePath_(img.webPath), bytes: img.blob.getBytes() }); }
   });
 
-  commitFiles_(files, 'ブログ記事を追加：' + title + ' (' + slug + ')');
+  commitFiles_(files, commitMessage);
+}
 
-  return slug;
+
+/* =========================================================================
+   4-2. 記事の修正と削除  完了メールのボタンから返信すると動きます
+   ========================================================================= */
+
+/** 完了メールの下に入れる目印。これより下は本文として扱いません。 */
+var EDIT_SEPARATOR = '―――――（ここから下は消さないでください）―――――';
+
+/**
+ * メール本文から「#修正 記事ID」「#削除 記事ID」を探します。
+ * 見つからなければ null（＝ふつうの新規投稿）を返します。
+ */
+function parseEditDirective_(rawBody) {
+  var m = String(rawBody || '').match(/#\s*(修正|削除)\s+(\d{4}-\d{2}-\d{2}-[0-9a-z]+)/);
+  return m ? { action: m[1], slug: m[2] } : null;
+}
+
+/** 目印より下（指示や引用）を取りのぞいて、記事になる部分だけ返します。 */
+function bodyWithoutMarker_(rawBody) {
+  var s = String(rawBody || '').replace(/\r\n?/g, '\n');
+  var i = s.indexOf(EDIT_SEPARATOR);
+  if (i >= 0) { s = s.slice(0, i); }
+  return s.replace(/^\s*#\s*(修正|削除)\s+\S+\s*$/gm, '');
+}
+
+/** すでにGitHubにある、その記事の写真を一覧します。 */
+function listExistingImages_(slug) {
+  var path = sitePath_('blog/images/' + slug);
+  var res  = githubApi_('GET', '/contents/' + encodeURI(path) + '?ref=' + CONFIG.GITHUB_BRANCH);
+  if (!res || !res.length) { return []; }
+
+  return res
+    .filter(function (f) { return f.type === 'file' && /\.(jpe?g|png|gif|webp)$/i.test(f.name); })
+    .sort(function (a, b) { return String(a.name).localeCompare(String(b.name)); })
+    .map(function (f) { return { webPath: 'blog/images/' + slug + '/' + f.name }; });
+}
+
+/**
+ * 既存の記事を、届いたメールの内容で書きかえます。
+ * 写真はそのまま残り、新しく添付された写真はうしろに足されます。
+ */
+function editPost_(msg, slug) {
+  var index = readIndexJson_();
+  var current = null;
+  for (var i = 0; i < index.posts.length; i++) {
+    if (index.posts[i].slug === slug) { current = index.posts[i]; break; }
+  }
+  if (!current) {
+    throw new Error('修正しようとした記事が見つかりません（' + slug + '）。すでに削除されていませんか。');
+  }
+
+  var cleaned = cleanBody_(bodyWithoutMarker_(msg.getPlainBody()));
+  var found   = extractDirectives_(cleaned);
+  var body    = found.body;
+
+  if (!body.replace(/\s/g, '')) {
+    throw new Error('本文が空でした。直した文章を書いてから送りなおしてください。');
+  }
+
+  var parsed = parseSubject_(msg.getSubject());
+  var title  = found.values['タイトル'] || found.values['title'] || parsed.title || current.title;
+
+  // もとの写真を残したうえで、今回あたらしく添付されたぶんを足します
+  var kept   = listExistingImages_(slug);
+  var images = kept.concat(collectImages_(msg, slug, kept.length));
+
+  savePost_(slug, current.date, title, body, images,
+            'ブログ記事を修正：' + title + ' (' + slug + ')');
+
+  return { slug: slug, title: title, plainBody: body };
+}
+
+/** 記事を一覧から取りのぞきます（本文と写真のファイルはそのまま残します）。 */
+function deletePost_(slug) {
+  var index  = readIndexJson_();
+  var before = index.posts.length;
+
+  index.posts = index.posts.filter(function (p) { return p.slug !== slug; });
+  if (index.posts.length === before) {
+    throw new Error('削除しようとした記事が見つかりません（' + slug + '）。すでに削除されていませんか。');
+  }
+
+  index.generated = Utilities.formatDate(new Date(), CONFIG.TIMEZONE, "yyyy-MM-dd'T'HH:mm:ssXXX");
+
+  commitFiles_(
+    [{ path: sitePath_('blog/index.json'), text: JSON.stringify(index, null, 2) + '\n' }],
+    'ブログ記事を削除：' + slug);
 }
 
 
@@ -366,11 +488,12 @@ function yamlValue_(v) {
    5. 画像  取り出す → 横1200pxに縮める → 名前をつける
    ========================================================================= */
 
-function collectImages_(msg, slug) {
-  var atts = msg.getAttachments({ includeInlineImages: true, includeAttachments: true });
-  var out  = [];
+function collectImages_(msg, slug, startFrom) {
+  var atts  = msg.getAttachments({ includeInlineImages: true, includeAttachments: true });
+  var begin = startFrom > 0 ? startFrom : 0;   // すでにある写真の枚数（修正のとき）
+  var out   = [];
 
-  for (var i = 0; i < atts.length && out.length < CONFIG.MAX_IMAGES_PER_POST; i++) {
+  for (var i = 0; i < atts.length && begin + out.length < CONFIG.MAX_IMAGES_PER_POST; i++) {
     var att  = atts[i];
     var type = String(att.getContentType() || '').toLowerCase();
 
@@ -390,7 +513,7 @@ function collectImages_(msg, slug) {
     }
 
     var ext = extensionFor_(resized.getContentType(), att.getName());
-    var num = ('0' + (out.length + 1)).slice(-2);
+    var num = ('0' + (begin + out.length + 1)).slice(-2);
 
     out.push({
       blob: resized,
@@ -598,17 +721,120 @@ function postUrl_(slug) {
   return 'https://' + CONFIG.GITHUB_OWNER + '.netlify.app/blog-post.html?slug=' + slug;
 }
 
-function sendSuccessMail_(msg, slug) {
+function threadHasLabel_(thread, name) {
+  return thread.getLabels().some(function (l) { return l.getName() === name; });
+}
+
+/** 投稿用Gmailのアドレス（このスクリプトを動かしているアカウント）。 */
+function blogAddress_() {
   try {
-    msg.reply(
-      'ブログに投稿しました。\n\n' +
-      '　タイトル：' + msg.getSubject() + '\n' +
-      '　記事のURL：' + postUrl_(slug) + '\n\n' +
-      'Netlifyの公開作業に1〜2分ほどかかります。しばらくしてから開いてみてください。\n' +
-      '（このメールは自動で送られています）');
+    return Session.getEffectiveUser().getEmail();
+  } catch (e) {
+    return CONFIG.ALLOWED_SENDERS[0];
+  }
+}
+
+/**
+ * 「修正」「削除」のメールを、宛先・件名・本文まで用意ずみで開くリンクを作ります。
+ * ボタンを押すと、ふだんのメールソフトで作成画面が開きます。
+ */
+function editMailto_(action, slug, title, currentBody) {
+  var body;
+
+  if (action === '削除') {
+    body = 'この記事をブログから消します。何も書きかえずに、そのまま送信してください。\n\n'
+         + EDIT_SEPARATOR + '\n#削除 ' + slug + '\n';
+  } else {
+    // 本文が長すぎるとリンクに収まらないので、その場合は入れずにご案内だけにします
+    var text = String(currentBody || '');
+    body = (text && text.length <= 1200)
+      ? 'いまの本文を下に入れてあります。直したいところを書きかえて送信してください。\n'
+        + '（写真はそのまま残ります。新しく添付すると、うしろに足されます）\n\n'
+        + text + '\n\n' + EDIT_SEPARATOR + '\n#修正 ' + slug + '\n'
+      : 'この下に、直した本文を「まるごと」書いてください。書いた内容で記事が置きかわります。\n'
+        + '（本文が長いため、いまの文章は入れていません。写真はそのまま残ります）\n\n\n'
+        + EDIT_SEPARATOR + '\n#修正 ' + slug + '\n';
+  }
+
+  return 'mailto:' + encodeURIComponent(blogAddress_())
+       + '?subject=' + encodeURIComponent('[' + action + '] ' + title)
+       + '&body='    + encodeURIComponent(body);
+}
+
+function button_(url, label, color) {
+  return '<a href="' + url + '" style="display:inline-block;padding:12px 22px;margin:0 8px 8px 0;'
+       + 'background:' + color + ';color:#fff;text-decoration:none;border-radius:999px;'
+       + 'font-weight:bold;font-size:15px;">' + label + '</a>';
+}
+
+/**
+ * 投稿・修正が終わったことを、送信者に返信でお知らせします。
+ * あわせて「修正」「削除」のボタンを付けます。
+ */
+function sendSuccessMail_(msg, posted, wasEdit) {
+  try {
+    var what     = wasEdit ? '修正' : '投稿';
+    var editUrl  = editMailto_('修正', posted.slug, posted.title, posted.plainBody);
+    var delUrl   = editMailto_('削除', posted.slug, posted.title, '');
+
+    var plain =
+      'ブログに' + what + 'しました。\n\n' +
+      '　タイトル：' + posted.title + '\n' +
+      '　記事のURL：' + postUrl_(posted.slug) + '\n' +
+      '　記事ID：' + posted.slug + '\n\n' +
+      '■ 直したいとき\n' +
+      'このメールに返信し、直した本文を書いて、いちばん下に次の1行を入れて送ってください。\n' +
+      '　#修正 ' + posted.slug + '\n\n' +
+      '■ 消したいとき\n' +
+      'このメールに返信し、次の1行だけ書いて送ってください。\n' +
+      '　#削除 ' + posted.slug + '\n\n' +
+      '（このメールは自動で送られています）';
+
+    var html =
+      '<div style="font-family:sans-serif;font-size:15px;line-height:1.9;color:#222">' +
+      '<p>ブログに<strong>' + what + 'しました</strong>。</p>' +
+      '<table style="border-collapse:collapse;margin:16px 0">' +
+      '<tr><td style="padding:4px 14px 4px 0;color:#777">タイトル</td><td style="padding:4px 0"><strong>' +
+        escapeHtml_(posted.title) + '</strong></td></tr>' +
+      '<tr><td style="padding:4px 14px 4px 0;color:#777">記事ID</td><td style="padding:4px 0">' +
+        escapeHtml_(posted.slug) + '</td></tr>' +
+      '</table>' +
+      '<p style="margin:22px 0 10px">直したいときは、下のボタンを押してください。' +
+      'メールの作成画面が開くので、そのまま送れば記事に反映されます。</p>' +
+      '<p style="margin:0 0 18px">' +
+        button_(editUrl, '✏️&nbsp;この記事を修正する', '#c2185b') +
+        button_(delUrl,  '🗑&nbsp;この記事を削除する',  '#777777') +
+      '</p>' +
+      '<p style="font-size:13px;color:#777;margin-top:24px">' +
+      '「修正」は、書いた本文で記事をまるごと置きかえます。写真はそのまま残り、' +
+      '新しく添付した写真はうしろに足されます。<br>' +
+      'ボタンが押せないときは、このメールにそのまま返信して、いちばん下に ' +
+      '<code>#修正 ' + escapeHtml_(posted.slug) + '</code> と書いて送ってください。' +
+      '</p></div>';
+
+    msg.reply(plain, { htmlBody: html });
+
   } catch (e) {
     Logger.log('完了メールを送れませんでした：' + e);
   }
+}
+
+function sendDeletedMail_(msg, slug) {
+  try {
+    msg.reply(
+      'ブログから記事を削除しました。\n\n' +
+      '　記事ID：' + slug + '\n\n' +
+      '一覧と記事ページから見えなくなりました。\n' +
+      '（本文と写真のファイルはGitHubに残っているので、必要なら元に戻せます）\n\n' +
+      '（このメールは自動で送られています）');
+  } catch (e) {
+    Logger.log('削除のお知らせを送れませんでした：' + e);
+  }
+}
+
+function escapeHtml_(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function sendErrorMail_(msg, err) {
@@ -645,8 +871,12 @@ function dryRun() {
       var imgs = m.getAttachments({ includeInlineImages: true, includeAttachments: true })
                   .filter(function (a) { return /^image\//i.test(a.getContentType() || ''); });
 
+      var order = parseEditDirective_(m.getPlainBody());
+      var kind  = order ? (order.action + '（記事ID：' + order.slug + '）') : '新規投稿';
+
       Logger.log(
         (ok ? '○ ' : '× 許可外 ') + from +
+        '｜' + kind +
         '｜タイトル：' + p.title +
         '｜写真：' + imgs.length + '枚');
     });
