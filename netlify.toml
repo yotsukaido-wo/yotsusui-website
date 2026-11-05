@@ -8,3 +8,9 @@
   # 公開するフォルダ（リポジトリの直下がそのままサイトです）
   publish = "."
   # ビルドコマンドは不要なので指定しません
+
+# 制作中に使っていた /onepage.html のURLは、トップページへ転送します
+[[redirects]]
+  from = "/onepage.html"
+  to = "/"
+  status = 301

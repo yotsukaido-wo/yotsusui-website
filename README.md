@@ -6,7 +6,8 @@
 ## ファイル構成
 
 ```
-index.html        トップページ（ファーストビュー・お知らせ・次の演奏会）
+index.html        トップページ（ワンページ版。1枚のページに全内容）
+index-multipage.html  旧マルチページ版のトップページ（保管用。どこからもリンクしていません）
 profile.html      プロフィール（楽団紹介・楽団概要・指揮者紹介）
 contact.html      見学・お問合せ（Googleフォーム埋め込み・見学の流れ・FAQ）
 schedule.html     練習日程（フリカレのカレンダー埋め込み・練習場所）
@@ -48,12 +49,12 @@ HTMLの中に `<!-- TODO: ... -->` というコメントを入れてあります
 
 | ファイル | 使っている場所 |
 |---|---|
-| `images/kaise-eiji.jpg` | 指揮者紹介（`onepage.html` / `profile.html`） |
-| `images/fire-festival-2026.png` | 消防フェスティバル四街道2026（`onepage.html`） |
-| `images/winter-concert-2026.jpg` | ウインターコンサート2026（`onepage.html` / `index.html` / `winter.html`） |
-| `images/ensemble-2027.jpg` | アンサンブル発表会（`onepage.html`） |
+| `images/kaise-eiji.jpg` | 指揮者紹介（`index.html` / `profile.html`） |
+| `images/fire-festival-2026.png` | 消防フェスティバル四街道2026（`index.html`） |
+| `images/winter-concert-2026.jpg` | ウインターコンサート2026（`index.html` / `winter.html`） |
+| `images/ensemble-2027.jpg` | アンサンブル発表会（`index.html`） |
 
-公式YouTubeチャンネルの新しい10本を `movie.html` / `onepage.html` の一覧に設定済みです。
+公式YouTubeチャンネルの新しい10本を `movie.html` / `index.html` の一覧に設定済みです。
 サムネイルはYouTubeの画像をそのまま読み込んでいます（動画IDから自動）。
 
 ### 楽団紹介のスライドショー（ワンページ版）
@@ -61,7 +62,7 @@ HTMLの中に `<!-- TODO: ... -->` というコメントを入れてあります
 `images/about-1.jpg`〜`about-9.jpg`（9枚）が3秒ごとに切り替わります。
 
 - 写真を変える：同じ名前で画像を差し替えるだけです
-- 枚数を変える：`onepage.html` の `<img class="slide" ...>` と、その下の `<i></i>`（点）を同じ数だけ増減します
+- 枚数を変える：`index.html` の `<img class="slide" ...>` と、その下の `<i></i>`（点）を同じ数だけ増減します
 - 速さを変える：`assets/onepage.js` の `SLIDE_INTERVAL`（ミリ秒）を書きかえます
 
 マウスを乗せている間と、別のタブを見ている間は止まります。
@@ -104,7 +105,7 @@ window.YOTSUSUI_VIDEOS = [
 
 ### SNSのアカウントを変えるとき（ワンページ版）
 
-`onepage.html` の最初の画面（ファーストビュー）に、
+`index.html` の最初の画面（ファーストビュー）に、
 「団員募集を見る」ボタンのとなりへ Instagram → X → YouTube の順で
 丸いアイコンボタンを並べています。`hero-sns` という目印で探して、
 `href="..."` のURLを書きかえてください。

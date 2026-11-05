@@ -15,13 +15,12 @@
 
 ---
 
-## 0. ファイルの置きかた
-
-GitHubのリポジトリには、`site` フォルダの **中身** をそのまま入れてください。
+## 0. ファイルの置きかた（設定済み）
 
 ```
-リポジトリの直下
-├── onepage.html          ← サイト本体
+リポジトリ yotsukaido-wo/yotsusui-website の直下
+├── index.html            ← トップページ（ワンページ版）
+├── index-multipage.html  ← 旧マルチページ版のトップ（保管用）
 ├── blog.html             ← ブログ一覧
 ├── blog-post.html        ← 記事ページ
 ├── _headers              ← Netlifyのキャッシュ設定
@@ -39,19 +38,23 @@ GitHubのリポジトリには、`site` フォルダの **中身** をそのま�
     └── email-to-post.gs  ← Apps Scriptに貼りつけるコード（公開はされません）
 ```
 
-> `site` フォルダごと push する場合は、Apps Script の `CONFIG.SITE_DIR` を
-> `'site'` に変えてください。直下に置くなら `''` のままでOKです。
+> サイトがリポジトリ直下にあるので、Apps Script の `CONFIG.SITE_DIR` は `''`（空）のままでOKです。
 
 ---
 
-## 1. GitHub のリポジトリを用意する
+## 1. GitHub のリポジトリ（作成済み）
 
-1. GitHub に `yotsukaido-wo` でログインします。
-2. 新しいリポジトリ **`yotsusui-website`** を作ります（Public）。
-3. 上の構成でファイルを push します。
+- リポジトリ： **https://github.com/yotsukaido-wo/yotsusui-website** （Public）
+- ブランチ： `main`
+- ローカルの作業フォルダ： `C:\Users\windo\dev\yotsusui-website`
 
-Apps Script の `CONFIG.GITHUB_REPO` は `'yotsusui-website'` に設定済みです。
-別の名前にした場合は、そこを書きかえてください。
+Apps Script の `CONFIG.GITHUB_OWNER` / `CONFIG.GITHUB_REPO` は、この値に設定済みです。
+
+ファイルを直して公開するときは、作業フォルダで次のようにします。
+
+```bash
+git add -A && git commit -m "変更内容" && git push
+```
 
 ---
 
