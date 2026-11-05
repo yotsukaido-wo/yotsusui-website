@@ -281,3 +281,44 @@ yotsukaido.wo.pr@gmail.com, aaa@gmail.com, bbb@gmail.com
 
 トップページに出す記事の数は、`index.html` のブログ欄にある `data-limit="6"` の数字で変えられます。
 ブログページ（`blog.html`）は、`data-limit` を書いていないので全記事が横に並びます。
+
+---
+
+## 8. Netlify のクレジット（1か月に公開できる回数）
+
+Netlify の無料プランは **月300クレジット**で、**本番デプロイ1回につき15クレジット**を使います。
+つまり **1か月に公開できるのは、およそ20回まで**です。
+
+| 何をしたとき | クレジット |
+|---|---|
+| ブログの記事を1本投稿する | 15（デプロイ1回） |
+| 完了メールのボタンで記事を直す | 15（デプロイ1回） |
+| 記事を削除する | 15（デプロイ1回） |
+| HTML・CSS・画像を直して push する | 15（デプロイ1回） |
+| `gas/` のコードや `.md` のマニュアルだけを直して push する | **0**（下の設定で省略されます） |
+
+残りのクレジットは、Netlify の
+**チーム名 → Usage & billing**（<https://app.netlify.com/teams/yotsukaido-wo/billing/general>）
+で確認できます。
+
+### 使い切ってしまったら
+
+**お金は請求されません。** 無料プランは「超過請求なし（no overage charges ever）」と
+明記されていて、クレジットカードも登録していません。
+使い切ると、次の請求期間（毎月4日スタート）まで**公開が止まるだけ**です。
+すでに公開されているサイトは、そのまま表示され続けます。
+
+### 無駄なデプロイを省く設定（設定済み）
+
+`netlify.toml` の `[build]` に、次の1行が入っています。
+
+```toml
+ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)gas/' ':(exclude)*.md' ':(exclude)*.pdf' ':(exclude).gitignore'"
+```
+
+サイトの見ために関係ないファイル（Apps Scriptのコード、マニュアル、PDF）だけを
+直したコミットでは、デプロイが省略されてクレジットを使いません。
+Netlify の **Deploys** の一覧に `Canceled`／`Build skipped` と出ていれば、省略できています。
+
+> 直すところが何か所もあるときは、**まとめて1回で push** してください。
+> 1か所ずつ push すると、そのたびに15クレジット使います。
