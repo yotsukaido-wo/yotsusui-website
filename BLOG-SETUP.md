@@ -169,6 +169,9 @@ yotsukaido.wo.pr@gmail.com, aaa@gmail.com, bbb@gmail.com
 
 ## 5. 記事の書きかた（投稿する人むけ）
 
+> 団員のみなさんに配る用のマニュアルは、[BLOG-MANUAL.md](BLOG-MANUAL.md) にあります。
+> この章は、その要点をまとめたものです。
+
 ブログ投稿専用のGmailあてに、ふつうにメールを送るだけです。
 
 | メールの場所 | ブログでの扱い |
