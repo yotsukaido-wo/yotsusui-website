@@ -326,6 +326,9 @@ function savePost_(slug, ymd, title, body, images, commitMessage) {
 /** 完了メールの下に入れる目印。これより下は本文として扱いません。 */
 var EDIT_SEPARATOR = '―――――（ここから下は消さないでください）―――――';
 
+/** 使いかたの案内と、記事本文の境目。これより上は本文として扱いません。 */
+var BODY_START = '―――――（ここから下が記事の本文です）―――――';
+
 /**
  * メール本文から「#修正 記事ID」「#削除 記事ID」を探します。
  * 見つからなければ null（＝ふつうの新規投稿）を返します。
@@ -335,11 +338,20 @@ function parseEditDirective_(rawBody) {
   return m ? { action: m[1], slug: m[2] } : null;
 }
 
-/** 目印より下（指示や引用）を取りのぞいて、記事になる部分だけ返します。 */
+/**
+ * 2つの目印のあいだを、記事の本文として取り出します。
+ *   （上）使いかたの案内　→ BODY_START より上は捨てる
+ *   （下）#修正 などの指示　→ EDIT_SEPARATOR より下は捨てる
+ */
 function bodyWithoutMarker_(rawBody) {
   var s = String(rawBody || '').replace(/\r\n?/g, '\n');
-  var i = s.indexOf(EDIT_SEPARATOR);
-  if (i >= 0) { s = s.slice(0, i); }
+
+  var tail = s.indexOf(EDIT_SEPARATOR);
+  if (tail >= 0) { s = s.slice(0, tail); }
+
+  var head = s.indexOf(BODY_START);
+  if (head >= 0) { s = s.slice(head + BODY_START.length); }
+
   return s.replace(/^\s*#\s*(修正|削除)\s+\S+\s*$/gm, '');
 }
 
@@ -754,14 +766,17 @@ function editMailto_(action, slug, title, currentBody) {
          + EDIT_SEPARATOR + '\n#削除 ' + slug + '\n';
   } else {
     // 本文が長すぎるとリンクに収まらないので、その場合は入れずにご案内だけにします
-    var text = String(currentBody || '');
-    body = (text && text.length <= 1200)
-      ? 'いまの本文を下に入れてあります。直したいところを書きかえて送信してください。\n'
-        + '（写真はそのまま残ります。新しく添付すると、うしろに足されます）\n\n'
-        + text + '\n\n' + EDIT_SEPARATOR + '\n#修正 ' + slug + '\n'
-      : 'この下に、直した本文を「まるごと」書いてください。書いた内容で記事が置きかわります。\n'
-        + '（本文が長いため、いまの文章は入れていません。写真はそのまま残ります）\n\n\n'
-        + EDIT_SEPARATOR + '\n#修正 ' + slug + '\n';
+    var text  = String(currentBody || '');
+    var guide = (text && text.length <= 1200)
+      ? '【使いかた】下の「記事の本文」のところを、直したいように書きかえて送信してください。\n'
+        + 'この案内の部分は、記事には入りません。\n'
+        + '写真はそのまま残ります。新しく添付すると、うしろに足されます。\n'
+      : '【使いかた】下の「記事の本文」のところに、直した本文を「まるごと」書いてください。\n'
+        + '書いた内容で記事が置きかわります。この案内の部分は、記事には入りません。\n'
+        + '（本文が長いため、いまの文章は入れていません。写真はそのまま残ります）\n';
+
+    body = guide + '\n' + BODY_START + '\n\n'
+         + text + '\n\n' + EDIT_SEPARATOR + '\n#修正 ' + slug + '\n';
   }
 
   // 宛先はそのまま書きます（＠を %40 にすると、開けないメールソフトがあります）
