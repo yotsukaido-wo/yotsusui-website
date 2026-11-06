@@ -350,9 +350,14 @@
 
       <h3 style="margin-top:64px" class="reveal">練習カレンダー</h3>
       <div class="embed embed-cal reveal d1">
+        <!-- sandbox は、よそのサイトを枠で開くときの「囲い」です。
+             ここに並べたことだけを許し、それ以外はできないようにします。
+             とくに、枠の中からこのページを別の場所へ飛ばす動きを止めています。
+             ※ カレンダーが真っ白になったときは、まずこの行を疑ってください。 -->
         <iframe
           src="https://freecalend.com/open/mem108678_date202611"
           title="四街道吹奏楽団 練習カレンダー（フリカレ）"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
           loading="lazy">
           読み込んでいます…
         </iframe>
