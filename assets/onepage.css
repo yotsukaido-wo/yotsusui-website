@@ -269,9 +269,12 @@ a:hover { color: var(--head); }
 @media (max-width: 580px) {
   .btn-row, .hero-actions { display: grid; }
   .btn-row .btn, .hero-actions .btn { width: 100%; }
-  /* スマホでは縦に積むので、右端ではなく中央に置きます */
-  .btn-badge { justify-self: center; margin: 0 auto; }
-  .btn-badge img { width: 136px; height: 136px; }
+  /* スマホでは、写真の右下（SCROLL の文字より少し上）に小さく置きます。
+     下向きのマイナスの余白で、ボタンの列から切りはなして下げています。
+     ・大きさ … SNSの丸ボタン（62px）より、ひとまわり大きいくらい
+     ・位置   … 右端。下げる量は margin の -52px で調整できます */
+  .btn-badge { justify-self: end; margin: 0 0 -52px; }
+  .btn-badge img { width: 74px; height: 74px; }
 }
 
 /* SNSボタン */
@@ -488,7 +491,9 @@ h4 {
 }
 .year-list .t { margin: 0; }
 @media (max-width: 580px) {
-  .year-list li { grid-template-columns: 1fr; gap: 6px; }
+  /* スマホでは1行が「月」と「内容」の2段になるので、上下を詰めて読みやすくします */
+  .year-list li { grid-template-columns: 1fr; gap: 2px; padding: 11px 0; }
+  .year-list .m { font-size: 1.08rem; }
 }
 
 /* =========================================================
@@ -510,6 +515,11 @@ h4 {
   font-size: 1.18rem; color: var(--head); margin-bottom: 8px;
 }
 .timeline p { margin: 0; }
+@media (max-width: 580px) {
+  /* スマホでは年と年のあいだを、すこし詰めます */
+  .timeline li { padding-bottom: 20px; }
+  .timeline .y { margin-bottom: 5px; }
+}
 
 /* =========================================================
    表
@@ -543,6 +553,25 @@ table.data caption {
     display: block; border-bottom: 0; white-space: normal;
   }
   table.data.data-stack th { border-bottom: 1px solid var(--line); }
+
+  /* 募集状況の表（横3列のまま）。
+     「フルート・ピッコロ」のような長い楽器名が2行に折り返さないよう、
+     文字と余白を少し小さくし、右の2列は中身ぴったりの幅にしています */
+  #recruit table.data:not(.data-stack) { font-size: .9rem; }
+  #recruit table.data:not(.data-stack) th,
+  #recruit table.data:not(.data-stack) td { padding: 12px 8px; white-space: nowrap; }
+  #recruit table.data:not(.data-stack) th:nth-child(2),
+  #recruit table.data:not(.data-stack) td:nth-child(2) { width: 1%; text-align: center; }
+  #recruit table.data:not(.data-stack) th:nth-child(3),
+  #recruit table.data:not(.data-stack) td:nth-child(3) { width: 1%; }
+  #recruit table.data:not(.data-stack) .badge { padding: 4px 10px; font-size: .8rem; }
+}
+
+/* とくに画面のせまい機種（iPhone SE など）では、もう一段だけ小さくします */
+@media (max-width: 360px) {
+  #recruit table.data:not(.data-stack) { font-size: .85rem; }
+  #recruit table.data:not(.data-stack) th,
+  #recruit table.data:not(.data-stack) td { padding: 11px 5px; }
 }
 
 .badge {
