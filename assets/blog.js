@@ -374,10 +374,30 @@
       var cover = meta.cover || entry.cover || '';
 
       document.title = title + '｜よつすいブログ｜四街道吹奏楽団';
+      var summary = meta.excerpt || entry.excerpt ||
+        (title + ' - 四街道吹奏楽団（よつすい）のブログです。');
       var desc = document.querySelector('meta[name="description"]');
-      if (desc) {
-        desc.setAttribute('content', meta.excerpt || entry.excerpt ||
-          (title + ' - 四街道吹奏楽団（よつすい）のブログです。'));
+      if (desc) { desc.setAttribute('content', summary); }
+
+      // LINEやSNSに貼ったときの見出し・説明・画像（OGP）も、記事のものに書きかえます。
+      // ※ 読みとる側がページの JavaScript を動かさない場合は、
+      //    blog-post.html に書いてあるブログ全体の内容が使われます。
+      function setMeta(attr, name, value) {
+        var el = document.querySelector('meta[' + attr + '="' + name + '"]');
+        if (el && value) { el.setAttribute('content', value); }
+      }
+      setMeta('property', 'og:title', title + '｜よつすいブログ');
+      setMeta('property', 'og:description', summary);
+      setMeta('property', 'og:url',
+        location.origin + location.pathname + location.search);
+      if (cover) {
+        setMeta('property', 'og:image', new URL(cover, location.href).href);
+        setMeta('property', 'og:image:alt', title);
+        // 画像を差しかえたので、もとの画像の大きさの指定は外します
+        ['og:image:width', 'og:image:height'].forEach(function (name) {
+          var el = document.querySelector('meta[property="' + name + '"]');
+          if (el) { el.parentNode.removeChild(el); }
+        });
       }
 
       var coverHtml = cover

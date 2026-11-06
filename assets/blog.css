@@ -149,7 +149,11 @@
 }
 .post-card:hover .post-thumb img { transform: scale(1.04); }
 
-/* 写真が1枚も添付されなかった記事用の代わりの絵 */
+/* 写真が1枚も添付されなかった記事用の、代わりの絵。
+   楽団らしい写真（images/blog-default.jpg）を敷いています。
+   記事そのものの写真と見まちがえないよう、上からワインレッドの膜をかけて
+   「よつすいブログ」の文字を白で重ねています。
+   別の写真にしたいときは、下の url(...) のファイル名を差し替えてください。 */
 .post-thumb .ph {
   position: absolute;
   inset: 0;
@@ -157,11 +161,16 @@
   place-content: center;
   gap: 8px;
   justify-items: center;
-  color: var(--terra-mid);
-  background: linear-gradient(160deg, var(--terra-pale) 0%, var(--cream) 100%);
+  color: #fff;
+  background-image:
+    linear-gradient(170deg, rgba(123, 58, 88, .80) 0%, rgba(74, 33, 52, .86) 100%),
+    url("../images/blog-default.jpg");
+  background-size: cover;
+  background-position: center;
+  text-shadow: 0 1px 6px rgba(30, 14, 22, .45);
 }
-.post-thumb .ph .ico { font-size: 2.2rem; line-height: 1; }
-.post-thumb .ph .txt { font-size: .78rem; letter-spacing: .08em; }
+.post-thumb .ph .ico { font-size: 2.4rem; line-height: 1; }
+.post-thumb .ph .txt { font-size: .78rem; letter-spacing: .12em; }
 
 .post-body {
   display: flex;
