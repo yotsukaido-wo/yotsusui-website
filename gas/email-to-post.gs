@@ -5,7 +5,7 @@
  *
  *  ブログ投稿専用のGmail（yotsukaido.wo.pr@gmail.com）に届いたメールを、
  *  Markdownファイル＋画像に変換して GitHub へ直接コミットします。
- *  GitHub が更新されると Netlify が自動でビルドし、ブログに反映されます。
+ *  GitHub が更新されると Cloudflare Pages が自動でビルドし、ブログに反映されます。
  *
  *  使いかた（投稿する人）
  *    件名  … 記事のタイトル
@@ -29,7 +29,7 @@ var CONFIG = {
   /* --- GitHub --- */
   GITHUB_OWNER:  'yotsukaido-wo',          // GitHubのアカウント名
   GITHUB_REPO:   'yotsusui-website',       // リポジトリ名
-  GITHUB_BRANCH: 'main',                   // Netlifyが見ているブランチ
+  GITHUB_BRANCH: 'main',                   // Cloudflare Pages が見ているブランチ
 
   /* --- ブログ投稿専用のGmail ---
      完了メールに付ける「修正」「削除」ボタンの宛先になります。 */
@@ -40,7 +40,7 @@ var CONFIG = {
      サイトの置き場所を変えたときは、ここを書きかえるか、Apps Script の
      「スクリプト プロパティ」に SITE_URL を登録してください。
      （スクリプト プロパティのほうが優先されるので、コードを触らずに切りかえられます） */
-  SITE_URL: 'https://yotsukaido-wo.netlify.app',
+  SITE_URL: 'https://yotsusui-website.pages.dev',
 
   /**
    * リポジトリの中で、サイト（onepage.html がある場所）がどこにあるか。
