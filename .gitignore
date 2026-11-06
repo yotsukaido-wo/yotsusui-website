@@ -23,3 +23,8 @@ $RECYCLE.BIN/
 .env
 *.key
 secrets.json
+
+# ===== 身内向けのメモ（サイトには置かない）=====
+# 団員に配る投稿マニュアル。手元には残したまま、
+# GitHub とサイトには上げないようにしています。
+BLOG-MANUAL.md
