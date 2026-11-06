@@ -520,7 +520,13 @@ function collectImages_(msg, slug, startFrom) {
     var att  = atts[i];
     var type = String(att.getContentType() || '').toLowerCase();
 
-    if (type.indexOf('image/') !== 0) { continue; }
+    /* 写真として受け取るのは、この4種類だけです。
+       ここをゆるくすると、種類をいつわった添付で .htm や .svg を
+       サイトの中に置かれてしまうため、はっきり並べて書いています。 */
+    if (!/^image\/(jpeg|jpg|png|gif|webp)(;|$)/.test(type)) {
+      Logger.log('写真ではないため除外：' + att.getName() + ' / ' + type);
+      continue;
+    }
     if (att.getSize() > CONFIG.MAX_ATTACHMENT_BYTES) {
       Logger.log('大きすぎるため除外：' + att.getName());
       continue;
