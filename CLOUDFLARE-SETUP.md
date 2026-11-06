@@ -102,17 +102,21 @@ Cloudflare のほうで問題がないと確かめられたら、仕上げをし
 
 ### 6-1　サイトの中の設定を直す
 
-新しいURLが決まってから、次の場所を書きかえます。
+**使うURLは `https://yotsusui-website.pages.dev` に決まりました。**（独自ドメインは取らず、Cloudflare がくれたアドレスをそのまま使います）
 
-| 場所 | いまの中身 | 直したあと |
-|---|---|---|
-| `blog.html` 8行目 | `https://yotsukaido-wo.netlify.app/blog.html` | 新しいURL |
-| `concert.html` 8行目 | `https://yotsukaido-wo.netlify.app/concert.html` | 新しいURL |
-| `winter.html` 8行目 | `https://yotsukaido-wo.netlify.app/winter.html` | 新しいURL |
+次の場所を書きかえました。**この作業は済んでいます。**
+
+| 場所 | 直したあと |
+|---|---|
+| `blog.html` 8行目 | `https://yotsusui-website.pages.dev/blog` |
+| `concert.html` 8行目 | `https://yotsusui-website.pages.dev/concert` |
+| `winter.html` 8行目 | `https://yotsusui-website.pages.dev/winter` |
+
+`.html` を付けていないのは、Cloudflare が `/blog.html` を `/blog` へ転送するためです。転送される前のアドレスを「正式」と書くと、ちぐはぐになります。
 
 これは「このページの正式なアドレスはこれです」と検索エンジンに伝えるための行です。古いままだと、消えたアドレスを指してしまいます。
 
-あわせて、用意してある **`_redirects`** というファイルを GitHub に入れます。制作中に使っていた `/onepage.html` をトップページへ転送するためのものです（Netlify では `netlify.toml` に書いてありましたが、Cloudflare はこのファイルを見ます）。
+あわせて、**`_redirects`** というファイルを GitHub に入れました。制作中に使っていた `/onepage.html` をトップページへ転送するためのものです（Netlify では `netlify.toml` に書いてありましたが、Cloudflare はこのファイルを見ます）。
 
 ### 6-2　ブログの完了メールの行き先を直す
 
@@ -120,7 +124,7 @@ Apps Script の画面を開き、**「プロジェクトの設定」→「スク
 
 | プロパティ名 | 値 |
 |---|---|
-| `SITE_URL` | 新しいURL（例：`https://yotsusui.com`） |
+| `SITE_URL` | `https://yotsusui-website.pages.dev` |
 
 コードを書きかえる必要はありません。ここを入れると、完了メールの「記事を見る」リンクが新しいURLになります。
 
