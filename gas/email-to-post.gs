@@ -35,6 +35,13 @@ var CONFIG = {
      完了メールに付ける「修正」「削除」ボタンの宛先になります。 */
   BLOG_ADDRESS: 'yotsukaido.wo.pr@gmail.com',
 
+  /* --- サイトのURL ---
+     完了メールに入れる「記事を見る」リンクの行き先です。
+     サイトの置き場所を変えたときは、ここを書きかえるか、Apps Script の
+     「スクリプト プロパティ」に SITE_URL を登録してください。
+     （スクリプト プロパティのほうが優先されるので、コードを触らずに切りかえられます） */
+  SITE_URL: 'https://yotsukaido-wo.netlify.app',
+
   /**
    * リポジトリの中で、サイト（onepage.html がある場所）がどこにあるか。
    *   リポジトリ直下に onepage.html がある      → ''
@@ -733,8 +740,17 @@ function shortHash_(seed) {
   return hex.slice(0, 6);
 }
 
+/**
+ * サイトのURL。スクリプト プロパティの SITE_URL があればそちらを使います。
+ * おしまいの「/」は取りのぞきます。
+ */
+function siteUrl_() {
+  var u = PropertiesService.getScriptProperties().getProperty('SITE_URL') || CONFIG.SITE_URL;
+  return String(u || '').trim().replace(/\/+$/, '');
+}
+
 function postUrl_(slug) {
-  return 'https://' + CONFIG.GITHUB_OWNER + '.netlify.app/blog-post.html?slug=' + slug;
+  return siteUrl_() + '/blog-post.html?slug=' + slug;
 }
 
 function threadHasLabel_(thread, name) {
