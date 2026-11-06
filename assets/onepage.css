@@ -655,6 +655,34 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
   .embed-form iframe { height: 690px; }
 }
 
+/* お問合せフォームの背景に、白黒の写真を敷いています。
+   Googleフォーム側の下地が透明なので、写真はフォームの中まで透けて見えます。
+   ただ、写真が暗いままだと「フォームをクリア」などの細かい文字が読みにくいので、
+   白いベールを一枚かぶせて、写真を少し明るくしています。
+   （数字を 0 に近づけると写真が濃く、1 に近づけると白っぽくなります）
+   写真は切れ目が出ないよう、タイル状に並べずに枠いっぱいへ広げています。 */
+.embed-form {
+  background-image:
+    linear-gradient(rgba(255,255,255,.58), rgba(255,255,255,.58)),
+    url(../images/form-bg.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 22px;
+}
+.embed-form iframe { border-radius: var(--radius); }
+.embed-form .embed-note {
+  border-top: 0; border-radius: var(--radius); margin-top: 18px;
+}
+/* 画面が広いときは左右をゆったりとって、写真をしっかり見せます */
+@media (min-width: 900px) {
+  .embed-form { padding: 40px 56px; }
+}
+@media (max-width: 480px) {
+  .embed-form { padding: 14px; }
+  .embed-form .embed-note { margin-top: 12px; }
+}
+
 /* 動画カード */
 .video-grid { display: grid; gap: 26px; grid-template-columns: 1fr; }
 @media (min-width: 680px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
