@@ -27,8 +27,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/onepage.css?v=10">
-<link rel="stylesheet" href="assets/blog.css?v=10">
+<link rel="stylesheet" href="assets/onepage.css?v=11">
+<link rel="stylesheet" href="assets/blog.css?v=11">
 </head>
 <body>
 <a class="skip-link" href="#main">本文へスキップ</a>
@@ -50,11 +50,11 @@
     <nav class="header-nav" id="header-nav" aria-label="メインメニュー">
       <ul>
         <li><a href="#about">楽団紹介</a></li>
-        <li><a href="#concert">演奏会</a></li>
-        <li><a href="#schedule">練習日程</a></li>
-        <li><a href="#activity">活動記録</a></li>
-        <li><a href="#recruit">団員募集</a></li>
-        <li><a href="#movie">動画紹介</a></li>
+        <li><a href="concert.html">演奏会</a></li>
+        <li><a href="schedule.html">練習日程</a></li>
+        <li><a href="activity.html">活動記録</a></li>
+        <li><a href="recruit.html">団員募集</a></li>
+        <li><a href="movie.html">動画紹介</a></li>
         <li><a href="#blog">ブログ</a></li>
         <li><a class="is-cta" href="#contact">見学・お問合せ</a></li>
       </ul>
@@ -232,6 +232,8 @@
   </section>
 
   <!-- ===================== 演奏会・イベント ===================== -->
+  <!-- これからの本番だけを短くまとめています。
+       過去の演奏会は concert.html（定期演奏会）と winter.html にあります。 -->
   <section class="section section-white" id="concert">
     <div class="wrap">
       <div class="section-head reveal">
@@ -242,11 +244,6 @@
 
       <div class="cards col-3">
         <article class="card reveal">
-          <div class="photo card-media" style="border-radius:0;box-shadow:none">
-            <a href="images/fire-festival-2026.png" target="_blank" rel="noopener" aria-label="四街道消防フェスティバル2026 出演チラシ（大きい画像を開きます）">
-              <img src="images/fire-festival-2026.png" alt="四街道消防フェスティバル2026 出演チラシ" width="1414" height="2000" loading="lazy">
-            </a>
-          </div>
           <div class="card-body">
             <span class="card-date">2026.11.08</span>
             <h3>消防フェスティバル四街道2026</h3>
@@ -257,17 +254,13 @@
               <dd>四街道市立中央小学校 校庭</dd>
             </dl>
             <p style="margin-top:18px;margin-bottom:0;font-size:.96rem;color:var(--ink-soft)">
-              演奏曲は「アンパンマンマーチ」「YOASOBIメドレー」ほか。雨天中止です。
+              演奏曲は「アンパンマンマーチ」「YOASOBIメドレー」ほか。雨天中止です。<br>
+              <a href="images/fire-festival-2026.png" target="_blank" rel="noopener">チラシを見る</a>
             </p>
           </div>
         </article>
 
         <article class="card reveal d1">
-          <div class="photo card-media" style="border-radius:0;box-shadow:none">
-            <a href="images/winter-concert-2026.jpg" target="_blank" rel="noopener" aria-label="ウインターコンサート2026 公演チラシ（大きい画像を開きます）">
-              <img src="images/winter-concert-2026.jpg" alt="ウインターコンサート2026 公演チラシ" width="794" height="1123" loading="lazy">
-            </a>
-          </div>
           <div class="card-body">
             <span class="card-date">2026.12.26</span>
             <h3>ウインターコンサート2026</h3>
@@ -280,15 +273,13 @@
               <dd>無料（入場整理券が必要です）</dd>
             </dl>
             <p style="margin-top:18px;margin-bottom:0;font-size:.96rem;color:var(--ink-soft)">
-              テーマは「昭和100年を振り返る紅白歌合戦」。整理券は11月28日（土）12時より電子チケット<a href="https://teket.jp/15970/78556" target="_blank" rel="noopener">「teket」</a>にて配付します。
+              テーマは「昭和100年を振り返る紅白歌合戦」。整理券は11月28日（土）12時より電子チケット<a href="https://teket.jp/15970/78556" target="_blank" rel="noopener">「teket」</a>にて配付します。<br>
+              <a href="images/winter-concert-2026.jpg" target="_blank" rel="noopener">チラシを見る</a>
             </p>
           </div>
         </article>
 
         <article class="card reveal d2">
-          <div class="photo card-media" style="border-radius:0;box-shadow:none">
-            <img src="images/ensemble-2027.jpg" alt="アンサンブル発表会で演奏する団員" width="1477" height="1108" loading="lazy">
-          </div>
           <div class="card-body">
             <span class="card-date">2027.02</span>
             <h3>団内アンサンブル発表会</h3>
@@ -306,14 +297,14 @@
       </div>
 
       <div class="btn-row reveal">
-        <!-- ?v= の数字は、ページを大きく直したときに増やします（古い表示が残らないようにするため）-->
-        <a class="btn btn-plain" href="concert.html?v=2">定期演奏会の記録を見る</a>
-        <a class="btn btn-plain" href="winter.html?v=2">ウィンターコンサートの記録を見る</a>
+        <a class="btn btn-plain" href="concert.html">定期演奏会の記録を見る</a>
+        <a class="btn btn-plain" href="winter.html">ウィンターコンサートの記録を見る</a>
       </div>
     </div>
   </section>
 
   <!-- ===================== 練習日程・年間予定 ===================== -->
+  <!-- 要点だけを置いています。年間予定と練習カレンダーは schedule.html にあります。 -->
   <section class="section section-pink" id="schedule">
     <div class="wrap">
       <div class="section-head reveal">
@@ -342,54 +333,18 @@
                 四街道市立旭公民館（ホールまたは大会議室）
               </td>
             </tr>
-            <tr>
-              <th>見学</th>
-              <td>随時受付（事前に<a href="#contact">お問い合わせ</a>よりご連絡ください）</td>
-            </tr>
           </tbody>
         </table>
       </div>
 
-      <h3 style="margin-top:64px" class="reveal">年間予定（令和8年度）</h3>
-      <ul class="year-list" data-stagger>
-        <li><span class="m">4月</span><p class="t">新年度スタート／定期演奏会に向けた練習</p></li>
-        <li><span class="m">5月</span><p class="t">第4回 定期演奏会（四街道市文化センター 大ホール）</p></li>
-        <li><span class="m">6月</span><p class="t">通常練習（土・日）</p></li>
-        <li><span class="m">7月</span><p class="t">千葉県吹奏楽コンクールに向けた強化練習</p></li>
-        <li><span class="m">8月</span><p class="t">千葉県吹奏楽コンクール A部門</p></li>
-        <li><span class="m">9月</span><p class="t">アルツハイマーデー イベント演奏（四街道市 わろうべの里）</p></li>
-        <li><span class="m">10月</span><p class="t">公民館祭り（四街道公民館）／晴山苑ボランティア演奏（千葉市鎌取晴山苑）／介護福祉施設おゆみの ボランティア演奏（千葉市緑区）</p></li>
-        <li><span class="m">11月</span><p class="t">四街道特洲会病院 あおい祭／消防フェスティバル四街道</p></li>
-        <li><span class="m">12月</span><p class="t">ウインターコンサート（四街道公民館ホール）</p></li>
-        <li><span class="m">1月</span><p class="t">通常練習（土・日）</p></li>
-        <li><span class="m">2月</span><p class="t">アンサンブル発表会</p></li>
-        <li><span class="m">3月</span><p class="t">次年度 定期演奏会に向けた練習</p></li>
-      </ul>
-
-      <h3 style="margin-top:64px" class="reveal">練習カレンダー</h3>
-      <div class="embed embed-cal reveal d1">
-        <!-- sandbox は、よそのサイトを枠で開くときの「囲い」です。
-             ここに並べたことだけを許し、それ以外はできないようにします。
-             とくに、枠の中からこのページを別の場所へ飛ばす動きを止めています。
-             ※ カレンダーが真っ白になったときは、まずこの行を疑ってください。 -->
-        <iframe
-          src="https://freecalend.com/open/mem108678_date202611"
-          title="四街道吹奏楽団 練習カレンダー（フリカレ）"
-          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
-          loading="lazy">
-          読み込んでいます…
-        </iframe>
-        <div class="embed-note">
-          <p style="margin:0">カレンダーが表示されない場合は、下のボタンから別の画面で開いてください。</p>
-          <a class="btn btn-plain" href="https://freecalend.com/open/mem108678_date202611" target="_blank" rel="noopener">
-            カレンダーを別の画面で開く
-          </a>
-        </div>
+      <div class="btn-row reveal">
+        <a class="btn btn-plain" href="schedule.html">年間予定・練習カレンダーを見る</a>
       </div>
     </div>
   </section>
 
   <!-- ===================== 活動記録 ===================== -->
+  <!-- 直近3年ぶんだけ。2023年より前は activity.html にあります。 -->
   <section class="section section-white" id="activity">
     <div class="wrap wrap-narrow">
       <div class="section-head reveal">
@@ -418,36 +373,16 @@
           <span class="y">2024年</span>
           <p>第2回 定期演奏会（5月25日）／ウインターコンサート2024（12月15日）</p>
         </li>
-        <li>
-          <span class="y">2023年</span>
-          <p>第1回 定期演奏会（2月）／ウインターコンサート2023（12月23日）</p>
-        </li>
-        <li>
-          <span class="y">2022年</span>
-          <p>ウインターコンサート2022（12月24日）</p>
-        </li>
-        <li>
-          <span class="y">2021年</span>
-          <p>ウインターコンサート2021（YouTubeにて配信）</p>
-        </li>
-        <li>
-          <span class="y">2019年</span>
-          <p>ウインターコンサート2019（12月15日）</p>
-        </li>
-        <li>
-          <span class="y">2018年</span>
-          <p>四街道吹奏楽団 結成（4月）／クリスマスコンサート2018（12月）</p>
-        </li>
       </ul>
 
       <div class="btn-row reveal">
-        <a class="btn btn-plain" href="concert.html?v=2">定期演奏会の記録を見る</a>
-        <a class="btn btn-plain" href="winter.html?v=2">ウィンターコンサートの記録を見る</a>
+        <a class="btn btn-plain" href="activity.html">2018年からの活動記録を見る</a>
       </div>
     </div>
   </section>
 
   <!-- ===================== 団員募集 ===================== -->
+  <!-- 募集中のパートだけ。応募条件・活動概要・パートごとの人数は recruit.html にあります。 -->
   <section class="section section-deep" id="recruit">
     <div class="wrap">
       <div class="section-head reveal">
@@ -470,66 +405,30 @@
         </div>
         <div class="reveal d1">
           <hr class="rule">
-          <h4>応募条件</h4>
-          <ul class="list-check">
-            <li>楽器を所有している方（パーカッションパート除く　チューバは団所有楽器あり要相談）</li>
-            <li>練習に積極的に参加できる方</li>
-            <li>楽器の基本的な技術を習得している方</li>
-            <li>ある程度楽譜が読めて、初見で合奏できる方</li>
-            <li>経験年数・ブランク：問いません</li>
-            <li>オーディション：ありません</li>
-            <li>高校生以上の方（高校生は保護者のご協力をいただくことがあります）</li>
-            <li>団の方針にご協力いただける方（見学の際ご説明いたします）</li>
-          </ul>
+          <h4>いま募集しているパート</h4>
+          <div class="table-scroll">
+            <table class="data data-parts">
+              <tbody>
+                <tr><th><span class="badge badge-urgent">急募</span></th><td>バスクラリネット／テナーサックス／ホルン／チューバ</td></tr>
+                <tr><th><span class="badge badge-boost">募集強化中</span></th><td>パーカッション</td></tr>
+                <tr><th><span class="badge badge-open">募集中</span></th><td>クラリネット／バリトンサックス／トロンボーン／ユーフォニアム</td></tr>
+                <tr><th><span class="badge badge-ask">要相談</span></th><td>ファゴット／コントラバス</td></tr>
+              </tbody>
+              <caption>2026年10月12日現在／休団者の人数は含まれておりません。</caption>
+            </table>
+          </div>
         </div>
       </div>
 
-      <h3 style="margin-top:72px" class="reveal">活動概要</h3>
-      <div class="table-scroll reveal d1">
-        <table class="data data-stack">
-          <tbody>
-            <tr><th>団費（月額）</th><td>学生 2,000円　／　社会人 3,000円（入団費 2,000円）</td></tr>
-            <tr><th>指揮</th><td>貝瀬永治（常任指揮者）</td></tr>
-            <tr><th>年間の主な本番</th><td>定期演奏会（5月頃）／千葉県吹奏楽コンクール（8月）／ウィンターコンサート（12月）／地域イベント・ボランティア演奏／アンサンブル発表会（2月）</td></tr>
-          </tbody>
-        </table>
+      <div class="btn-row reveal">
+        <a class="btn btn-plain" href="recruit.html">応募条件・活動概要・パートごとの人数を見る</a>
       </div>
-
-      <h3 style="margin-top:64px" class="reveal">募集状況</h3>
-      <p class="reveal">
-        とくに四街道市民の方、急募・募集強化中のパートは大歓迎です。
-        「要相談」の楽器についてはお問い合わせください。
-      </p>
-      <div class="table-scroll reveal d1">
-        <table class="data">
-          <caption>2026年10月12日現在／休団者の人数は含まれておりません。</caption>
-          <thead>
-            <tr><th scope="col">パート</th><th scope="col">在籍</th><th scope="col">募集状況</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>フルート・ピッコロ</td><td>6名</td><td><span class="badge badge-closed">募集停止</span></td></tr>
-            <tr><td>オーボエ</td><td>2名</td><td><span class="badge badge-closed">募集停止</span></td></tr>
-            <tr><td>ファゴット</td><td>2名</td><td><span class="badge badge-ask">要相談</span></td></tr>
-            <tr><td>クラリネット</td><td>8名</td><td><span class="badge badge-open">募集中</span></td></tr>
-            <tr><td>バスクラリネット</td><td>1名</td><td><span class="badge badge-urgent">急募</span></td></tr>
-            <tr><td>アルトサックス</td><td>5名</td><td><span class="badge badge-closed">募集停止</span></td></tr>
-            <tr><td>テナーサックス</td><td>2名</td><td><span class="badge badge-urgent">急募</span></td></tr>
-            <tr><td>バリトンサックス</td><td>1名</td><td><span class="badge badge-open">募集中</span></td></tr>
-            <tr><td>ホルン</td><td>3名</td><td><span class="badge badge-urgent">急募</span></td></tr>
-            <tr><td>トランペット</td><td>6名</td><td><span class="badge badge-closed">募集停止</span></td></tr>
-            <tr><td>トロンボーン</td><td>5名</td><td><span class="badge badge-open">募集中</span></td></tr>
-            <tr><td>ユーフォニアム</td><td>2名</td><td><span class="badge badge-open">募集中</span></td></tr>
-            <tr><td>チューバ</td><td>1名</td><td><span class="badge badge-urgent">急募</span></td></tr>
-            <tr><td>コントラバス</td><td>1名</td><td><span class="badge badge-ask">要相談</span></td></tr>
-            <tr><td>パーカッション</td><td>5名</td><td><span class="badge badge-boost">募集強化中</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-
     </div>
   </section>
 
   <!-- ===================== よつすい動画紹介 ===================== -->
+  <!-- data-limit="3" で、トップには新しい3本だけ出します。
+       全部そろっているのは movie.html です。 -->
   <section class="section section-white" id="movie">
     <div class="wrap">
       <div class="section-head reveal">
@@ -541,11 +440,12 @@
         </p>
       </div>
 
-      <div class="video-grid" id="video-grid">
-        <!-- 動画カードはページ下部の一覧から自動で作られます -->
+      <div class="video-grid" id="video-grid" data-limit="3">
+        <!-- 動画カードは assets/videos.js の一覧から自動で作られます -->
       </div>
 
       <div class="btn-row reveal">
+        <a class="btn btn-plain" href="movie.html">動画をすべて見る</a>
         <a class="yt-link"
            href="https://www.youtube.com/@yotsukaido_wo/featured"
            target="_blank" rel="noopener"
@@ -722,17 +622,17 @@
         <h2>メニュー</h2>
         <ul>
           <li><a href="#about">楽団紹介</a></li>
-          <li><a href="#concert">演奏会</a></li>
-          <li><a href="#schedule">練習日程・年間予定</a></li>
-          <li><a href="#activity">活動記録</a></li>
-          <li><a href="#recruit">団員募集</a></li>
+          <li><a href="concert.html">演奏会</a></li>
+          <li><a href="schedule.html">練習日程・年間予定</a></li>
+          <li><a href="activity.html">活動記録</a></li>
+          <li><a href="recruit.html">団員募集</a></li>
         </ul>
       </div>
 
       <div>
         <h2>リンク</h2>
         <ul>
-          <li><a href="#movie">よつすい動画紹介</a></li>
+          <li><a href="movie.html">よつすい動画紹介</a></li>
           <li><a href="blog.html">よつすいブログ</a></li>
           <li><a href="https://www.cbs-net.jp/" target="_blank" rel="noopener">千葉県吹奏楽連盟</a></li>
           <li><a href="https://www.city.yotsukaido.chiba.jp/" target="_blank" rel="noopener">四街道市</a></li>
@@ -746,8 +646,8 @@
 </footer>
 
 <!-- 紹介する動画の一覧（idを入れるとサムネイルが自動表示されます） -->
-<script src="assets/videos.js?v=1"></script>
-<script src="assets/onepage.js?v=10"></script>
-<script src="assets/blog.js?v=10"></script>
+<script src="assets/videos.js?v=2"></script>
+<script src="assets/onepage.js?v=11"></script>
+<script src="assets/blog.js?v=11"></script>
 </body>
 </html>

@@ -34,7 +34,13 @@
   /* ---------- 動画カードの自動生成（フェードインより先に実行） ---------- */
   var grid = document.getElementById('video-grid');
   if (grid && Array.isArray(window.YOTSUSUI_VIDEOS)) {
-    window.YOTSUSUI_VIDEOS.forEach(function (v, i) {
+    // HTML側に data-limit="3" と書くと、はじめの3本だけ出します。
+    // トップページは3本、動画紹介のページ（movie.html）は全部です。
+    var videoLimit = parseInt(grid.getAttribute('data-limit'), 10);
+    var videoList = window.YOTSUSUI_VIDEOS;
+    if (videoLimit > 0) { videoList = videoList.slice(0, videoLimit); }
+
+    videoList.forEach(function (v, i) {
       var hasId = !!(v.id && v.id.trim());
       var el = document.createElement(hasId ? 'a' : 'div');
       el.className = 'video-card reveal' + (i % 3 ? ' d' + (i % 3) : '');

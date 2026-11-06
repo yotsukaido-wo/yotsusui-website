@@ -604,21 +604,32 @@ table.data caption {
      右の2列に幅を持たせているのは、あまった幅がぜんぶパートの列に
      たまって、楽器名と「在籍」のあいだがぽっかり空くのを防ぐためです。
      ※ パートの列は nowrap なので、ここの％より狭くはなりません。 */
-  #recruit table.data:not(.data-stack) { font-size: .9rem; }
-  #recruit table.data:not(.data-stack) th,
-  #recruit table.data:not(.data-stack) td { padding: 12px 8px; white-space: nowrap; }
-  #recruit table.data:not(.data-stack) th:nth-child(2),
-  #recruit table.data:not(.data-stack) td:nth-child(2) { width: 20%; text-align: center; }
-  #recruit table.data:not(.data-stack) th:nth-child(3),
-  #recruit table.data:not(.data-stack) td:nth-child(3) { width: 36%; text-align: center; }
-  #recruit table.data:not(.data-stack) .badge { padding: 4px 10px; font-size: .8rem; }
+  table.data.data-recruit { font-size: .9rem; }
+  table.data.data-recruit th,
+  table.data.data-recruit td { padding: 12px 8px; white-space: nowrap; }
+  table.data.data-recruit th:nth-child(2),
+  table.data.data-recruit td:nth-child(2) { width: 20%; text-align: center; }
+  table.data.data-recruit th:nth-child(3),
+  table.data.data-recruit td:nth-child(3) { width: 36%; text-align: center; }
+  table.data.data-recruit .badge { padding: 4px 10px; font-size: .8rem; }
 }
 
 /* とくに画面のせまい機種（iPhone SE など）では、もう一段だけ小さくします */
 @media (max-width: 360px) {
-  #recruit table.data:not(.data-stack) { font-size: .85rem; }
-  #recruit table.data:not(.data-stack) th,
-  #recruit table.data:not(.data-stack) td { padding: 11px 5px; }
+  table.data.data-recruit { font-size: .85rem; }
+  table.data.data-recruit th,
+  table.data.data-recruit td { padding: 11px 5px; }
+}
+
+/* トップページの「いま募集しているパート」。
+   スマホでも2列のまま、楽器名のほうだけ折り返します
+   （パートが多いので、1行ずつの積み上げにすると長くなりすぎるためです）。 */
+table.data.data-parts th { width: 36%; white-space: normal; text-align: center; }
+table.data.data-parts td { white-space: normal; }
+@media (max-width: 600px) {
+  table.data.data-parts { font-size: .92rem; }
+  table.data.data-parts th,
+  table.data.data-parts td { padding: 12px 10px; }
 }
 
 .badge {
