@@ -16,8 +16,19 @@
   --link:       #A34B6C;  /* リンク */
   --line:       #EFCEDC;  /* 区切り線 */
   --terra:      #AC4651;  /* アクセント（ボタン／白文字・ローズ） */
-  --terra-mid:  #AC5059;  /* アクセント（アイコン・ラベル） */
+  --terra-mid:  #9A3E4E;  /* アクセント（アイコン・ラベル）
+                             ※ 薄ピンクの上でも読めるよう、少し濃くしてあります */
   --terra-pale: #F9DAE3;  /* アクセント（淡い背景） */
+
+  /* --- セクションの背景は、この3段階だけを使います ---
+     交互に切り替えることで、どこで話題が変わるのかが
+     ひと目で分かるようにしています。 */
+  --sec-white:  #FFFFFF;  /* 白 */
+  --sec-pink:   #FAE5EC;  /* 薄ピンク（ページ全体の地色と同じ色） */
+  --sec-deep:   linear-gradient(140deg, #7B3A58 0%, #A24A5C 100%); /* 濃いワインレッド */
+  --on-deep:      #FFFFFF;  /* 濃色セクションの見出し */
+  --on-deep-soft: #FAE5EC;  /* 濃色セクションの本文
+                               （色がいちばん明るいところでも 4.7:1 あります） */
 
   --radius:  12px;
   --radius-lg: 18px;
@@ -340,8 +351,30 @@ a:hover { color: var(--head); }
    セクション共通
    ========================================================= */
 .section { padding: 104px 0; }
-.section-cream { background: var(--cream); }
-.section-white { background: var(--surface); }
+
+/* 背景は「白」「薄ピンク」「濃いワインレッド」の3段階。
+   セクションごとに交互に付けかえて使います。 */
+.section-white { background: var(--sec-white); }
+.section-pink  { background: var(--sec-pink); }
+.section-deep  { background: var(--sec-deep); color: var(--on-deep-soft); }
+
+/* 濃色セクションの中身を、読める色に反転します。
+   白いカードや表の「中」までは色が移らないよう、そこだけ元の文字色に戻します。 */
+.section-deep .section-head .label,
+.section-deep .section-head .sub { color: var(--on-deep-soft); }
+.section-deep .section-head h2,
+.section-deep h3,
+.section-deep h4 { color: var(--on-deep); }
+.section-deep .rule { background: var(--on-deep-soft); opacity: .85; }
+.section-deep .list-check li::before { color: var(--on-deep-soft); }
+.section-deep table.data caption { color: var(--on-deep-soft); }
+.section-deep table.data,
+.section-deep .card,
+.section-deep .notice { color: var(--ink); }
+.section-deep .btn-plain {
+  background: transparent; border-color: var(--on-deep-soft); color: var(--on-deep);
+}
+.section-deep .btn-plain:hover { background: rgba(255,255,255,.14); color: var(--on-deep); }
 
 @media (max-width: 760px) { .section { padding: 72px 0; } }
 
@@ -402,17 +435,25 @@ h4 {
 }
 
 /* =========================================================
-   写真スライドショー（楽団紹介）
-   3秒ごとに次の写真へ、1.1秒かけてゆっくり入れ替わります。
+   写真スライドショー（楽団紹介・団員募集）
+   3秒ごとに次の写真へ、0.45秒で入れ替わります。
    枚数を変えるときは HTML の <img class="slide"> を増減するだけです。
+
+   ★ 2枚が半透明で重なって見えないようにしています。
+      新しい写真は「前の写真の上」にかぶせて出し、前の写真は
+      下に敷いたまま不透明で残します（下が透けないので二重写しになりません）。
+      入れ替わったあとで、下の写真を JavaScript が外します。
+      ※ 0.45秒は onepage.js の SLIDE_FADE と合わせてあります。
    ========================================================= */
 .slideshow { position: relative; aspect-ratio: 4 / 3; background: var(--cream); }
 .slideshow .slide {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
-  opacity: 0; transition: opacity 1.1s var(--ease);
+  opacity: 0; z-index: 0; transition: opacity .45s var(--ease);
 }
-.slideshow .slide.is-current { opacity: 1; }
+/* 入れ替え中だけ、前の写真を下に敷いておきます */
+.slideshow .slide.is-under { opacity: 1; z-index: 1; transition: none; }
+.slideshow .slide.is-current { opacity: 1; z-index: 2; }
 
 /* 何枚目を見ているかが分かる小さな点 */
 .slide-dots {
