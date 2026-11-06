@@ -58,7 +58,8 @@
           this.setAttribute('data-fallback', '1');
           this.src = 'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg';
         };
-        img.alt = '';
+        // 読み上げソフト向けに、サムネイルにも曲名を入れておきます
+        img.alt = (v.title || '動画') + ' の動画サムネイル';
         img.loading = 'lazy';
         thumb.appendChild(img);
         var play = document.createElement('span');
@@ -108,9 +109,14 @@
      .slideshow の中の <img class="slide"> を3秒ごとに切り替えます。
      ・切り替え時間（3000）を変えれば間隔を調整できます
      ・マウスを乗せている間と、別のタブを見ている間は止まります
-     ・動きを減らす設定の端末では1枚目のまま動きません
+     ・動きを減らす設定の端末（OSで「視差効果を減らす」等をON）では
+       自動の切り替えをしません。1枚目のまま止まります
   ------------------------------------------------ */
   var SLIDE_INTERVAL = 3000;
+  // 1枚が消える（または出てくる）のにかかる時間（ミリ秒）。
+  // onepage.css の .slideshow .slide の transition と同じ値にしてください。
+  // 消えてから出すので、入れ替わり全体はこの倍の時間がかかります。
+  var SLIDE_FADE = 250;
 
   Array.prototype.forEach.call(
     document.querySelectorAll('.slideshow'),
@@ -124,11 +130,19 @@
       var paused = false;
 
       function show(next) {
-        slides[index].classList.remove('is-current');
-        if (dots[index]) { dots[index].classList.remove('is-current'); }
+        var prev = index;
+
+        // まず今の写真を消します。
+        // 消えきってから次を出すので、2枚が半透明で重なることがありません。
+        slides[prev].classList.remove('is-current');
+        if (dots[prev]) { dots[prev].classList.remove('is-current'); }
+
         index = next;
-        slides[index].classList.add('is-current');
-        if (dots[index]) { dots[index].classList.add('is-current'); }
+
+        window.setTimeout(function () {
+          slides[index].classList.add('is-current');
+          if (dots[index]) { dots[index].classList.add('is-current'); }
+        }, SLIDE_FADE);
       }
 
       // 写真は loading="lazy" で後回しにしてあるので、
