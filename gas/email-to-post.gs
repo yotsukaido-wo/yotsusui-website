@@ -520,10 +520,11 @@ function collectImages_(msg, slug, startFrom) {
     var att  = atts[i];
     var type = String(att.getContentType() || '').toLowerCase();
 
-    /* 写真として受け取るのは、この4種類だけです。
+    /* 写真として受け取るのは、ここに並べた型だけです。
+       heic / heif は iPhone の写真です（ふつうは縮小のときにJPEGへ変わります）。
        ここをゆるくすると、種類をいつわった添付で .htm や .svg を
        サイトの中に置かれてしまうため、はっきり並べて書いています。 */
-    if (!/^image\/(jpeg|jpg|png|gif|webp)(;|$)/.test(type)) {
+    if (!/^image\/(jpeg|jpg|png|gif|webp|heic|heif)([;-]|$)/.test(type)) {
       Logger.log('写真ではないため除外：' + att.getName() + ' / ' + type);
       continue;
     }
@@ -541,7 +542,7 @@ function collectImages_(msg, slug, startFrom) {
       resized = blob;
     }
 
-    var ext = extensionFor_(resized.getContentType(), att.getName());
+    var ext = extensionFor_(resized.getContentType());
     var num = ('0' + (begin + out.length + 1)).slice(-2);
 
     out.push({
@@ -618,15 +619,21 @@ function getWorkFolder_() {
   return folder;
 }
 
-function extensionFor_(contentType, name) {
+function extensionFor_(contentType) {
   var t = String(contentType || '').toLowerCase();
   if (t.indexOf('png')  >= 0) { return '.png'; }
   if (t.indexOf('webp') >= 0) { return '.webp'; }
   if (t.indexOf('gif')  >= 0) { return '.gif'; }
+  if (t.indexOf('heic') >= 0) { return '.heic'; }
+  if (t.indexOf('heif') >= 0) { return '.heif'; }
   if (t.indexOf('jpeg') >= 0 || t.indexOf('jpg') >= 0) { return '.jpg'; }
 
-  var m = String(name || '').match(/(\.[A-Za-z0-9]{2,4})$/);
-  return m ? m[1].toLowerCase() : '.jpg';
+  /* 上のどれでもない型のときの、最後の手あてです。
+     以前はここでファイル名の末尾を拡張子に使っていましたが、それだと
+     添付の名前を evil.htm にするだけで、.htm のファイルをサイトに
+     置けてしまいました。ファイル名は見ずに .jpg に決めます。
+     （collectImages_ が通す型は上で全部拾えるので、ふだんは通りません） */
+  return '.jpg';
 }
 
 
