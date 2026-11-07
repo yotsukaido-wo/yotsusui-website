@@ -1,0 +1,14 @@
+# ===== 検索エンジンへのあいさつ文（robots.txt）=====
+# Google などの検索ロボットが、サイトに来たときに最初に読むファイルです。
+#
+#   User-agent: *   … すべての検索ロボットへ、という意味
+#   Allow: /        … サイト全体を見てもらってかまいません、という意味
+#   Sitemap:        … ページの一覧表（sitemap.xml）の置き場所を教えています
+#
+# ★ 見せたくないページができたときだけ、下のように1行足してください。
+#      Disallow: /himitsu.html
+
+User-agent: *
+Allow: /
+
+Sitemap: https://yotsusui-website.pages.dev/sitemap.xml

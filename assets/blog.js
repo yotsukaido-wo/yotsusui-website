@@ -418,8 +418,12 @@
       }
       setMeta('property', 'og:title', title + '｜よつすいブログ');
       setMeta('property', 'og:description', summary);
-      setMeta('property', 'og:url',
-        location.origin + location.pathname + location.search);
+      // 公開中のサイトは「.html」なしのURLが正式なので、ここでも外しておきます
+      // （sitemap.xml に書いてあるURLと形をそろえるためです）
+      var postUrl = location.origin +
+        location.pathname.replace(/\.html$/, '') + location.search;
+
+      setMeta('property', 'og:url', postUrl);
       if (cover) {
         setMeta('property', 'og:image', new URL(cover, location.href).href);
         setMeta('property', 'og:image:alt', title);
@@ -429,6 +433,43 @@
           if (el) { el.parentNode.removeChild(el); }
         });
       }
+
+      // このページの正式なURL（canonical）を、記事ごとのURLに直します。
+      // こうしておくと、Google が記事を1本ずつ別のページとして登録してくれます。
+      var canon = document.querySelector('link[rel="canonical"]');
+      if (!canon) {
+        canon = document.createElement('link');
+        canon.setAttribute('rel', 'canonical');
+        document.head.appendChild(canon);
+      }
+      canon.setAttribute('href', postUrl);
+
+      // 検索エンジン向けに「これはブログ記事です」と書いた札（構造化データ）を足します。
+      // 画面には表示されません。
+      try {
+        var ld = {
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          'headline': title,
+          'description': summary,
+          'inLanguage': 'ja',
+          'mainEntityOfPage': { '@type': 'WebPage', '@id': postUrl },
+          'url': postUrl,
+          'isPartOf': {
+            '@type': 'Blog',
+            'name': 'よつすいブログ',
+            'url': location.origin + '/blog'
+          },
+          'author':    { '@type': 'MusicGroup', 'name': '四街道吹奏楽団' },
+          'publisher': { '@id': location.origin + '/#organization' }
+        };
+        if (date) { ld.datePublished = date; ld.dateModified = date; }
+        if (cover) { ld.image = new URL(cover, location.href).href; }
+        var ldEl = document.createElement('script');
+        ldEl.type = 'application/ld+json';
+        ldEl.textContent = JSON.stringify(ld);
+        document.head.appendChild(ldEl);
+      } catch (e) { /* 札が作れなくても、記事の表示には影響しません */ }
 
       var coverHtml = cover
         ? '<div class="article-cover"><img src="' + esc(safeUrl(cover)) + '" alt=""></div>'

@@ -27,6 +27,9 @@ blog/index.json   記事の一覧データ（メール投稿で自動更新）
 blog/posts/*.md   記事の本文（メール投稿で自動追加）
 blog/images/      記事の写真（メール投稿で自動追加）
 gas/email-to-post.gs  メール投稿の仕組み（Google Apps Scriptに貼りつけるコード）
+robots.txt        検索ロボットへのあいさつ文（sitemapの場所を伝える）
+sitemap.xml       ページの一覧表（tools/make-sitemap.py が作る）
+tools/make-sitemap.py  sitemap.xml を作りなおす道具
 _headers          Netlifyのキャッシュ設定
 ```
 
@@ -34,6 +37,12 @@ _headers          Netlifyのキャッシュ設定
 
 ブログ投稿専用のGmailに記事をメールすると、5分以内にサイトへ反映されます。
 GitHubのトークン発行・Netlify・Apps Scriptの設定手順は **`BLOG-SETUP.md`** にまとめてあります。
+
+## Google 検索に出るようにする（SEO）
+
+タイトル・説明文・構造化データ・robots.txt・sitemap.xml はすでに入れてあります。
+残っているのは Google Search Console への登録（要ログイン作業）です。
+手順は **`SEO-SETUP.md`** にまとめてあります。
 
 ## 公開前に差し替えが必要な箇所
 
