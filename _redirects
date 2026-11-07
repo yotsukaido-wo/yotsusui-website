@@ -21,3 +21,17 @@
 /studio-replacement.md    /404.html  301
 /netlify.toml             /404.html  301
 /gas/*                    /404.html  301
+
+# ===== 制作中に作った、いまは使っていないページ =====
+# どこからもリンクされておらず、sitemap にも載っていませんが、
+# URLを直接打つと開けてしまうので、こちらも404ページへ送ります。
+# ファイルは GitHub に残してあります。
+#
+# ★ 拡張子ありと拡張子なしの両方のURLで開けるので、2行ずつ書いています。
+
+/index-multipage.html  /404.html  301
+/index-multipage       /404.html  301
+/link.html             /404.html  301
+/link                  /404.html  301
+/profile.html          /404.html  301
+/profile               /404.html  301
