@@ -133,17 +133,36 @@ a:hover { color: var(--head); }
 
 @media (max-width: 1140px) {
   .nav-toggle { display: inline-flex; }
+
+  /* ★ ヘッダーの帯は横並びなので、メニューにも「横に100%」と指定して
+       ロゴの行の下へ回りこませます。これがないと、開いたメニューが
+       ロゴの横に押しこまれて、画面の右へはみ出します（横スクロールの原因） */
+  .header-bar { flex-wrap: wrap; }
   .header-nav {
-    display: none; padding: 8px 0 20px; border-top: 1px solid var(--line);
+    display: none; flex: 1 0 100%; width: 100%;
+    padding: 10px 0 18px; border-top: 1px solid var(--line);
   }
   .header-nav.is-open { display: block; }
-  .header-nav ul { display: block; }
-  .header-nav li + li { border-top: 1px solid var(--line); }
-  .header-nav a {
-    padding: 18px 8px; border-radius: 0; font-size: 1.05rem; min-height: 60px;
+
+  /* 項目は何段かに分けて横に並べます。縦1列だと画面の高さに入りきらず、
+     下のほうの項目が見えなくなるためです。
+     1つぶんの幅は130px以上。入るだけ横に並び、あふれたら次の段に回ります
+     （スマホなら2列、タブレットならもっと多くの列になります）。
+     「見学・お問合せ」だけは、いちばん下で横いっぱいに広げます */
+  .header-nav ul {
+    display: grid; gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   }
+  .header-nav li + li { border-top: 0; }
+  .header-nav a {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 56px; padding: 10px 12px; text-align: center;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    font-size: 1rem;
+  }
+  .header-nav li:last-child { grid-column: 1 / -1; }
   .header-nav a.is-cta {
-    margin-top: 14px; border-radius: var(--radius); text-align: center; padding: 18px;
+    margin-top: 6px; border-color: transparent; padding: 16px;
   }
 }
 
