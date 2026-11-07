@@ -29,9 +29,14 @@
   line-height: 1.4;
   color: var(--head);
 }
+/* ★ max-width は「1行の長さの上限」です。
+      34em のままだと説明文が2行に折り返してしまうので、
+      パソコンでは1行で収まる 44em まで広げています。
+      文章を長くしたときに折り返したら、この数字を増やしてください。
+      画面がせまいときは、はみ出さないようにふつうに折り返します */
 .blog-head p {
   margin: 20px auto 0;
-  max-width: 34em;
+  max-width: 44em;
   color: var(--ink-soft);
   font-size: .98rem;
   line-height: 2;
