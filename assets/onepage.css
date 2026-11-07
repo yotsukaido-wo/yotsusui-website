@@ -477,14 +477,14 @@ h4 {
 
 /* =========================================================
    写真スライドショー（楽団紹介・団員募集）
-   6.5秒ごとに次の写真へ切り替わります。
+   9秒ごとに次の写真へ切り替わります。
    枚数を変えるときは HTML の <img class="slide"> を増減するだけです。
 
    ★ 2枚が半透明で重なって見えないようにしています。
       前の写真が「完全に消えてから」次の写真が出てくる順番にしました。
       重ねてすれ違わせると、どうしても途中で二重写しになるためです。
-      消えるのに0.6秒、出てくるのに0.6秒で、合わせて1.2秒です。
-      ※ 0.6秒は onepage.js の SLIDE_FADE（600）と合わせてあります。
+      消えるのに0.8秒、出てくるのに0.8秒で、合わせて1.6秒です。
+      ※ 0.8秒は onepage.js の SLIDE_FADE（800）と合わせてあります。
         かたほうだけ変えると、写真が一瞬消えたように見えるので注意してください。
       ※ 動きを減らす設定の端末では、切り替えそのものを止めています。
    ========================================================= */
@@ -492,7 +492,7 @@ h4 {
 .slideshow .slide {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
-  opacity: 0; z-index: 0; transition: opacity .6s var(--ease);
+  opacity: 0; z-index: 0; transition: opacity .8s var(--ease);
 }
 .slideshow .slide.is-current { opacity: 1; z-index: 2; }
 
@@ -879,9 +879,13 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 /* =========================================================
    アニメーション（ふわっと）
    ========================================================= */
+/* ★ 動きの速さは、この .9s などの秒数で決まります。
+      数字を大きくするほど、ゆっくり出てきます。
+      下の transition-delay（出はじめるまでの待ち時間）は別ものです。
+      そちらを大きくすると「出てくるのが遅い」と感じるので、さわらないでください */
 .reveal {
   opacity: 0; transform: translateY(44px);
-  transition: opacity .9s var(--ease), transform .9s var(--ease);
+  transition: opacity 1.3s var(--ease), transform 1.3s var(--ease);
 }
 .reveal.is-visible { opacity: 1; transform: none; }
 .reveal.d1 { transition-delay: .12s; }
@@ -894,7 +898,7 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 .section-head h2,
 .section-head .sub {
   opacity: 0;
-  transition: opacity .85s var(--ease), transform .85s var(--ease);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
 }
 .section-head .label { transform: translateX(-18px); transition-delay: .08s; }
 .section-head h2     { transform: translateY(26px);  transition-delay: .22s; }
@@ -906,7 +910,7 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 /* 小さな区切り線は横に伸びる */
 .rule {
   transform: scaleX(0); transform-origin: left center;
-  transition: transform .9s var(--ease) .25s;
+  transition: transform 1.3s var(--ease) .25s;
 }
 .reveal.is-visible .rule, .is-visible > .rule { transform: scaleX(1); }
 
@@ -916,7 +920,7 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 }
 .hero-anim {
   opacity: 0;
-  animation: riseIn 1.05s var(--ease) forwards;
+  animation: riseIn 1.5s var(--ease) forwards;
 }
 .hero-anim.a1 { animation-delay: .20s; }
 .hero-anim.a2 { animation-delay: .38s; }
@@ -927,7 +931,7 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 /* 写真はゆっくり大きく浮かび上がる */
 .photo {
   opacity: 0; transform: translateY(30px) scale(1.05);
-  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+  transition: opacity 1.7s var(--ease), transform 1.7s var(--ease);
 }
 .photo.is-visible { opacity: 1; transform: none; }
 
@@ -937,7 +941,7 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 .photo.photo-slow {
   opacity: 0;
   transform: translateY(28px) scale(1.03);
-  transition: opacity .9s var(--ease), transform .9s var(--ease);
+  transition: opacity 1.3s var(--ease), transform 1.3s var(--ease);
 }
 .photo.photo-slow.is-visible { opacity: 1; transform: none; }
 

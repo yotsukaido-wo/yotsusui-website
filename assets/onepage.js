@@ -112,18 +112,18 @@
   );
 
   /* ---------- 写真スライドショー ----------
-     .slideshow の中の <img class="slide"> を6.5秒ごとに切り替えます。
-     ・切り替え時間（6500）を変えれば間隔を調整できます
+     .slideshow の中の <img class="slide"> を9秒ごとに切り替えます。
+     ・切り替え時間（9000）を変えれば間隔を調整できます
        （数字を大きくするほど、ゆっくりになります）
      ・マウスを乗せている間と、別のタブを見ている間は止まります
      ・動きを減らす設定の端末（OSで「視差効果を減らす」等をON）では
        自動の切り替えをしません。1枚目のまま止まります
   ------------------------------------------------ */
-  var SLIDE_INTERVAL = 6500;
+  var SLIDE_INTERVAL = 9000;
   // 1枚が消える（または出てくる）のにかかる時間（ミリ秒）。
   // onepage.css の .slideshow .slide の transition と同じ値にしてください。
   // 消えてから出すので、入れ替わり全体はこの倍の時間がかかります。
-  var SLIDE_FADE = 600;
+  var SLIDE_FADE = 800;
 
   Array.prototype.forEach.call(
     document.querySelectorAll('.slideshow'),
