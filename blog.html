@@ -77,13 +77,11 @@
   <section class="section blog-list">
     <div class="wrap">
 
-      <!-- 記事カード（blog/index.json から新しい順に並びます。横にスクロールすると過去記事です） -->
-      <div class="post-carousel" id="post-carousel" data-hover-scroll hidden>
-        <button class="car-nav prev" id="car-prev" type="button" aria-label="新しい記事へもどる">‹</button>
-        <ul class="post-track" id="post-grid" tabindex="0" aria-label="記事一覧（横にスクロールできます）"></ul>
-        <button class="car-nav next" id="car-next" type="button" aria-label="過去の記事を見る">›</button>
-        <p class="car-hint" id="car-hint">← 矢印にマウスを乗せるか、横にスクロールすると過去の記事が読めます →</p>
-      </div>
+      <!-- 記事一覧（blog/index.json から新しい順に並びます）
+           たて1列で、記事のタイトルの横に写真がならびます。
+           横に送るカード型にもどしたいときは、トップページ（index.html）の
+           「よつすいブログ」の欄と同じ書き方にしてください -->
+      <ul class="post-list" id="post-grid" aria-label="記事一覧" hidden></ul>
 
       <!-- 読み込み中・記事がないときの表示 -->
       <p class="blog-state" id="blog-state">記事を読み込んでいます…</p>

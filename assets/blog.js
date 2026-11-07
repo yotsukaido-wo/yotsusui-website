@@ -204,6 +204,13 @@
     var nextBtn = document.getElementById('car-next');
     var hintEl  = document.getElementById('car-hint');
 
+    /* 並べ方は2とおりあります。
+       ・<ul id="post-grid" class="post-list">  … たて1列（タイトルの横に写真）。blog.html
+       ・<ul id="post-grid" class="post-track"> … 横に送るカード型。トップページ
+       どちらにするかは HTML 側の class で決まるので、ここは直さなくて大丈夫です */
+    var isList = grid.classList.contains('post-list');
+    var boxEl  = carEl || grid;   // 読み込みが終わるまで隠しておく入れもの
+
     function cardHtml(p) {
       var href  = 'blog-post.html?slug=' + encodeURIComponent(p.slug);
       var thumb = p.cover
@@ -222,6 +229,27 @@
                 '<span class="post-more">読む →</span>' +
               '</div>' +
             '</div>' +
+          '</a>' +
+        '</li>';
+    }
+
+    // たて1列の一覧のとき、1記事ぶんの書き方。
+    // 左にタイトル、右に写真（写真がない記事は「よつすいブログ」の絵）。
+    function rowHtml(p) {
+      var href  = 'blog-post.html?slug=' + encodeURIComponent(p.slug);
+      var thumb = p.cover
+        ? '<img src="' + esc(safeUrl(p.cover)) + '" alt="" loading="lazy" decoding="async">'
+        : '<span class="ph"><span class="ico" aria-hidden="true">♪</span><span class="txt">よつすいブログ</span></span>';
+
+      return '' +
+        '<li>' +
+          '<a class="post-row" href="' + href + '">' +
+            '<div class="post-row-body">' +
+              '<span class="post-date">' + esc(fmtDate(p.date)) + '</span>' +
+              '<h2 class="post-title">' + esc(p.title || '（無題）') + '</h2>' +
+              (p.excerpt ? '<p class="post-excerpt">' + esc(p.excerpt) + '</p>' : '') +
+            '</div>' +
+            '<div class="post-thumb post-row-thumb">' + thumb + '</div>' +
           '</a>' +
         '</li>';
     }
@@ -295,14 +323,16 @@
       });
     }
 
-    // 左右キーでも動かせるようにします
-    grid.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight') { e.preventDefault(); slide(1); }
-      if (e.key === 'ArrowLeft')  { e.preventDefault(); slide(-1); }
-    });
+    // 左右キーでも動かせるようにします（横に送るカード型のときだけ）
+    if (!isList) {
+      grid.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); slide(1); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); slide(-1); }
+      });
 
-    grid.addEventListener('scroll', syncNav, { passive: true });
-    window.addEventListener('resize', syncNav);
+      grid.addEventListener('scroll', syncNav, { passive: true });
+      window.addEventListener('resize', syncNav);
+    }
 
     // トップページのように「最新のいくつかだけ」出したいときは、
     // <ul id="post-grid" data-limit="6"> のように書くと、その数だけ並びます。
@@ -313,7 +343,7 @@
       if (limit > 0) { posts = posts.slice(0, limit); }
 
       if (!posts.length) {
-        if (carEl)   { carEl.hidden = true; }
+        if (boxEl)   { boxEl.hidden = true; }
         if (stateEl) {
           stateEl.hidden = false;
           stateEl.textContent = '記事はまだありません。最初の記事を準備中です。';
@@ -321,15 +351,15 @@
         return;
       }
 
-      grid.innerHTML = posts.map(cardHtml).join('');
-      if (carEl)   { carEl.hidden = false; }
+      grid.innerHTML = posts.map(isList ? rowHtml : cardHtml).join('');
+      if (boxEl)   { boxEl.hidden = false; }
       if (stateEl) { stateEl.hidden = true; }
 
       // 画像の読み込みで幅が変わることがあるので、少しおいてからもう一度そろえます
       syncNav();
       setTimeout(syncNav, 300);
     })['catch'](function (err) {
-      if (carEl)   { carEl.hidden = true; }
+      if (boxEl)   { boxEl.hidden = true; }
       if (stateEl) {
         stateEl.hidden = false;
         stateEl.textContent = '記事の読み込みに失敗しました。時間をおいて、もう一度お試しください。';

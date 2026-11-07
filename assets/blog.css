@@ -222,6 +222,63 @@
   .post-body { padding: 20px 20px 22px; }
 }
 
+/* ---------- 記事一覧（たて1列・タイトルの横に写真） ---------- */
+/* blog.html の一覧はこの形です。
+   <ul class="post-list"> と書いたときだけ、この見た目になります。
+   1行ぶんが <a class="post-row">（左：日付とタイトル ／ 右：写真）です。
+   写真の大きさを変えたいときは、下の .post-row-thumb の flex-basis を直します */
+.post-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.post-list > li { border-bottom: 1px solid var(--line); }
+
+.post-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: background .25s var(--ease);
+}
+.post-row:hover,
+.post-row:focus-visible {
+  background: var(--terra-pale);
+  color: inherit;
+}
+
+/* 左側（日付・タイトル・書き出し）。
+   min-width: 0 がないと、長いタイトルが写真を押し出してしまいます */
+.post-row-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.post-row .post-title   { margin: 6px 0 0; -webkit-line-clamp: 2; }
+.post-row .post-excerpt { margin: 8px 0 0; -webkit-line-clamp: 2; }
+
+/* 右側の写真。横幅は 200px で固定、たて横の比は 16:10 です */
+.post-row-thumb {
+  flex: 0 0 200px;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius);
+}
+.post-row:hover .post-row-thumb img { transform: scale(1.04); }
+.post-row-thumb .ph .ico { font-size: 1.7rem; }
+.post-row-thumb .ph .txt { font-size: .66rem; }
+
+/* スマホ：写真を小さくして、書き出しの文はお休みさせます */
+@media (max-width: 600px) {
+  .post-row { gap: 14px; padding: 16px 2px; }
+  .post-row-thumb { flex-basis: 112px; }
+  .post-row .post-title { font-size: .96rem; }
+  .post-row .post-excerpt { display: none; }
+  .post-row-thumb .ph .ico { font-size: 1.3rem; }
+  .post-row-thumb .ph .txt { display: none; }
+}
+
 /* ---------- 読み込み中・記事なし ---------- */
 .blog-state {
   text-align: center;
