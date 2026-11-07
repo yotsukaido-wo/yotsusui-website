@@ -124,6 +124,117 @@
     </span>
   </section>
 
+  <!-- ===================== 演奏会・イベント ===================== -->
+  <!-- これからの本番だけを短くまとめています。
+       過去の演奏会は concert.html（定期演奏会）と winter.html にあります。 -->
+  <section class="section section-white" id="concert">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="label">{ Concert }</span>
+        <h2>演奏会・イベント</h2>
+        <p class="sub">入場無料の公演が中心です。どなたでもお気軽にお越しください。</p>
+      </div>
+
+      <div class="cards col-3">
+        <article class="card reveal">
+          <div class="photo card-media" style="border-radius:0;box-shadow:none">
+            <a href="images/fire-festival-2026.png" target="_blank" rel="noopener" aria-label="四街道消防フェスティバル2026 出演チラシ（大きい画像を開きます）">
+              <img src="images/fire-festival-2026.png" alt="四街道消防フェスティバル2026 出演チラシ" width="1414" height="2000" loading="lazy">
+            </a>
+          </div>
+          <div class="card-body">
+            <span class="card-date">2026.11.08</span>
+            <h3>消防フェスティバル四街道2026</h3>
+            <dl>
+              <dt>日時</dt>
+              <dd>2026年11月8日（日）<br>12:45〜13:10</dd>
+              <dt>会場</dt>
+              <dd>四街道市立中央小学校 校庭</dd>
+            </dl>
+            <p style="margin-top:18px;margin-bottom:0;font-size:.96rem;color:var(--ink-soft)">
+              演奏曲は「アンパンマンマーチ」「YOASOBIメドレー」ほか。雨天中止です。
+            </p>
+          </div>
+        </article>
+
+        <article class="card reveal d1">
+          <div class="photo card-media" style="border-radius:0;box-shadow:none">
+            <a href="images/winter-concert-2026.jpg" target="_blank" rel="noopener" aria-label="ウインターコンサート2026 公演チラシ（大きい画像を開きます）">
+              <img src="images/winter-concert-2026.jpg" alt="ウインターコンサート2026 公演チラシ" width="794" height="1123" loading="lazy">
+            </a>
+          </div>
+          <div class="card-body">
+            <span class="card-date">2026.12.26</span>
+            <h3>ウインターコンサート2026</h3>
+            <dl>
+              <dt>日時</dt>
+              <dd>2026年12月26日（土）<br>18:00開場／18:30開演</dd>
+              <dt>会場</dt>
+              <dd>四街道公民館ホール</dd>
+              <dt>入場料</dt>
+              <dd>無料（入場整理券が必要です）</dd>
+            </dl>
+            <p style="margin-top:18px;margin-bottom:0;font-size:.96rem;color:var(--ink-soft)">
+              テーマは「昭和100年を振り返る紅白歌合戦」。整理券は11月28日（土）12時より電子チケット<a href="https://teket.jp/15970/78556" target="_blank" rel="noopener">「teket」</a>にて配付します。
+            </p>
+          </div>
+        </article>
+
+        <article class="card reveal d2">
+          <div class="photo card-media" style="border-radius:0;box-shadow:none">
+            <img src="images/ensemble-2027.jpg" alt="アンサンブル発表会で演奏する団員" width="1477" height="1108" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="card-date">2027.02</span>
+            <h3>団内アンサンブル発表会</h3>
+            <dl>
+              <dt>日時</dt>
+              <dd>2027年2月（日程調整中）</dd>
+              <dt>会場</dt>
+              <dd>未定</dd>
+            </dl>
+            <p style="margin-top:18px;margin-bottom:0;font-size:.96rem;color:var(--ink-soft)">
+              団員が少人数のグループに分かれて演奏する、年に一度の発表会です。
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="btn-row reveal">
+        <a class="btn btn-plain" href="concert.html">定期演奏会の記録を見る</a>
+        <a class="btn btn-plain" href="winter.html">ウィンターコンサートの記録を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== よつすいブログ ===================== -->
+  <section class="section section-pink" id="blog">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="label">{ Blog }</span>
+        <h2>よつすいブログ</h2>
+        <p class="sub">
+          練習の様子や本番の裏話、団員のつぶやきなど、よつすいの「ふだん」をお届けしています。
+        </p>
+      </div>
+
+      <!-- 記事カード（blog/index.json から新しい順に並びます。横に送ると過去記事です） -->
+      <div class="post-carousel" id="post-carousel" hidden>
+        <button class="car-nav prev" id="car-prev" type="button" aria-label="新しい記事へもどる">‹</button>
+        <ul class="post-track" id="post-grid" data-limit="6" tabindex="0" aria-label="ブログ記事（横にスクロールできます）"></ul>
+        <button class="car-nav next" id="car-next" type="button" aria-label="過去の記事を見る">›</button>
+        <p class="car-hint" id="car-hint">← 横にスクロールすると過去の記事が読めます →</p>
+      </div>
+
+      <!-- 読み込み中・記事がないときの表示 -->
+      <p class="blog-state" id="blog-state">記事を読み込んでいます…</p>
+
+      <div class="btn-row reveal">
+        <a class="btn btn-plain" href="blog.html">ブログ記事の一覧を見る</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== 楽団紹介 ===================== -->
   <section class="section section-white" id="about">
     <div class="wrap">
@@ -231,92 +342,9 @@
     </div>
   </section>
 
-  <!-- ===================== 演奏会・イベント ===================== -->
-  <!-- これからの本番だけを短くまとめています。
-       過去の演奏会は concert.html（定期演奏会）と winter.html にあります。 -->
-  <section class="section section-white" id="concert">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="label">{ Concert }</span>
-        <h2>演奏会・イベント</h2>
-        <p class="sub">入場無料の公演が中心です。どなたでもお気軽にお越しください。</p>
-      </div>
-
-      <div class="cards col-3">
-        <article class="card reveal">
-          <div class="photo card-media" style="border-radius:0;box-shadow:none">
-            <a href="images/fire-festival-2026.png" target="_blank" rel="noopener" aria-label="四街道消防フェスティバル2026 出演チラシ（大きい画像を開きます）">
-              <img src="images/fire-festival-2026.png" alt="四街道消防フェスティバル2026 出演チラシ" width="1414" height="2000" loading="lazy">
-            </a>
-          </div>
-          <div class="card-body">
-            <span class="card-date">2026.11.08</span>
-            <h3>消防フェスティバル四街道2026</h3>
-            <dl>
-              <dt>日時</dt>
-              <dd>2026年11月8日（日）<br>12:45〜13:10</dd>
-              <dt>会場</dt>
-              <dd>四街道市立中央小学校 校庭</dd>
-            </dl>
-            <p style="margin-top:18px;margin-bottom:0;font-size:.96rem;color:var(--ink-soft)">
-              演奏曲は「アンパンマンマーチ」「YOASOBIメドレー」ほか。雨天中止です。
-            </p>
-          </div>
-        </article>
-
-        <article class="card reveal d1">
-          <div class="photo card-media" style="border-radius:0;box-shadow:none">
-            <a href="images/winter-concert-2026.jpg" target="_blank" rel="noopener" aria-label="ウインターコンサート2026 公演チラシ（大きい画像を開きます）">
-              <img src="images/winter-concert-2026.jpg" alt="ウインターコンサート2026 公演チラシ" width="794" height="1123" loading="lazy">
-            </a>
-          </div>
-          <div class="card-body">
-            <span class="card-date">2026.12.26</span>
-            <h3>ウインターコンサート2026</h3>
-            <dl>
-              <dt>日時</dt>
-              <dd>2026年12月26日（土）<br>18:00開場／18:30開演</dd>
-              <dt>会場</dt>
-              <dd>四街道公民館ホール</dd>
-              <dt>入場料</dt>
-              <dd>無料（入場整理券が必要です）</dd>
-            </dl>
-            <p style="margin-top:18px;margin-bottom:0;font-size:.96rem;color:var(--ink-soft)">
-              テーマは「昭和100年を振り返る紅白歌合戦」。整理券は11月28日（土）12時より電子チケット<a href="https://teket.jp/15970/78556" target="_blank" rel="noopener">「teket」</a>にて配付します。
-            </p>
-          </div>
-        </article>
-
-        <article class="card reveal d2">
-          <div class="photo card-media" style="border-radius:0;box-shadow:none">
-            <img src="images/ensemble-2027.jpg" alt="アンサンブル発表会で演奏する団員" width="1477" height="1108" loading="lazy">
-          </div>
-          <div class="card-body">
-            <span class="card-date">2027.02</span>
-            <h3>団内アンサンブル発表会</h3>
-            <dl>
-              <dt>日時</dt>
-              <dd>2027年2月（日程調整中）</dd>
-              <dt>会場</dt>
-              <dd>未定</dd>
-            </dl>
-            <p style="margin-top:18px;margin-bottom:0;font-size:.96rem;color:var(--ink-soft)">
-              団員が少人数のグループに分かれて演奏する、年に一度の発表会です。
-            </p>
-          </div>
-        </article>
-      </div>
-
-      <div class="btn-row reveal">
-        <a class="btn btn-plain" href="concert.html">定期演奏会の記録を見る</a>
-        <a class="btn btn-plain" href="winter.html">ウィンターコンサートの記録を見る</a>
-      </div>
-    </div>
-  </section>
-
   <!-- ===================== 練習日程・年間予定 ===================== -->
   <!-- 要点だけを置いています。年間予定と練習カレンダーは schedule.html にあります。 -->
-  <section class="section section-pink" id="schedule">
+  <section class="section section-white" id="schedule">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="label">{ Schedule }</span>
@@ -356,7 +384,7 @@
 
   <!-- ===================== 活動記録 ===================== -->
   <!-- 直近3年ぶんだけ。2023年より前は activity.html にあります。 -->
-  <section class="section section-white" id="activity">
+  <section class="section section-pink" id="activity">
     <div class="wrap wrap-narrow">
       <div class="section-head reveal">
         <span class="label">{ Activity }</span>
@@ -447,7 +475,7 @@
   <!-- ===================== よつすい動画紹介 ===================== -->
   <!-- data-limit="3" で、トップには新しい3本だけ出します。
        全部そろっているのは movie.html です。 -->
-  <section class="section section-white" id="movie">
+  <section class="section section-pink" id="movie">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="label">{ Movie }</span>
@@ -473,34 +501,6 @@
           </span>
           <span class="yt-label">YouTubeを開く</span>
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== よつすいブログ ===================== -->
-  <section class="section section-pink" id="blog">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="label">{ Blog }</span>
-        <h2>よつすいブログ</h2>
-        <p class="sub">
-          練習の様子や本番の裏話、団員のつぶやきなど、よつすいの「ふだん」をお届けしています。
-        </p>
-      </div>
-
-      <!-- 記事カード（blog/index.json から新しい順に並びます。横に送ると過去記事です） -->
-      <div class="post-carousel" id="post-carousel" hidden>
-        <button class="car-nav prev" id="car-prev" type="button" aria-label="新しい記事へもどる">‹</button>
-        <ul class="post-track" id="post-grid" data-limit="6" tabindex="0" aria-label="ブログ記事（横にスクロールできます）"></ul>
-        <button class="car-nav next" id="car-next" type="button" aria-label="過去の記事を見る">›</button>
-        <p class="car-hint" id="car-hint">← 横にスクロールすると過去の記事が読めます →</p>
-      </div>
-
-      <!-- 読み込み中・記事がないときの表示 -->
-      <p class="blog-state" id="blog-state">記事を読み込んでいます…</p>
-
-      <div class="btn-row reveal">
-        <a class="btn btn-plain" href="blog.html">ブログ記事の一覧を見る</a>
       </div>
     </div>
   </section>
