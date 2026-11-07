@@ -1,2 +1,23 @@
 # 制作中に使っていた /onepage.html のURLは、トップページへ転送します
 /onepage.html  /  301
+
+# ===== 身内向けのメモは、サイトからは開けないようにします =====
+# GitHub には残したまま、ホームページのURLを打っても見られないようにする設定です。
+# 開こうとすると「ページが見つかりません」の画面に飛びます。
+#
+# ★ なぜ「404」と書かずに「301」なのか
+#    Cloudflare Pages の _redirects は、301〜308（転送）しか使えません。
+#    404 のような書き方（書きかえ）は使えないので、404ページへ転送しています。
+#    転送はファイルがあっても必ず先に実行されるので、中身は配信されません。
+#
+# ★ 新しくメモを足したときは、ここに1行足してください。
+#    （.md をまとめて指定する書き方は使えないため、1つずつ書きます）
+
+/BLOG-SETUP.md            /404.html  301
+/CLOUDFLARE-SETUP.md      /404.html  301
+/README.md                /404.html  301
+/SEO-SETUP.md             /404.html  301
+/claude-design-prompt.md  /404.html  301
+/studio-replacement.md    /404.html  301
+/netlify.toml             /404.html  301
+/gas/*                    /404.html  301
