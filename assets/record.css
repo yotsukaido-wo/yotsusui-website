@@ -33,6 +33,10 @@
   font-size: .98rem;
   line-height: 2;
 }
+/* 1文が長くて、34em だと文の途中で折り返してしまうページ用。
+   文の切れ目で改行させたいときに、<p class="lead-oneline"> と書きます。
+   画面が狭いときは、はみ出さないようにふつうに折り返します */
+.rec-head-band p.lead-oneline { max-width: 41em; }
 
 /* ----- 1回ぶんのまとまり ----- */
 .rec-list { display: grid; gap: 36px; }
