@@ -50,12 +50,12 @@
     <nav class="header-nav" id="header-nav" aria-label="メインメニュー">
       <ul>
         <li><a href="concert.html">演奏会</a></li>
+        <li><a href="movie.html">動画紹介</a></li>
         <li><a href="#blog">ブログ</a></li>
         <li><a href="#about">楽団紹介</a></li>
         <li><a href="schedule.html">練習日程</a></li>
         <li><a href="activity.html">活動記録</a></li>
         <li><a href="recruit.html">団員募集</a></li>
-        <li><a href="movie.html">動画紹介</a></li>
         <li><a class="is-cta" href="#contact">見学・お問合せ</a></li>
       </ul>
     </nav>
@@ -127,7 +127,7 @@
   <!-- ===================== 演奏会・イベント ===================== -->
   <!-- これからの本番だけを短くまとめています。
        過去の演奏会は concert.html（定期演奏会）と winter.html にあります。 -->
-  <section class="section section-white" id="concert">
+  <section class="section section-pink" id="concert">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="label">{ Concert }</span>
@@ -203,6 +203,39 @@
       <div class="btn-row reveal">
         <a class="btn btn-plain" href="concert.html">定期演奏会の記録を見る</a>
         <a class="btn btn-plain" href="winter.html">ウィンターコンサートの記録を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== よつすい動画紹介 ===================== -->
+  <!-- data-limit="3" で、トップには新しい3本だけ出します。
+       全部そろっているのは movie.html です。 -->
+  <section class="section section-white" id="movie">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="label">{ Movie }</span>
+        <h2>よつすい動画紹介</h2>
+        <p class="sub">
+          公式YouTubeチャンネルで、演奏会やコンサートの演奏を公開しています。<br>
+          気に入っていただけたら、チャンネル登録と高評価をお願いします。
+        </p>
+      </div>
+
+      <div class="video-grid" id="video-grid" data-limit="3">
+        <!-- 動画カードは assets/videos.js の一覧から自動で作られます -->
+      </div>
+
+      <div class="btn-row reveal">
+        <a class="btn btn-plain" href="movie.html">動画をすべて見る</a>
+        <a class="yt-link"
+           href="https://www.youtube.com/@yotsukaido_wo/featured"
+           target="_blank" rel="noopener"
+           aria-label="YouTubeチャンネルを開く（別の画面で開きます）">
+          <span class="yt-circle" aria-hidden="true">
+            <svg class="sns-ico" viewBox="0 0 24 24" focusable="false"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </span>
+          <span class="yt-label">YouTubeを開く</span>
+        </a>
       </div>
     </div>
   </section>
@@ -468,39 +501,6 @@
 
       <div class="btn-row reveal">
         <a class="btn btn-plain" href="recruit.html">応募条件・活動概要・パートごとの人数を見る</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== よつすい動画紹介 ===================== -->
-  <!-- data-limit="3" で、トップには新しい3本だけ出します。
-       全部そろっているのは movie.html です。 -->
-  <section class="section section-pink" id="movie">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="label">{ Movie }</span>
-        <h2>よつすい動画紹介</h2>
-        <p class="sub">
-          公式YouTubeチャンネルで、演奏会やコンサートの演奏を公開しています。<br>
-          気に入っていただけたら、チャンネル登録と高評価をお願いします。
-        </p>
-      </div>
-
-      <div class="video-grid" id="video-grid" data-limit="3">
-        <!-- 動画カードは assets/videos.js の一覧から自動で作られます -->
-      </div>
-
-      <div class="btn-row reveal">
-        <a class="btn btn-plain" href="movie.html">動画をすべて見る</a>
-        <a class="yt-link"
-           href="https://www.youtube.com/@yotsukaido_wo/featured"
-           target="_blank" rel="noopener"
-           aria-label="YouTubeチャンネルを開く（別の画面で開きます）">
-          <span class="yt-circle" aria-hidden="true">
-            <svg class="sns-ico" viewBox="0 0 24 24" focusable="false"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-          </span>
-          <span class="yt-label">YouTubeを開く</span>
-        </a>
       </div>
     </div>
   </section>
