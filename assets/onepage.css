@@ -477,21 +477,22 @@ h4 {
 
 /* =========================================================
    写真スライドショー（楽団紹介・団員募集）
-   3秒ごとに次の写真へ切り替わります。
+   6.5秒ごとに次の写真へ切り替わります。
    枚数を変えるときは HTML の <img class="slide"> を増減するだけです。
 
    ★ 2枚が半透明で重なって見えないようにしています。
       前の写真が「完全に消えてから」次の写真が出てくる順番にしました。
       重ねてすれ違わせると、どうしても途中で二重写しになるためです。
-      消えるのに0.25秒、出てくるのに0.25秒で、合わせて0.5秒です。
-      ※ 0.25秒は onepage.js の SLIDE_FADE と合わせてあります。
+      消えるのに0.6秒、出てくるのに0.6秒で、合わせて1.2秒です。
+      ※ 0.6秒は onepage.js の SLIDE_FADE（600）と合わせてあります。
+        かたほうだけ変えると、写真が一瞬消えたように見えるので注意してください。
       ※ 動きを減らす設定の端末では、切り替えそのものを止めています。
    ========================================================= */
 .slideshow { position: relative; aspect-ratio: 4 / 3; background: var(--cream); }
 .slideshow .slide {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
-  opacity: 0; z-index: 0; transition: opacity .25s var(--ease);
+  opacity: 0; z-index: 0; transition: opacity .6s var(--ease);
 }
 .slideshow .slide.is-current { opacity: 1; z-index: 2; }
 
