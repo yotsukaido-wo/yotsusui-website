@@ -131,13 +131,31 @@ a:hover { color: var(--head); }
   .site-logo .mark { width: 38px; height: 38px; }
 }
 
+/* いちばん小さいスマホ（横320px台）でも、ロゴとメニューのボタンが
+   1行に並ぶように、どちらも少しだけ小さくします */
+@media (max-width: 380px) {
+  .site-logo .mark { width: 34px; height: 34px; }
+  .site-logo .name-ja { font-size: .9rem; }
+  .nav-toggle { min-height: 48px; padding: 0 12px; font-size: .92rem; gap: 7px; }
+  .nav-toggle .bars { width: 17px; }
+}
+
 @media (max-width: 1140px) {
   .nav-toggle { display: inline-flex; }
 
   /* ★ ヘッダーの帯は横並びなので、メニューにも「横に100%」と指定して
        ロゴの行の下へ回りこませます。これがないと、開いたメニューが
        ロゴの横に押しこまれて、画面の右へはみ出します（横スクロールの原因） */
-  .header-bar { flex-wrap: wrap; }
+  .header-bar { flex-wrap: wrap; gap: 12px; }
+
+  /* ロゴとメニューのボタンは、かならず同じ行に並べます。
+     幅が足りないときは、ボタンではなくロゴのほうを縮めます
+     （min-width:0 がないと縮まず、ボタンが下の行へ押し出されます）。
+     英語の行は、入りきらなければ2行になります */
+  .site-logo { flex: 1 1 0; min-width: 0; }
+  .site-logo > span { min-width: 0; }
+  .site-logo .name-en { white-space: normal; }
+  .nav-toggle { flex: none; }
   .header-nav {
     display: none; flex: 1 0 100%; width: 100%;
     padding: 10px 0 18px; border-top: 1px solid var(--line);
