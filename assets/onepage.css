@@ -625,7 +625,9 @@ table.data caption {
    スマホでも2列のまま、楽器名のほうだけ折り返します
    （パートが多いので、1行ずつの積み上げにすると長くなりすぎるためです）。 */
 table.data.data-parts th { width: 36%; white-space: normal; text-align: center; }
-table.data.data-parts td { white-space: normal; }
+/* 楽器名が「ト／ロンボーン」のように途中で切れないよう、
+   折り返しは「／」の区切りでだけ起きるようにしています */
+table.data.data-parts td { white-space: normal; word-break: keep-all; }
 @media (max-width: 600px) {
   table.data.data-parts { font-size: .92rem; }
   table.data.data-parts th,
