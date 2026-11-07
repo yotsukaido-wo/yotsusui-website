@@ -379,6 +379,10 @@ a:hover { color: var(--head); }
 @media (max-width: 760px) { .section { padding: 72px 0; } }
 
 .section-head { margin-bottom: 54px; max-width: 42em; }
+/* 説明文の1行が長くて、42文字ぶんだと文の途中で折り返してしまう見出し用。
+   <div class="section-head head-wide"> と書くと、その見出しだけ広がります。
+   画面が狭いときは、はみ出さないようにふつうに折り返します */
+.section-head.head-wide { max-width: 50em; }
 .section-head .label {
   display: block; margin-bottom: 14px;
   color: var(--terra-mid); font-size: .85rem; font-weight: 500;
