@@ -40,7 +40,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # 一覧表に載せるページ
 #   （ファイル名, URLの後ろ, 重要度）
-#   ※ 404.html と index-multipage.html は検索に出さないので、載せません。
+#   ※ 載せないページ
+#      ・404.html … ページが見つからなかったときの画面
+#      ・index-multipage.html / link.html / profile.html
+#        … 制作中に作った、いまは使っていないページ。
+#          _redirects で404ページへ飛ばしているので、sitemap にも載せません。
+#          もう一度サイトで使うようになったら、_redirects の行を消して、
+#          下の PAGES に1行もどしてください。
 PAGES = [
     ("index.html",    "/",          "1.0"),
     ("concert.html",  "/concert",   "0.9"),
@@ -51,8 +57,6 @@ PAGES = [
     ("activity.html", "/activity",  "0.7"),
     ("movie.html",    "/movie",     "0.7"),
     ("blog.html",     "/blog",      "0.7"),
-    ("profile.html",  "/profile",   "0.6"),
-    ("link.html",     "/link",      "0.4"),
 ]
 
 

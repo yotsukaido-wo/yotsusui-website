@@ -57,18 +57,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://yotsusui-website.pages.dev/profile</loc>
-    <lastmod>2026-11-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://yotsusui-website.pages.dev/link</loc>
-    <lastmod>2026-11-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
     <loc>https://yotsusui-website.pages.dev/blog-post?slug=2026-10-18-shimoda-nouen</loc>
     <lastmod>2026-10-18</lastmod>
     <changefreq>yearly</changefreq>
