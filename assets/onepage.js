@@ -238,4 +238,70 @@
     if (!observers[at]) { observers[at] = makeObserver(at, '0px'); }
     observers[at].observe(el);
   });
+
+  /* ---------- ページ内リンクの「行き先ずれ」対策 ----------
+     ブログ記事や動画の一覧は、ページを開いたあとから読み込まれます。
+     読み込みが終わるとそのぶんページが下に伸びるので、
+     伸びる前にメニューを押すと、押した時点の位置までしか動かず、
+     目的の場所より手前（ブログの途中あたり）で止まっていました。
+     2回目に押すとちゃんと移動するのは、もう伸びきっているためです。
+
+     そこで、ページ内リンクを押したあと2秒だけページの高さを見張って、
+     高さが変わったら行き先に合わせ直すようにしました。
+     自分でスクロールしたり画面をさわったりしたら、
+     じゃまをしないよう、その時点で見張りをやめます。
+
+     ・見張る時間を変えたいときは、下の 2000（ミリ秒）を直します
+     ・この仕組みは行き先の調整だけで、見た目は何も変えません
+  --------------------------------------------------------- */
+  var WATCH_MS = 2000;                 // 押したあと、高さを見張る時間
+  var STOP_EVENTS = ['wheel', 'touchstart', 'keydown', 'mousedown'];
+
+  function keepAligned(target) {
+    var until  = (window.performance ? performance.now() : Date.now()) + WATCH_MS;
+    var lastH  = document.body.scrollHeight;
+    var active = true;
+
+    function now()  { return window.performance ? performance.now() : Date.now(); }
+    function stop() {
+      active = false;
+      STOP_EVENTS.forEach(function (name) {
+        window.removeEventListener(name, stop, true);
+      });
+    }
+    STOP_EVENTS.forEach(function (name) {
+      window.addEventListener(name, stop, true);
+    });
+
+    (function step() {
+      if (!active) { return; }
+
+      var h = document.body.scrollHeight;
+      if (h !== lastH) {
+        lastH = h;
+        // 行き先に合わせ直します。
+        // ヘッダーのぶんの余白は onepage.css の scroll-padding-top が見てくれます
+        target.scrollIntoView({
+          behavior: reduceMotion ? 'auto' : 'smooth',
+          block: 'start'
+        });
+      }
+
+      if (now() < until) { window.requestAnimationFrame(step); }
+      else { stop(); }
+    })();
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!e.target || !e.target.closest) { return; }
+
+    var link = e.target.closest('a[href^="#"]');
+    if (!link) { return; }
+
+    var id = link.getAttribute('href').slice(1);
+    if (!id) { return; }
+
+    var target = document.getElementById(id);
+    if (target) { keepAligned(target); }
+  });
 })();
