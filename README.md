@@ -27,6 +27,7 @@ blog/index.json   記事の一覧データ（メール投稿で自動更新）
 blog/posts/*.md   記事の本文（メール投稿で自動追加）
 blog/images/      記事の写真（メール投稿で自動追加）
 gas/email-to-post.gs  メール投稿の仕組み（Google Apps Scriptに貼りつけるコード）
+assets/ga.js      Google アナリティクス（アクセス数の計測）の設定
 robots.txt        検索ロボットへのあいさつ文（sitemapの場所を伝える）
 sitemap.xml       ページの一覧表（tools/make-sitemap.py が作る）
 tools/make-sitemap.py  sitemap.xml を作りなおす道具
@@ -43,6 +44,13 @@ GitHubのトークン発行・Netlify・Apps Scriptの設定手順は **`BLOG-SE
 タイトル・説明文・構造化データ・robots.txt・sitemap.xml はすでに入れてあります。
 残っているのは Google Search Console への登録（要ログイン作業）です。
 手順は **`SEO-SETUP.md`** にまとめてあります。
+
+## アクセス解析（Google アナリティクス）
+
+測定ID `G-20KZFLF2Y2`（楽団のGoogleアカウント yotsukaido.wo@gmail.com で管理）。
+設定は `assets/ga.js`、読み込みは各ページの `</head>` の直前2行です。
+Googleのプログラムを読み込むため、`_headers` の CSP に googletagmanager.com と
+google-analytics.com を許可する記述を足してあります。
 
 ## 公開前に差し替えが必要な箇所
 

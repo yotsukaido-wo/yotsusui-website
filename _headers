@@ -4,18 +4,19 @@
 #
 # ★ ここに書いていない配信元を使い始めたときは、1行を足してください。
 #    足しわすれると、その部分だけ表示されなくなります（故障ではありません）。
-#      script-src  … プログラム    …… うちのサイトのものだけ
+#      script-src  … プログラム    …… うち ＋ Googleアナリティクス
+#      connect-src … データ送信先  …… うち ＋ Googleアナリティクス
 #      style-src   … 見た目        …… うち ＋ Googleフォント
 #                     （'unsafe-inline' は、ページに直書きした style="..." のため）
 #      font-src    … 文字の形      …… うち ＋ Googleフォント
-#      img-src     … 画像          …… うち ＋ YouTubeのサムネイル
+#      img-src     … 画像          …… うち ＋ YouTubeのサムネイル ＋ Googleアナリティクス
 #      frame-src   … 枠で開くもの  …… 練習カレンダー（フリカレ）と お問い合わせフォーム
 #      form-action … 送信先        …… 'none'。うちのページに送信フォームは無いため。
 #                     （自前のフォームを作る日が来たら 'self' に直してください）
 #      frame-ancestors … よそのサイトが、うちを枠に入れて表示するのを防ぎます
 
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://i.ytimg.com; frame-src https://freecalend.com https://docs.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://i.ytimg.com https://*.google-analytics.com https://*.googletagmanager.com; frame-src https://freecalend.com https://docs.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'
 
 # ===== キャッシュの設定 =====
 # 記事データはすぐ反映されるように、写真は長くキャッシュするようにしています。
