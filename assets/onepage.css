@@ -819,15 +819,19 @@ details.faq .faq-body p:last-child { margin-bottom: 0; }
 .footer-grid h2 { font-size: 1rem; color: #fff; margin: 0 0 16px; letter-spacing: .05em; }
 .footer-grid ul { list-style: none; margin: 0; padding: 0; }
 .footer-grid li { padding: 8px 0; }
-.footer-sns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+/* SNSのボタンは、名前を入れると4つで横幅が足りず、パソコンでもスマホでも
+   2段に折り返していました。そこでアイコンだけの丸ボタンにしています。
+   名前は、読み上げソフト向けに HTML 側の aria-label に入れてあります
+   （マウスを乗せたときの吹き出しは title です）。 */
+.footer-sns { display: flex; flex-wrap: nowrap; gap: 10px; margin-top: 20px; }
 .footer-sns a {
-  display: inline-flex; align-items: center; gap: 8px;
-  min-height: 48px; padding: 0 18px;
-  border: 1px solid rgba(255,255,255,.28); border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: none; width: 44px; height: 44px;
+  border: 1px solid rgba(255,255,255,.28); border-radius: 50%;
   transition: background .35s var(--ease);
 }
 .footer-sns a:hover { background: rgba(255,255,255,.12); text-decoration: none; }
-.footer-sns .sns-ico { width: 17px; height: 17px; fill: currentColor; }
+.footer-sns .sns-ico { width: 18px; height: 18px; fill: currentColor; }
 .copyright {
   margin-top: 48px; padding-top: 24px;
   border-top: 1px solid rgba(255,255,255,.15);
